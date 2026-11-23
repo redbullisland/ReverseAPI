@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eyecon getnames.jsp lookup</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font: 15px/1.5 system-ui, sans-serif; max-width: 820px; margin: 2rem auto; padding: 0 1rem; }
+  h1 { font-size: 1.4rem; margin-bottom: .25rem; }
+  .sub { opacity: .75; margin: 0 0 1.25rem; font-size: .9rem; }
+  .card { border: 1px solid #8885; border-radius: 10px; padding: 1rem; margin-bottom: 1rem; }
+  label { display: block; font-weight: 600; margin: .6rem 0 .25rem; }
+  input, select { width: 100%; box-sizing: border-box; padding: .55rem .6rem; border: 1px solid #8887; border-radius: 6px; background: transparent; color: inherit; }
+  button { margin-top: 1rem; padding: .6rem 1.2rem; border: 0; border-radius: 6px; background: #1665d8; color: white; font-weight: 600; cursor: pointer; }
+  button:disabled { opacity: .6; cursor: wait; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+  .badge { display: inline-block; padding: .15rem .55rem; border-radius: 999px; font-size: .85rem; font-weight: 600; }
+  .ok { background: #1a7f37; color: white; }
+  .warn { background: #9a6700; color: white; }
+  .bad { background: #b42318; color: white; }
+  .muted { opacity: .7; }
+  ul { margin: .4rem 0; padding-left: 1.3rem; }
+  pre { white-space: pre-wrap; word-break: break-word; background: #8882; padding: .8rem; border-radius: 6px; max-height: 320px; overflow: auto; }
+  code { word-break: break-all; font-size: .85rem; }
+  .error { color: #b42318; font-weight: 600; }
+  details { margin-top: 1rem; font-size: .9rem; }
+  @media (max-width: 600px) { .row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+  <h1>Eyecon number lookup</h1>
+  <p class="sub">Local UI for <code>GET /app/getnames.jsp</code> — name + spam, and name history. Requests go directly from this machine to <code>api.eyecon-app.com</code>.</p>
+
+  <form class="card" id="form">
+    <div class="row">
+      <div>
+        <label for="dial">Country code</label>
+        <select id="dial" name="dial">
+          <option value="+880" selected>Bangladesh (+880)</option>
+          <option value="+91">India (+91)</option>
+          <option value="+92">Pakistan (+92)</option>
+          <option value="+977">Nepal (+977)</option>
+          <option value="+94">Sri Lanka (+94)</option>
+          <option value="+1">USA / Canada (+1)</option>
+          <option value="+44">UK (+44)</option>
+          <option value="">Custom / full number</option>
+        </select>
+      </div>
+      <div>
+        <label for="number">Mobile number</label>
+        <input id="number" name="number" placeholder="17XXXXXXXX" autocomplete="off" required>
+      </div>
+    </div>
+
+    <label for="cid">Client ID / <code>e-auth</code> from your Eyecon app</label>
+    <input id="cid" name="cid" placeholder="e.g. xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" autocomplete="off" required>
+
+    <div class="row">
+      <div>
+        <label for="mode">Mode</label>
+        <select id="mode" name="mode">
+          <option value="callerid">Caller ID (name + spam)</option>
+          <option value="search">Search (all known names)</option>
+        </select>
+      </div>
+      <div>
+        <label for="lang">Language</label>
+        <input id="lang" name="lang" value="en" autocomplete="off">
+      </div>
+    </div>
+
+    <button type="submit" id="go">Look up</button>
+  </form>
+
+  <div class="card" id="output" hidden>
+    <div id="status"></div>
+    <h3>Names</h3>
+    <ul id="names"></ul>
+    <div id="spam"></div>
+    <h3>Request URL</h3>
+    <code id="url"></code>
+    <h3>Raw response</h3>
+    <pre id="raw"></pre>
+  </div>
+
+  <div class="card error" id="error" hidden></div>
+
+  <details class="card">
+    <summary>Where do I get the Client ID?</summary>
+    <p>The server rejects unknown IDs with <code>401</code>. The app stores it as the <code>clientId</code> preference after phone verification, and sends it as the <code>e-auth</code> header. Options:</p>
+    <ul>
+      <li>Capture a real request from the app with mitmproxy/Charles and copy the <code>e-auth</code> header value.</li>
+      <li>On a rooted device or emulator, read the app's <code>shared_prefs</code> for <code>clientId</code>.</li>
+      <li>Hook <code>Authenticator.m16803d()</code> with Frida and print the return value.</li>
+    </ul>
+    <p>The <code>e-auth-c</code> checksum and <code>e-auth-k</code> key are computed automatically from the ID.</p>
+  </details>
+
+<script>
+const $ = id => document.getElementById(id);
+const form = $('form');
+
+$('cid').value = localStorage.getItem('eyecon_cid') || '';
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  const errorBox = $('error');
+  errorBox.hidden = true;
+  $('output').hidden = true;
+  $('go').disabled = true;
+  $('go').textContent = 'Looking up…';
+
+  let localDigits = $('number').value.replace(/\D/g, '');
+  const dialDigits = $('dial').value.replace(/\D/g, '');
+  let number;
+  if (!dialDigits) {
+    number = localDigits;
+  } else if (localDigits.startsWith(dialDigits)) {
+    number = localDigits;
+  } else {
+    localDigits = localDigits.replace(/^0+/, '');
+    number = dialDigits + localDigits;
+  }
+
+  const payload = {
+    number,
+    cid: $('cid').value.trim(),
+    mode: $('mode').value,
+    lang: $('lang').value.trim() || 'en',
+    source: 'local-webapp'
+  };
+  localStorage.setItem('eyecon_cid', payload.cid);
+
+  try {
+    const res = await fetch('/api/lookup', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+
+    if (!data.ok && data.error) {
+      errorBox.textContent = data.error;
+      errorBox.hidden = false;
+    }
+
+    if (data.status !== undefined || data.names !== undefined) {
+      $('output').hidden = false;
+      const status = $('status');
+      const label = data.status === 200 ? 'HTTP 200' : 'HTTP ' + data.status;
+      status.innerHTML = `<span class="badge ${data.status === 200 ? 'ok' : 'bad'}">${label}</span> <span class="muted">cli=${data.cli || '—'}</span>`;
+
+      $('names').innerHTML = '';
+      (data.names || []).forEach(name => {
+        const li = document.createElement('li');
+        li.textContent = name;
+        $('names').appendChild(li);
+      });
+      if (!(data.names || []).length) {
+        $('names').innerHTML = '<li class="muted">No names returned</li>';
+      }
+
+      const level = data.spam_level;
+      const cls = level === 2 ? 'warn' : level === 1 ? 'bad' : 'ok';
+      $('spam').innerHTML = `Spam status: <span class="badge ${cls}">${data.spam_text || 'Unknown'}</span>`;
+      $('url').textContent = data.url || '';
+      $('raw').textContent = data.raw || '';
+    }
+  } catch (err) {
+    errorBox.textContent = 'Could not reach the local server: ' + err;
+    errorBox.hidden = false;
+  } finally {
+    $('go').disabled = false;
+    $('go').textContent = 'Look up';
+  }
+});
+</script>
+</body>
+</html>

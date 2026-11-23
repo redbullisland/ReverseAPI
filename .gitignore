@@ -1,0 +1,56 @@
+# ReverseAPI — gitignore
+# Research repo: notes, scripts, and app source are tracked.
+# Large binaries, APKs, decompiled trees, and tool downloads stay on disk only.
+
+# --- Decompiled / derived trees (regenerate via README.md instructions) ---
+/eyecon_apktool/
+/eyecon_jadx/
+/eyecon_jadx_badcode/
+/truecaller_apktool/
+/truecaller_jadx/
+/truecaller_jadx_badcode/
+/*_apktool/
+/*_jadx/
+/*_jadx_badcode/
+
+# --- APKs and signing/output artifacts ---
+*.apk
+*.apk.idsig
+*.keystore
+*.jks
+/NUL
+
+# --- Tool downloads / Frida binaries / installers ---
+*.xz
+*.msi
+*.zip
+/frida-server
+/frida-server-arm64
+/frida-gadget.so
+/scrcpy/
+/jadx-gui-*/
+
+# --- Logs, dumps, captured app data, and transient artifacts ---
+*.log
+/logcat_*.txt
+/frida_*.txt
+/frida_*.log
+/contactdb*.db
+/contactdb_extract.bin
+*_out.txt
+*_runner.out
+*_runner.err
+*.idsig
+
+# --- Node / frontend build artifacts ---
+node_modules/
+dist/
+.next/
+out/
+*.tsbuildinfo
+.env.local
+.env*.local
+
+# --- OS cruft ---
+Thumbs.db
+.DS_Store
