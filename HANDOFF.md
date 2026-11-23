@@ -382,3 +382,69 @@ Both Caller ID (`is_callerid=true`, `requestApi=okHttp`) and Search
 - `D:\ReverseAPI\contactdb_live.db` — pulled app DB (contains `shared_preference_v2`).
 - `D:\ReverseAPI\logcat_phone.txt` — passive logcat capture during registration.
 - `D:\ReverseAPI\debug.keystore` — signing key for the debuggable rebuild.
+
+---
+
+## NEXT HANDOFF (2026-11-23, end of day)
+
+Both providers are now **live-verified**. The client-only Next.js app in `app/` is the
+deliverable; the Vite app at `http://127.0.0.1:5173` is an older reference only.
+
+### TrueCaller — complete
+- Endpoint/auth/response fully verified live (not just static). See
+  `truecaller_research/AUTH_AND_TESTING_FINDINGS.md` §6–7.
+- Confirmed request: `GET https://search5.truecaller.com/v2/search?q=%2B<e164>&countryCode=<ISO2>&type=2&encoding=json`,
+  with `Authorization: Bearer <installationId>` and `Accept: application/json`.
+- The Bearer value is the account's **`installationId`**, read from
+  `shared_prefs/account.xml` on a debuggable rebuild of the app. It has a **72-hour TTL**
+  (`installationIdTtl=259200000`). **Never commit it** — each user pastes their own in the UI.
+- Real response returned `"name":"Tasif"` for `+8801632027018` (matching Eyecon's `TAS IF?`).
+- Response shape uses `isFraud` and `feedback.feedbackType` (not `spamInfo`); the provider
+  parser was corrected accordingly.
+- `truecaller_debuggable.apk` (113 MB, gitignored) is on disk if another token is ever needed.
+- Install note: `adb install` is blocked by MIUI; use `MSYS_NO_PATHCONV=1 adb push ... /data/local/tmp/tc.apk`
+  then `adb shell pm install -r /data/local/tmp/tc.apk`.
+
+### Design intent — `caller_id_lookup_design.zip`
+Extracted to `_design_review/` (gitignored). Four Stitch-generated Tailwind screens:
+
+| Screen | File |
+|---|---|
+| Lookup (web) | `stitch_multi_provider_phone_lookup/caller_id_lookup_web/code.html` |
+| Lookup (mobile) | `stitch_multi_provider_phone_lookup/caller_id_lookup_mobile/code.html` |
+| Settings (web) | `stitch_multi_provider_phone_lookup/settings_web/code.html` |
+| Settings (mobile) | `stitch_multi_provider_phone_lookup/settings_mobile/code.html` |
+
+Key design decisions to carry into the Next.js app:
+- **Header** with `call` icon + "Caller ID Lookup" + Settings button.
+- **Multi-select provider segmented control** (Eyecon / TrueCaller / NumVerify) — choose one
+  or more, and run all selected providers for a single lookup. Current app uses a single
+  provider dropdown — this is the biggest gap.
+- **Input mode tabs**: Single number vs Multiple / CSV (comma/newline, `.csv` upload,
+  live number count). Not present in the current app.
+- **Mode radios**: Caller ID / Search / name history (current app has this).
+- **Results**: one card **per provider**, with names list, spam-status badge, HTTP status,
+  `via proxy` label, and an expandable "Request URL & raw response" `<details>`.
+- **Settings modal / page**: per-provider enable toggles + credential fields; a "Client ID
+  required" alert banner on the lookup page links into settings. Eyecon CID input has a
+  show/hide toggle. Plain text `localStorage` keys in the design (`caller_id_eyecon_client_id`)
+  — keep the app's current `callerid-lookup:settings:v1` instead, it is fine.
+- **Visual system**: Material Design 3 color tokens (light + dark), Tailwind CDN, Material
+  Symbols icons, `max-w-4xl`, rounded cards, dense typography scale.
+- Design contains a third provider, **NumVerify** (access key). Not implemented/researched —
+  either drop it from the UI or treat it as a future placeholder.
+
+### Current Next.js app status
+- `npm run build` passes (Next.js 15.5.29).
+- Dev server was started in the background for testing: **http://localhost:3000** → HTTP 200.
+- Tests to run before handoff: select Eyecon (CID pre-filled) → `01632-027018` → Look up;
+  then TrueCaller with a **fresh** installationId pasted into the "Bearer token" field.
+- Both providers need an external CORS proxy (custom `e-auth-*` / `Authorization` headers
+  trigger preflight). Proxy template field is in the UI; `https://corsproxy.io/?url={url}&{headers}`
+  is the documented default.
+
+### Repo state
+Commits after the original Eyecon work: `6e26996` (client app), `3107b46` + `acb63c6`
+(TrueCaller research/docs), `615d704` (TrueCaller provider), `86098ff` (URL display),
+`a9b9a25` + `068efa0` (auth findings + ignores), `94e95a3` (live verification + parser fix).
+Working tree is clean; bulky artifacts and captures are gitignored but retained on disk.
