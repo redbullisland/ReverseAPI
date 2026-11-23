@@ -42,6 +42,13 @@ Key findings (confirmed in decompiled sources):
 - Number normalization: `PhoneNumberHelper.m16597e()` → libphonenumber E164 → `C8676OH.m16256N()` strips `+`.
 - Response fields read in `RunnableC8493c.java:259-377`: `name`, `type` (`spam` / `maybe spam`), `suspicious_spam`.
 - `namesListener.mo15098a((String[]) arrayList4.toArray(new String[0]), spam, 0)` receives all names → name history.
+- Response format quirk (found while building the client-only app): without `Accept: application/json`
+  the server may return a bare name string (e.g. `TAS IF?`) instead of a JSON array. Send
+  `Accept: application/json` and make the parser tolerate both shapes.
+- CORS: the `e-auth-*` headers trigger a browser preflight, and `OPTIONS /app/getnames.jsp`
+  returns **401 with no CORS headers**, so direct browser `fetch` is blocked even though
+  `curl` works. The Next.js app exposes an optional, user-configured CORS-proxy template
+  (`{url}` / `{rawUrl}` / `{headers}` tokens) stored in localStorage; blank = direct fetch.
 - Auth headers (`NetworkHelper.java:330-339`):
   ```text
   e-auth-v: e1

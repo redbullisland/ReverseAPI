@@ -5,15 +5,23 @@
 - Work **only** inside `D:\ReverseAPI`.
 - This is a reverse-engineering research archive plus a webapp. Treat existing files
   as user work; investigate before deleting or overwriting.
+- Parallel tasks have separate owners: `app/` (webapp agent), `truecaller_research/`
+  (research agent), and root docs/config (`AGENTS.md`, `README.md`, `.gitignore`,
+  `.gitattributes`, `GIT_WORKFLOW.md`). Do not edit files outside your owner set.
+- Subagents never run `git add` or `git commit`; the main agent commits serially
+  after all tasks report back. See `GIT_WORKFLOW.md`.
 
 ## What is tracked vs. on-disk only
 
 - **Tracked:** markdown notes (`HANDOFF.md`, `EYECON_ENDPOINTS.md`, `README.md`,
-  `AGENTS.md`, `cid.txt`), helper scripts (`*.ps1`, `*.bat`), Frida hooks
-  (`eyecon_hook*.js`), the Vite React reference app, and the upcoming Next.js `app/`.
+  `AGENTS.md`, `GIT_WORKFLOW.md`, `cid.txt`), helper scripts (`*.ps1`, `*.bat`),
+  Frida hooks (`eyecon_hook*.js`), the Vite React reference app, the client-only
+  Next.js `app/`, and the TrueCaller notes in `truecaller_research/`.
 - **Not tracked (see `.gitignore`):** APKs, `*_apktool/`, `*_jadx/`, `*_jadx_badcode/`,
-  Frida binaries, `*.msi`/`*.xz`, logs, captured DBs. These stay on disk. Do not
-  attempt to commit them. Regeneration commands are in `README.md`.
+  Frida binaries, `*.msi`/`*.xz`, logs, runtime DBs, `node_modules/`, `.next/`,
+  `.vercel/`, and local `.env*` files (except `*.env.example` templates). These stay
+  on disk or in the local environment. Do not attempt to commit them. Regeneration
+  commands are in `README.md`.
 
 ## Research workflow (what has worked)
 
@@ -42,13 +50,15 @@
 ## Code style / conventions
 
 - Keep webapp changes minimal and consistent with surrounding files.
-- The Next.js app in `app/` must keep API keys/auth handling server-side (API routes),
-  never in client components.
+- `app/` is deliberately **client-only** (no Next.js API routes): credentials are
+  entered in the UI and kept in that browser's `localStorage`. Never hardcode real
+  secrets in source or commit `.env*` files. See `app/README.md`.
 - Add any new endpoint/auth/checksum findings to `EYECON_ENDPOINTS.md` and update
   `HANDOFF.md` final status.
 - Document regeneration steps for any new decompiled tree in `README.md`.
 
 ## Current state
 
-Eyecon research complete (real CID + live lookups working). TrueCaller research and
-Next.js app are the next tasks; see `truecaller_research/` and `app/` once created.
+Eyecon research complete (real CID + live lookups working). Three parallel tasks are
+under way: root hygiene (`GIT_WORKFLOW.md`), the client-only Next.js app in `app/`,
+and TrueCaller research in `truecaller_research/`. The main agent handles all commits.

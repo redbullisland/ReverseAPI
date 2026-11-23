@@ -42,14 +42,29 @@
 *_runner.err
 *.idsig
 
-# --- Node / frontend build artifacts ---
+# --- Runtime captures / databases (any research module) ---
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# --- Node / frontend build artifacts (Vite, Next.js, Vercel) ---
 node_modules/
 dist/
 .next/
 out/
+coverage/
+.turbo/
+.vercel/
 *.tsbuildinfo
-.env.local
-.env*.local
+next-env.d.ts
+
+# --- Local environment / secrets (example templates stay tracked) ---
+.env
+.env.*
+!.env.example
+!.env.*.example
 
 # --- OS cruft ---
 Thumbs.db

@@ -15,13 +15,15 @@ frontend that reproduces their name + spam lookups.
 | `HANDOFF.md` | yes | Research handoff / full history and final status |
 | `EYECON_ENDPOINTS.md` | yes | Eyecon endpoint, auth, checksum, and response-field report |
 | `AGENTS.md` | yes | Instructions for AI agents working in this repo |
+| `GIT_WORKFLOW.md` | yes | Branch/commit rules, tracked vs ignored, module onboarding |
 | `cid.txt` | yes | The real server-issued Eyecon CID (checksum `38`) |
 | `*.ps1`, `*.bat` | yes | Emulator / capture helper scripts |
 | `eyecon_hook*.js` | yes | Frida hook scripts used for dynamic analysis |
 | `eyecon_lookup_react/` | yes | Working Vite+React webapp (reference; CID pre-filled) |
 | `eyecon_lookup_webapp/` | yes | Original plain Python/HTML prototype (reference) |
-| `app/` | yes | **Next.js app for Vercel** (added in a later step) |
-| `truecaller_research/` | yes | TrueCaller notes/plan (added in a later step) |
+| `app/` | yes | **Client-only Next.js app for Vercel** (no API routes) |
+| `truecaller_research/` | yes | TrueCaller notes, plan, and grep results |
+| `.env*`, `.vercel/` | no | Local secrets and deploy metadata (gitignored) |
 | `eyecon.apk`, `Truecaller*.apk` | no | Source APKs (keep on disk, gitignored) |
 | `eyecon_apktool/`, `eyecon_jadx*/` | no | Decompiled trees (regenerate; see below) |
 | `frida-*`, `*.msi`, `*.xz`, `*.zip` | no | Downloaded tools/binaries (gitignored) |
@@ -29,6 +31,7 @@ frontend that reproduces their name + spam lookups.
 
 > Large binaries, APKs, decompiled trees, and runtime dumps are **not** committed.
 > They remain on disk. Use the commands below to regenerate them after a fresh clone.
+> Branch/commit rules and how to add new modules or apps: see `GIT_WORKFLOW.md`.
 
 ---
 
@@ -96,7 +99,11 @@ npm run dev -- --host 127.0.0.1
 Vite middleware in `vite.config.js` exposes `/api/lookup` so the browser avoids
 Eyecon's CORS/custom-header restrictions. The CID is pre-filled in `src/App.jsx`.
 
-### Production (Next.js for Vercel) — `app/`
+### Production (client-only Next.js for Vercel) — `app/`
 
-Added in a later step. Vercel setup: **Root Directory = `app`**.
-The app will proxy Eyecon (and later TrueCaller) through Next.js API routes.
+Vercel setup: **Root Directory = `app`**. There are **no Next.js API routes**: each
+lookup is a direct `fetch()` from the browser, with an optional user-supplied CORS
+proxy template (Eyecon sends no CORS headers for its custom-header requests).
+Credentials are pasted in the UI and stored in that browser's `localStorage`; no
+secrets live in source or environment variables. TrueCaller is a placeholder
+provider until its auth is researched. See `app/README.md` and `GIT_WORKFLOW.md`.
