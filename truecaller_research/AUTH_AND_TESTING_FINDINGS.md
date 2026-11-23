@@ -270,3 +270,24 @@ Options if TrueCaller must work through the web app (not yet decided):
 4. Keep TrueCaller out of the hosted app and treat it as a manual verification tool only.
 
 Open question added for next time: **does Vercel's rewrite proxy pass TrueCaller's WAF?**
+
+## 10. Portable relay candidate — Cloudflare Worker (2026-11-23)
+
+`app/relay-worker.js` is a free, portable Cloudflare Worker (~60 lines) that acts as a CORS relay:
+accepts `?url=<encoded upstream>&reqHeaders=<encoded "Name: value">` (exactly the format the app's
+`{headers}` token emits), forwards them upstream, and returns the response with permissive CORS
+headers. Only the four known API hosts are allowed, so it is not an open proxy.
+
+Deploy via Cloudflare dashboard (Workers & Pages → Create Worker → paste the file) or:
+`npm i -g wrangler && wrangler login && wrangler deploy relay-worker.js`.
+
+Then in the app set **Proxy URL template** to
+`https://<your-worker>.workers.dev/?url={url}&{headers}`.
+
+This is the cheapest portable test of whether a non-OpenSSL TLS stack passes TrueCaller's WAF.
+Not yet verified — no Cloudflare account/CLI was available in this session.
+
+Also confirmed: **NumVerify does not need a proxy** — `OPTIONS https://apilayer.net/api/validate`
+returns `access-control-allow-origin: *` with allowed methods, so a direct browser `fetch()` works.
+Its access key is a query param (user pastes their own; stored in localStorage). This makes
+NumVerify the easy third provider whenever it is added.

@@ -124,6 +124,9 @@ https://your-proxy.example.com/?{rawUrl}
 ```
 
 Public free proxies tested in Nov 2026 were dead/paywalled (corsproxy.io now requires an API key).
+`relay-worker.js` is a ready-to-deploy **free Cloudflare Worker** relay for TrueCaller if the
+built-in rewrite fails on your host. Deploy it, then set the template to
+`https://<your-worker>.workers.dev/?url={url}&{headers}`.
 With no token the encoded URL is appended. With `{headers}`, the browser sends no custom headers
 and the proxy sets them upstream, avoiding a preflight. A proxy that strips custom headers gets a
 401 from the provider.
