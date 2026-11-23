@@ -48,6 +48,9 @@
 *.db-wal
 *.sqlite
 *.sqlite3
+*.ab
+/tc_*.html
+/tc_*.js
 
 # --- Node / frontend build artifacts (Vite, Next.js, Vercel) ---
 node_modules/
