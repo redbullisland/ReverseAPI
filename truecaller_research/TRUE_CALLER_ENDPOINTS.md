@@ -17,8 +17,12 @@ All source paths below are relative to `D:\ReverseAPI\`.
   (`truecaller_research/jadx_decompile.log:3-4`). The normal JADX tree contains 76,914
   Java files; it is usable for readability, but **apktool smali is ground truth** wherever
   JADX restructures or fails a method.
-- **Nothing in this document has been live-verified.** It is a static map from the
-  decompiled APK. Dynamic confirmation is tracked in `truecaller_research/DYNAMIC_PLAN.md`.
+- **LIVE-VERIFIED on 2026-11-23.** The debuggable rebuild was installed on the Xiaomi device,
+  signed in, and a real search for `+8801632027018` returned HTTP 200 with `"name":"Tasif"`
+  from both `search5` and `search5-noneu` for `type=2` and `type=4`. See
+  `truecaller_research/AUTH_AND_TESTING_FINDINGS.md` §7 for the confirmed request/response.
+  The static map below was correct; only the auth value (`installationId`) had to come from
+  the device. The original dynamic plan is retained in `truecaller_research/DYNAMIC_PLAN.md`.
 
 ---
 

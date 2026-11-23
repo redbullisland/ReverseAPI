@@ -51,6 +51,8 @@
 *.ab
 /tc_*.html
 /tc_*.js
+/tc_signin_logcat.txt
+/tc_live_response.txt
 
 # --- Node / frontend build artifacts (Vite, Next.js, Vercel) ---
 node_modules/

@@ -117,7 +117,76 @@ Hoping for a no-secret route, the public website was checked:
 The Astro JS bundles (`SearchBar.DA6Vlleu.js`, `BaseLayout...js`) contain no directly
 callable public API. **The web path needs its own OTP login token too** — no shortcut.
 
-## 6. What the Next.js app needs
+## 6. LIVE VERIFICATION — SUCCESS (2026-11-23)
+
+The debuggable APK was installed via `MSYS_NO_PATHCONV=1 adb push ... /data/local/tmp/tc.apk`
+followed by `adb shell pm install -r /data/local/tmp/tc.apk` (a direct `adb install` was
+blocked by MIUI with `INSTALL_FAILED_USER_RESTRICTED`). The user signed in with OTP and
+searched `01632-027018`.
+
+`run-as com.truecaller cat shared_prefs/account.xml` yielded:
+
+```xml
+<string name="installationId"><value></string>
+<string name="profileCountryIso">BD</string>
+<string name="profileNumber">+880<redacted></string>
+<string name="networkDomain">noneu</string>
+<long name="installationIdTtl" value="259200000" />   <!-- 72 hours -->
+```
+
+**Never commit the real installationId.** It is a credential tied to the user's account and
+expires after 72 hours (TTL above). Users must paste their own into the app.
+
+### Confirmed request (HTTP 200)
+
+```http
+GET https://search5.truecaller.com/v2/search
+    ?q=%2B8801632027018&countryCode=BD&type=2&encoding=json
+Authorization: Bearer <installationId>
+Accept: application/json
+```
+
+Tested matrix — all returned HTTP 200 with identical `"name":"Tasif"`:
+
+| Host | type | Result |
+|---|---|---|
+| `search5-noneu.truecaller.com` | 2 | 200, `Tasif` |
+| `search5-noneu.truecaller.com` | 4 | 200, `Tasif` |
+| `search5.truecaller.com` | 2 | 200, `Tasif` |
+| `search5.truecaller.com` | 4 | 200, `Tasif` |
+
+So the static-derived request shape is **correct**. `search5` and `search5-noneu` both work;
+the app's own `networkDomain=noneu` is not required for this number. `Accept: application/json`
+works — no protobuf decoder needed.
+
+### Confirmed response shape (actual JSON keys)
+
+```json
+{
+  "data": [{
+    "id": "...", "name": "Tasif", "score": 0.306,
+    "access": "PUBLIC", "enhanced": true,
+    "phones": [{ "e164Format": "+8801632027018", "nationalFormat": "01632-027018",
+                 "dialingCode": 880, "countryCode": "BD",
+                 "carrier": "Robi Axiata Limited", "numberType": "MOBILE", "type": "openPhone" }],
+    "addresses": [{ "countryCode": "BD", "timeZone": "+06:00", "type": "address" }],
+    "feedback": { "commentCount": 0, "feedbackType": "None" },
+    "commentsStats": { "showComments": false },
+    "isFraud": false,
+    "electedTags": [], "badges": [], "tags": [], "sources": [], "searchWarnings": [],
+    "manualCallerIdPrompt": false, "ns": 7
+  }],
+  "provider": "ss-nu",
+  "stats": { "sourceStats": [] }
+}
+```
+
+Important correction to the static doc: the live response uses **`isFraud`** and
+**`feedback.feedbackType`** (e.g. `"Spam"`, `"Fraud"`, `"None"`) for spam/fraud — there is no
+`spamInfo` object in this response. `app/src/lib/providers/truecaller.js` was updated to parse
+these real fields (while still tolerating the older `spamInfo` / `isSuspectedFraud` variants).
+
+## 7. What the Next.js app needs
 
 Only one value: the installationId, pasted into the **Bearer token** field in
 `app/src/lib/providers/truecaller.js`. Everything else is already known:

@@ -25,10 +25,8 @@ a developer tool. Think: clean, calm, confident, privacy-conscious.
 - Browser `fetch` to the provider is normally blocked by CORS, so the UI has an
   **optional "CORS proxy" advanced field**. This must be discoverable but not scary —
   most users will need it, and it has privacy implications.
-- Provider switcher: **Eyecon** (live-verified) and **TrueCaller** (implemented from static
-  analysis, request shape not yet live-verified). Both are selectable and both need the
-  user's own token. For TrueCaller the UI should subtly flag that the API shape is
-  "experimental / unverified" rather than disabling it.
+- Provider switcher: **Eyecon** and **TrueCaller** — both live-verified end-to-end.
+  Both are selectable and both need the user's own credential pasted in the UI.
 
 ## 2. Users & jobs to be done
 
@@ -52,8 +50,8 @@ Design **one main screen** plus all of its states:
    own signed-in Eyecon app"), not a raw stack trace.
 7. **Error — CORS blocked / network failed** — guides the user to the Advanced proxy field.
 8. **Advanced proxy panel expanded** — including the privacy warning.
-9. **TrueCaller selected** — token field plus host / search-type / Accept fields; a small
-   "unverified API shape" note; submit enabled once a token is pasted.
+9. **TrueCaller selected** — installationId field plus host / search-type / Accept fields;
+   submit enabled once a value is pasted.
 10. **Mobile layout (~375px)** — all of the above stacked, no horizontal scroll.
 
 ## 4. Current information architecture (redesign this)
@@ -63,7 +61,7 @@ Header: "Caller ID lookup" + short explainer
 
 Card 1 — "1. Provider"
   Provider select: [Eyecon ▾] / [TrueCaller]
-  Small "experimental / unverified" note when TrueCaller is selected
+  No special note needed — both providers are verified
 
 Card 2 — "2. Number"
   Country code select (Bangladesh +880 default, ~10 countries + "Custom / full number")

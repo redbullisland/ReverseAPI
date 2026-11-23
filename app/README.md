@@ -23,7 +23,7 @@ Open http://localhost:3000. Verify a production build with `npm run build`.
 
 ## UI walkthrough
 
-1. Pick a provider: **Eyecon** (live-verified) or **TrueCaller** (built from static analysis — request shape is a candidate, not yet live-verified).
+1. Pick a provider: **Eyecon** or **TrueCaller** — both live-verified end-to-end.
 2. Pick a country code (Bangladesh `+880` is the default) and type a number, e.g. `01632-027018`.
    A leading trunk `0` is stripped when the country code is added. You can also choose
    **Custom / full number** and paste `+880...` or `00880...` directly.
@@ -39,7 +39,7 @@ Open http://localhost:3000. Verify a production build with `npm run build`.
 
 All settings and secrets live under the localStorage key `callerid-lookup:settings:v1`.
 
-### TrueCaller request (static-derived)
+### TrueCaller request (live-verified)
 
 ```text
 GET https://search5.truecaller.com/v2/search
@@ -48,10 +48,17 @@ Accept: application/json
 Authorization: Bearer <your token>
 ```
 
-The stock app sends `Accept: application/x-protobuf` and adds `encoding=json` via an auth
-interceptor (`pg4`). No HMAC/signature parameter was found on this path. Response is parsed as
-`{ data: [{ name, altName, spamInfo: { spamScore, spamType }, phones: [...] }] }`. Details and
-open questions: `truecaller_research/TRUE_CALLER_ENDPOINTS.md` and `DYNAMIC_PLAN.md`.
+`Accept: application/json` works; `encoding=json` is added by the app's auth interceptor (`pg4`).
+No HMAC/signature parameter exists on this path. The Bearer value is the account's
+**installationId** (server-issued, 72-hour TTL — paste your own; never commit it). Both
+`search5` and `search5-noneu` hosts work.
+
+Live-verified response shape:
+`{ data: [{ name, phones: [{ e164Format, carrier, ... }], feedback: { feedbackType },
+isFraud, electedTags, ... }], provider, stats }`. Spam/fraud is in `feedback.feedbackType`
+and `isFraud` (older `spamInfo` / `isSuspectedFraud` variants are also parsed).
+
+Details: `truecaller_research/AUTH_AND_TESTING_FINDINGS.md` and `TRUE_CALLER_ENDPOINTS.md`.
 
 ## CORS caveat (important)
 
@@ -92,7 +99,7 @@ control for anything sensitive. Leaving the field blank keeps requests direct (a
 ## Provider architecture
 
 - `src/lib/providers/eyecon.js` — working Eyecon request builder, checksum and response parser.
-- `src/lib/providers/truecaller.js` — static-derived `/v2/search` provider; needs a user-pasted Bearer token.
+- `src/lib/providers/truecaller.js` — live-verified `/v2/search` provider; needs a user-pasted installationId.
 - `src/lib/providers/index.js` — registry and `lookup(providerId, payload)` dispatcher.
 - `src/lib/providers/http.js` — shared fetch/timeout and proxy-URL mapping helpers.
 - `src/lib/settings.js` — country list, defaults and localStorage persistence.
@@ -100,4 +107,4 @@ control for anything sensitive. Leaving the field blank keeps requests direct (a
 
 Both providers expose `SECRET_FIELDS` / `DEFAULT_SECRETS` and a single `lookup()`; the UI,
 persistence and result rendering pick up new fields automatically. Verified request details for
-Eyecon are in `HANDOFF.md`; TrueCaller's static candidate is in `truecaller_research/`.
+both providers are in `truecaller_research/` and `HANDOFF.md`.

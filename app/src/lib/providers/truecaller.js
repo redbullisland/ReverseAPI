@@ -105,21 +105,39 @@ export function parseResponse(raw) {
       contact.name || contact.transliteratedName || contact.altName || '';
     if (name && !names.includes(name)) names.push(name);
 
+    // Live response (v26.43.5, 2026-11-23) uses `isFraud` + `feedback.feedbackType`.
+    // `spamInfo` / `isSuspectedFraud` are kept for older/other response variants.
     const spamInfo = contact.spamInfo ?? {};
+    const feedback = contact.feedback ?? {};
     const phone = Array.isArray(contact.phones) ? contact.phones[0] ?? {} : {};
     const spamScore = Number(spamInfo.spamScore ?? phone.spamScore ?? 0) || 0;
-    const spamType = spamInfo.spamType ?? phone.spamType ?? '';
-    const fraud = contact.isSuspectedFraud === true;
+    const spamType =
+      spamInfo.spamType ??
+      phone.spamType ??
+      feedback.feedbackType ??
+      contact.category ??
+      '';
+    const cleanType = /^none$/i.test(String(spamType)) ? '' : String(spamType);
+    const fraud =
+      contact.isFraud === true ||
+      contact.isSuspectedFraud === true ||
+      /fraud/i.test(cleanType);
 
-    if (spamScore > 0 || spamType) spamLevel = Math.max(spamLevel, 1);
+    if (spamScore > 0 || cleanType) {
+      spamLevel = Math.max(spamLevel, 1);
+    }
     if (fraud) spamLevel = Math.max(spamLevel, 2);
 
     result.entries.push({
       name,
-      type: String(spamType || contact.category || ''),
+      type: cleanType,
       suspicious_spam: fraud,
       spam_score: spamScore,
       e164: phone.e164Format ?? '',
+      carrier: phone.carrier ?? '',
+      tags: Array.isArray(contact.electedTags)
+        ? contact.electedTags.map((tag) => tag.name ?? tag).filter(Boolean)
+        : [],
     });
   }
 
