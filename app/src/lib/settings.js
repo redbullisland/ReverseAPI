@@ -3,17 +3,17 @@ import { DEFAULT_PROVIDER, PROVIDERS } from './providers';
 export const STORAGE_KEY = 'callerid-lookup:settings:v1';
 
 export const COUNTRIES = [
-  { code: '+880', label: 'Bangladesh (+880)', placeholder: '017XX XXX XXX' },
-  { code: '+91', label: 'India (+91)', placeholder: 'XXXXXXXXXX' },
-  { code: '+92', label: 'Pakistan (+92)', placeholder: '3XXXXXXXXX' },
-  { code: '+977', label: 'Nepal (+977)', placeholder: '9XXXXXXXXX' },
-  { code: '+94', label: 'Sri Lanka (+94)', placeholder: '7XXXXXXXX' },
-  { code: '+1', label: 'USA / Canada (+1)', placeholder: 'XXXXXXXXXX' },
-  { code: '+44', label: 'UK (+44)', placeholder: '7XXXXXXXXX' },
-  { code: '+61', label: 'Australia (+61)', placeholder: '4XXXXXXXXX' },
-  { code: '+971', label: 'UAE (+971)', placeholder: '5XXXXXXXXX' },
-  { code: '+966', label: 'Saudi Arabia (+966)', placeholder: '5XXXXXXXXX' },
-  { code: '', label: 'Custom / full number', placeholder: '+880 17XX XXX XXX' },
+  { code: '+880', label: 'Bangladesh (+880)', placeholder: '017XX XXX XXX', iso: 'BD' },
+  { code: '+91', label: 'India (+91)', placeholder: 'XXXXXXXXXX', iso: 'IN' },
+  { code: '+92', label: 'Pakistan (+92)', placeholder: '3XXXXXXXXX', iso: 'PK' },
+  { code: '+977', label: 'Nepal (+977)', placeholder: '9XXXXXXXXX', iso: 'NP' },
+  { code: '+94', label: 'Sri Lanka (+94)', placeholder: '7XXXXXXXX', iso: 'LK' },
+  { code: '+1', label: 'USA / Canada (+1)', placeholder: 'XXXXXXXXXX', iso: 'US' },
+  { code: '+44', label: 'UK (+44)', placeholder: '7XXXXXXXXX', iso: 'GB' },
+  { code: '+61', label: 'Australia (+61)', placeholder: '4XXXXXXXXX', iso: 'AU' },
+  { code: '+971', label: 'UAE (+971)', placeholder: '5XXXXXXXXX', iso: 'AE' },
+  { code: '+966', label: 'Saudi Arabia (+966)', placeholder: '5XXXXXXXXX', iso: 'SA' },
+  { code: '', label: 'Custom / full number', placeholder: '+880 17XX XXX XXX', iso: '' },
 ];
 
 const DEFAULT_SECRETS = Object.fromEntries(

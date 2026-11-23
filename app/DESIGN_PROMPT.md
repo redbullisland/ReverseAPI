@@ -25,8 +25,10 @@ a developer tool. Think: clean, calm, confident, privacy-conscious.
 - Browser `fetch` to the provider is normally blocked by CORS, so the UI has an
   **optional "CORS proxy" advanced field**. This must be discoverable but not scary —
   most users will need it, and it has privacy implications.
-- Provider switcher: **Eyecon** works today; **TrueCaller** is a clearly-labelled
-  "coming soon / not configured yet" placeholder (button disabled).
+- Provider switcher: **Eyecon** (live-verified) and **TrueCaller** (implemented from static
+  analysis, request shape not yet live-verified). Both are selectable and both need the
+  user's own token. For TrueCaller the UI should subtly flag that the API shape is
+  "experimental / unverified" rather than disabling it.
 
 ## 2. Users & jobs to be done
 
@@ -42,7 +44,7 @@ a developer tool. Think: clean, calm, confident, privacy-conscious.
 Design **one main screen** plus all of its states:
 
 1. **Empty / default state** — form only, results area shows a friendly empty prompt.
-2. **Filling state** — CID entered, live checksum preview updates.
+2. **Filling state** — CID (or Bearer token) entered; for Eyecon, live checksum preview updates.
 3. **Loading state** — "Looking up…" with a spinner/skeleton in the result area.
 4. **Success — Caller ID mode** — one name, "Not flagged" status.
 5. **Success — Search / name history mode** — multiple names, table of entries.
@@ -50,7 +52,8 @@ Design **one main screen** plus all of its states:
    own signed-in Eyecon app"), not a raw stack trace.
 7. **Error — CORS blocked / network failed** — guides the user to the Advanced proxy field.
 8. **Advanced proxy panel expanded** — including the privacy warning.
-9. **Placeholder provider selected (TrueCaller)** — disabled submit, informative banner.
+9. **TrueCaller selected** — token field plus host / search-type / Accept fields; a small
+   "unverified API shape" note; submit enabled once a token is pasted.
 10. **Mobile layout (~375px)** — all of the above stacked, no horizontal scroll.
 
 ## 4. Current information architecture (redesign this)
@@ -59,18 +62,18 @@ Design **one main screen** plus all of its states:
 Header: "Caller ID lookup" + short explainer
 
 Card 1 — "1. Provider"
-  Provider select: [Eyecon ▾] / [TrueCaller (not configured yet)]
-  Placeholder banner when TrueCaller is selected
+  Provider select: [Eyecon ▾] / [TrueCaller]
+  Small "experimental / unverified" note when TrueCaller is selected
 
 Card 2 — "2. Number"
   Country code select (Bangladesh +880 default, ~10 countries + "Custom / full number")
   Mobile number text input (inputMode=tel)
   Radio: ( ) Caller ID   ( ) Search / name history
 
-Card 3 — "3. Credentials"   (hidden for placeholder providers)
-  "Client ID (e-auth / CID)" text input
-  Helper text: "Paste the clientId from your own signed-in Eyecon app. Stored only in this browser."
-  Live line: "Computed e-auth-c checksum: 38"
+Card 3 — "3. Credentials"   (fields change with the selected provider)
+  Eyecon: "Client ID (e-auth / CID)" input + helper + live "Computed e-auth-c checksum: 38"
+  TrueCaller: "Bearer token" input (required) + "Search host" (search5 / search5-eu /
+    search5-noneu) + "Search type" (2 = caller ID) + "Accept header" (application/json)
 
 <details> "Advanced — CORS proxy"
   Explanation that api.eyecon-app.com sends no CORS headers and the custom e-auth-*

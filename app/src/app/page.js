@@ -65,7 +65,12 @@ export default function Home() {
       const data = await lookup(provider.id, {
         number: settings.number,
         dialCode: settings.dialCode,
+        countryCode: selectedCountry?.iso ?? '',
         cid: settings.secrets.eyecon?.cid,
+        token: settings.secrets.truecaller?.token,
+        host: settings.secrets.truecaller?.host,
+        type: settings.secrets.truecaller?.type,
+        accept: settings.secrets.truecaller?.accept,
         mode: settings.mode,
         lang: settings.lang,
         source: settings.source,

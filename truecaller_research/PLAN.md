@@ -40,8 +40,9 @@ Scope: **name/spam lookup only** (no messaging, no social, no photos).
 - [x] Decide dynamic-analysis route — debuggable rebuild / Frida Gadget, not root or
   frida-server; see `truecaller_research/DYNAMIC_PLAN.md`.
 - [ ] Live verification with real token.
-- [ ] Next.js client-only integration (browser fetches directly; user pastes their own
-      secrets into localStorage; no server API route and no server-held secrets).
+- [x] Next.js client-only integration (browser fetches directly; user pastes their own
+      secrets into localStorage; no server API route and no server-held secrets). Implemented in
+      `app/src/lib/providers/truecaller.js` using the static candidate; still needs live verification.
 
 ## Notes / commands
 

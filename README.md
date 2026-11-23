@@ -4,7 +4,7 @@ Reverse-engineering research for caller-ID / spam-lookup Android apps, and a web
 frontend that reproduces their name + spam lookups.
 
 **Repo root:** `D:\ReverseAPI`
-**Live research target:** Eyecon (complete, working). Next target: TrueCaller.
+**Research status:** Eyecon complete and live-verified. TrueCaller static API map complete; live token verification pending.
 
 ---
 
@@ -105,5 +105,6 @@ Vercel setup: **Root Directory = `app`**. There are **no Next.js API routes**: e
 lookup is a direct `fetch()` from the browser, with an optional user-supplied CORS
 proxy template (Eyecon sends no CORS headers for its custom-header requests).
 Credentials are pasted in the UI and stored in that browser's `localStorage`; no
-secrets live in source or environment variables. TrueCaller is a placeholder
-provider until its auth is researched. See `app/README.md` and `GIT_WORKFLOW.md`.
+secrets live in source or environment variables. Both Eyecon and TrueCaller providers are
+implemented; TrueCaller's request shape is static-derived and still needs live verification.
+See `app/README.md`, `truecaller_research/TRUE_CALLER_ENDPOINTS.md`, and `GIT_WORKFLOW.md`.
