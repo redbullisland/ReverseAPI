@@ -257,6 +257,12 @@ export default function Home() {
 
           <p style={{ ...styles.help, marginTop: '1rem' }}><strong>Request URL:</strong></p>
           <pre style={styles.pre}>{result.url}</pre>
+          {result.targetUrl && result.targetUrl !== result.url && (
+            <>
+              <p style={styles.help}><strong>Upstream URL:</strong></p>
+              <pre style={styles.pre}>{result.targetUrl}</pre>
+            </>
+          )}
           <p style={styles.help}><strong>Raw response:</strong></p>
           <pre style={styles.pre}>{result.raw || '(empty)'}</pre>
         </section>
