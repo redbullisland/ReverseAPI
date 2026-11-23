@@ -1,0 +1,172 @@
+truecaller_jadx/sources/com/truecaller\R.java:1066:        public static final int freshchatCountryCodeDropdownIcon = 0x7f0403c5;
+truecaller_jadx/sources/com/truecaller\R.java:1067:        public static final int freshchatCountryCodeItemCountryCode = 0x7f0403c6;
+truecaller_jadx/sources/com/truecaller\R.java:1148:        public static final int freshchatSelectedCountryCode = 0x7f040418;
+truecaller_jadx/sources/com/truecaller\R.java:1149:        public static final int freshchatSelectedCountryCodeIndicator = 0x7f040419;
+truecaller_jadx/sources/com/truecaller\R.java:3254:        public static final int freshchat_country_code_input_divider = 0x7f0601b6;
+truecaller_jadx/sources/com/truecaller\R.java:3255:        public static final int freshchat_country_code_text_color = 0x7f0601b8;
+truecaller_jadx/sources/com/truecaller\R.java:3265:        public static final int freshchat_highlighted_country_code = 0x7f0601c4;
+truecaller_jadx/sources/com/truecaller\R.java:3318:        public static final int freshchat_selected_country_code = 0x7f0601ff;
+truecaller_jadx/sources/com/truecaller\R.java:3319:        public static final int freshchat_selected_country_code_in_bottomsheet = 0x7f060200;
+truecaller_jadx/sources/com/truecaller\R.java:3320:        public static final int freshchat_selected_country_code_text = 0x7f060201;
+truecaller_jadx/sources/com/truecaller\R.java:7509:        public static final int freshchat_country_code_sheet_icon = 0x7f080495;
+truecaller_jadx/sources/com/truecaller\R.java:11245:        public static final int changeCountryCode = 0x7f0a0459;
+truecaller_jadx/sources/com/truecaller\R.java:11581:        public static final int countryCode = 0x7f0a05a9;
+truecaller_jadx/sources/com/truecaller\R.java:12442:        public static final int freshchat_attach_or_country_code_layout = 0x7f0a0906;
+truecaller_jadx/sources/com/truecaller\R.java:12549:        public static final int freshchat_country_code = 0x7f0a0971;
+truecaller_jadx/sources/com/truecaller\R.java:12550:        public static final int freshchat_country_code_flag = 0x7f0a0972;
+truecaller_jadx/sources/com/truecaller\R.java:12551:        public static final int freshchat_country_code_flag_layout = 0x7f0a0973;
+truecaller_jadx/sources/com/truecaller\R.java:12552:        public static final int freshchat_country_code_item_layout = 0x7f0a0974;
+truecaller_jadx/sources/com/truecaller\R.java:12553:        public static final int freshchat_country_code_scroll_divider = 0x7f0a0975;
+truecaller_jadx/sources/com/truecaller\R.java:12611:        public static final int freshchat_phone_country_code = 0x7f0a09af;
+truecaller_jadx/sources/com/truecaller\R.java:12612:        public static final int freshchat_phone_country_code_layout = 0x7f0a09b0;
+truecaller_jadx/sources/com/truecaller\R.java:12627:        public static final int freshchat_selected_country_code = 0x7f0a09bf;
+truecaller_jadx/sources/com/truecaller\R.java:16735:        public static final int dialog_change_country_code = 0x7f0d024f;
+truecaller_jadx/sources/com/truecaller\R.java:17006:        public static final int freshchat_country_code_item_layout = 0x7f0d0364;
+truecaller_jadx/sources/com/truecaller\R.java:19569:        public static final int BlockAddNumberBlockedCountryCodes = 0x7f14003d;
+truecaller_jadx/sources/com/truecaller\R.java:23809:        public static final int freshchat_country_code_title = 0x7f141166;
+truecaller_jadx/sources/com/truecaller\R.java:23816:        public static final int freshchat_default_country_code = 0x7f14116d;
+truecaller_jadx/sources/com/truecaller\R.java:25204:        public static final int settings_blocking_country_code_type_block_list_title = 0x7f1417d1;
+truecaller_jadx/sources/com/truecaller\R.java:27829:        public static final int Widget_Freshchat_CountryCodeItemCountryCodeText = 0x7f1506b7;
+truecaller_jadx/sources/com/truecaller\R.java:27893:        public static final int Widget_Freshchat_SelectedCountryCode = 0x7f1506ff;
+truecaller_jadx/sources/com/truecaller\account\network\AccountPhoneNumberDto.java:13:    private final String countryCode;
+truecaller_jadx/sources/com/truecaller\account\network\AccountPhoneNumberDto.java:20:        this.countryCode = str;
+truecaller_jadx/sources/com/truecaller\account\network\AccountPhoneNumberDto.java:25:    public final String getCountryCode() {
+truecaller_jadx/sources/com/truecaller\account\network\AccountPhoneNumberDto.java:26:        return this.countryCode;
+truecaller_jadx/sources/com/truecaller\account\network\AddSecondaryNumberRequestDto.java:14:    private final String countryCode;
+truecaller_jadx/sources/com/truecaller\account\network\AddSecondaryNumberRequestDto.java:27:        this.countryCode = str2;
+truecaller_jadx/sources/com/truecaller\account\network\AddSecondaryNumberRequestDto.java:33:    public final String getCountryCode() {
+truecaller_jadx/sources/com/truecaller\account\network\AddSecondaryNumberRequestDto.java:34:        return this.countryCode;
+truecaller_jadx/sources/com/truecaller\account\network\VerificationPhoneNumber.java:13:    private final String countryCode;
+truecaller_jadx/sources/com/truecaller\account\network\VerificationPhoneNumber.java:20:        this.countryCode = str;
+truecaller_jadx/sources/com/truecaller\account\network\VerificationPhoneNumber.java:25:    public final String getCountryCode() {
+truecaller_jadx/sources/com/truecaller\account\network\VerificationPhoneNumber.java:26:        return this.countryCode;
+truecaller_jadx/sources/com/truecaller\account\network\VerifyTokenRequestDto.java:15:    private final String countryCode;
+truecaller_jadx/sources/com/truecaller\account\network\VerifyTokenRequestDto.java:43:        this.countryCode = str3;
+truecaller_jadx/sources/com/truecaller\account\network\VerifyTokenRequestDto.java:51:    public final String getCountryCode() {
+truecaller_jadx/sources/com/truecaller\account\network\VerifyTokenRequestDto.java:52:        return this.countryCode;
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\CreateInstallationModel.java:15:    @aw20("countryCodeName")
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\CreateInstallationModel.java:16:    public final String countryCodeName;
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\CreateInstallationModel.java:51:        this.countryCodeName = str2;
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:17:    public static final String COUNTRY_CODE = "TRUEPROFILE_COUNTRY_CODE";
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:56:    public String countryCode;
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:127:        this.countryCode = bundle.getString(COUNTRY_CODE);
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:163:        this.countryCode = parcel.readString();
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:202:        bundle.putString(COUNTRY_CODE, this.countryCode);
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:231:        parcel.writeString(this.countryCode);
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\VerifyInstallationModel.java:9:    @aw20("countryCodeName")
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\VerifyInstallationModel.java:10:    private final String mCountryCodeName;
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\VerifyInstallationModel.java:24:        this.mCountryCodeName = str3;
+truecaller_jadx/sources/com/truecaller\api\services\callerid\p107v1\model\Phone$ValueCase.java:6:    NONNORMALIZEDPHONE(2),
+truecaller_jadx/sources/com/truecaller\api\services\callerid\p107v1\model\Phone$ValueCase.java:25:        return NONNORMALIZEDPHONE;
+truecaller_jadx/sources/com/truecaller\bizmon\businessWidgetView\BizMultiViewConfig.java:31:    private final String normalizedNumber;
+truecaller_jadx/sources/com/truecaller\bizmon\businessWidgetView\BizMultiViewConfig.java:105:        public final String getNormalizedNumber() {
+truecaller_jadx/sources/com/truecaller\bizmon\businessWidgetView\BizMultiViewConfig.java:139:            sb.append(", normalizedNumber=");
+truecaller_jadx/sources/com/truecaller\bizmon\businessWidgetView\BizMultiViewConfig.java:208:        public final String getNormalizedNumber() {
+truecaller_jadx/sources/com/truecaller\bizmon\businessWidgetView\BizMultiViewConfig.java:217:            return "BizViewDetailsNotificationViewConfig(contact=" + this.f79979b + ", normalizedNumber=" + this.f79980c + ")";
+truecaller_jadx/sources/com/truecaller\bizmon\businessWidgetView\BizMultiViewConfig.java:271:        public final String getNormalizedNumber() {
+truecaller_jadx/sources/com/truecaller\bizmon\businessWidgetView\BizMultiViewConfig.java:280:            return "BizViewDetailsViewBottomSheetConfig(contact=" + this.f79981b + ", normalizedNumber=" + this.f79982c + ")";
+truecaller_jadx/sources/com/truecaller\bizmon\businessWidgetView\BizMultiViewConfig.java:334:        public final String getNormalizedNumber() {
+truecaller_jadx/sources/com/truecaller\bizmon\businessWidgetView\BizMultiViewConfig.java:343:            return "BizViewDetailsViewConfig(contact=" + this.f79983b + ", normalizedNumber=" + this.f79984c + ")";
+truecaller_jadx/sources/com/truecaller\bizmon\businessWidgetView\BizMultiViewConfig.java:356:        this.normalizedNumber = str;
+truecaller_jadx/sources/com/truecaller\bizmon\businessWidgetView\BizMultiViewConfig.java:377:    public String getNormalizedNumber() {
+truecaller_jadx/sources/com/truecaller\bizmon\businessWidgetView\BizMultiViewConfig.java:378:        return this.normalizedNumber;
+truecaller_jadx/sources/com/truecaller\blocking\api\model\TrackingType.java:16:    COUNTRY("COUNTRY_CODE"),
+truecaller_jadx/sources/com/truecaller\calling\missedcallreminder\MissedCallReminder.java:23:    @aw20(alternate = {DownloadCommon.DOWNLOAD_REPORT_FIND_FILE_RESULT_VALUE_B}, value = "normalizedNumber")
+truecaller_jadx/sources/com/truecaller\calling\util\roaming\CallCountrySelectionManager$Action$BottomSheet.java:90:        pya0.m79287z(sbM79278q, this.f80801f, ", homeCountryCode=", this.f80802g, ", roamingCountryCode=");
+truecaller_jadx/sources/com/truecaller\call_assistant\api\hint\AssistantHintCallType.java:14:    UNKNOWN(GrsBaseInfo.CountryCodeSource.UNKNOWN);
+truecaller_jadx/sources/com/truecaller\common\p142ui\avatar\AvatarXConfig.java:238:        sb.append(", normalizedAddress=");
+truecaller_jadx/sources/com/truecaller\data\entity\HistoryEvent.java:19:    public static volatile PhoneNumberUtil f81517F;
+truecaller_jadx/sources/com/truecaller\data\entity\HistoryEvent.java:94:    public PhoneNumberUtil.PhoneNumberType f81542t;
+truecaller_jadx/sources/com/truecaller\data\entity\HistoryEvent.java:221:        PhoneNumberUtil.PhoneNumberType phoneNumberType = this.f81542t;
+truecaller_jadx/sources/com/truecaller\data\entity\HistoryEvent.java:244:        sb.append(", normalizedNumber=");
+truecaller_jadx/sources/com/truecaller\data\entity\HistoryEvent.java:246:        new StringBuilder("<non-null normalized number>, rawNumber=").append(this.f81528f);
+truecaller_jadx/sources/com/truecaller\data\entity\HistoryEvent.java:296:        PhoneNumberUtil.PhoneNumberType phoneNumberType = this.f81542t;
+truecaller_jadx/sources/com/truecaller\data\entity\messaging\Participant.java:244:                AssertionUtil.reportThrowableButNeverCrash(new IllegalArgumentException("Normalized number cannot be null"));
+truecaller_jadx/sources/com/truecaller\data\entity\messaging\Participant.java:361:        String strM90678n = vew.m90678n(vewVar, str, PhoneNumberUtil.PhoneNumberFormat.E164, null, str2, 2);
+truecaller_jadx/sources/com/truecaller\esim\external\GetProductCatalogRequest$FilterCase.java:5:    COUNTRY_CODE(1),
+truecaller_jadx/sources/com/truecaller\esim\external\GetProductCatalogRequest$FilterCase.java:20:            return COUNTRY_CODE;
+truecaller_jadx/sources/com/truecaller\familyprotect\api\protectionconfig\model\FamilyBlockPatternType.java:17:    COUNTRY_CODE(3),
+truecaller_jadx/sources/com/truecaller\name_quality_feedback\internal\upload\NameQualityFeedbackDto.java:27:    private final String normalizedPhoneNumber;
+truecaller_jadx/sources/com/truecaller\name_quality_feedback\internal\upload\NameQualityFeedbackDto.java:34:        this.normalizedPhoneNumber = str;
+truecaller_jadx/sources/com/truecaller\name_quality_feedback\internal\upload\NameQualityFeedbackDto.java:58:            str = nameQualityFeedbackDto.normalizedPhoneNumber;
+truecaller_jadx/sources/com/truecaller\name_quality_feedback\internal\upload\NameQualityFeedbackDto.java:71:    public final String getNormalizedPhoneNumber() {
+truecaller_jadx/sources/com/truecaller\name_quality_feedback\internal\upload\NameQualityFeedbackDto.java:72:        return this.normalizedPhoneNumber;
+truecaller_jadx/sources/com/truecaller\name_quality_feedback\internal\upload\NameQualityFeedbackDto.java:87:    public final NameQualityFeedbackDto copy(@NotNull String normalizedPhoneNumber, @NotNull String shownName, int feedbackType) {
+truecaller_jadx/sources/com/truecaller\name_quality_feedback\internal\upload\NameQualityFeedbackDto.java:88:        normalizedPhoneNumber.getClass();
+truecaller_jadx/sources/com/truecaller\name_quality_feedback\internal\upload\NameQualityFeedbackDto.java:90:        return new NameQualityFeedbackDto(normalizedPhoneNumber, shownName, feedbackType);
+truecaller_jadx/sources/com/truecaller\name_quality_feedback\internal\upload\NameQualityFeedbackDto.java:101:        return Intrinsics.m67018c(this.normalizedPhoneNumber, nameQualityFeedbackDto.normalizedPhoneNumber) && Intrinsics.m67018c(this.shownName, nameQualityFeedbackDto.shownName) && this.feedbackType == nameQualityFeedbackDto.feedbackType;
+truecaller_jadx/sources/com/truecaller\name_quality_feedback\internal\upload\NameQualityFeedbackDto.java:109:    public final String getNormalizedPhoneNumber() {
+truecaller_jadx/sources/com/truecaller\name_quality_feedback\internal\upload\NameQualityFeedbackDto.java:110:        return this.normalizedPhoneNumber;
+truecaller_jadx/sources/com/truecaller\name_quality_feedback\internal\upload\NameQualityFeedbackDto.java:119:        return lc90.m68428h(this.normalizedPhoneNumber.hashCode() * 31, 31, this.shownName) + this.feedbackType;
+truecaller_jadx/sources/com/truecaller\name_quality_feedback\internal\upload\NameQualityFeedbackDto.java:124:        return z6b0.m97824f(this.feedbackType, ")", pya0.m79278q("NameQualityFeedbackDto(normalizedPhoneNumber=", this.normalizedPhoneNumber, ", shownName=", this.shownName, ", feedbackType="));
+truecaller_jadx/sources/com/truecaller\premium\data\InsuranceState.java:19:    UNKNOWN(GrsBaseInfo.CountryCodeSource.UNKNOWN);
+truecaller_jadx/sources/com/truecaller\premium\insurance\data\InsurancePartner.java:16:    UNKNOWN(GrsBaseInfo.CountryCodeSource.UNKNOWN);
+truecaller_jadx/sources/com/truecaller\referrals\api\ReferralManager$ReferralLaunchContext.java:13:    UNKNOWN('-', GrsBaseInfo.CountryCodeSource.UNKNOWN),
+truecaller_jadx/sources/com/truecaller\referral_name_suggestion\api\analytics\ReferralAnalyticsContext.java:12:    UNKNOWN(GrsBaseInfo.CountryCodeSource.UNKNOWN),
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:181:            @aw20("countryCode")
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:183:            private final String countryCode;
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:215:                this.countryCode = str6;
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:238:                    str6 = address.countryCode;
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:290:            public final String getCountryCode() {
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:291:                return this.countryCode;
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:313:            public final Address copy(@Nullable String type, @Nullable String street, @Nullable String zipCode, @Nullable String city, @Nullable String area, @Nullable String countryCode, @Nullable String timeZone, @Nullable Number latitude, @Nullable Number longitude) {
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:314:                return new Address(type, street, zipCode, city, area, countryCode, timeZone, latitude, longitude);
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:325:                return Intrinsics.m67018c(this.type, address.type) && Intrinsics.m67018c(this.street, address.street) && Intrinsics.m67018c(this.zipCode, address.zipCode) && Intrinsics.m67018c(this.city, address.city) && Intrinsics.m67018c(this.area, address.area) && Intrinsics.m67018c(this.countryCode, address.countryCode) && Intrinsics.m67018c(this.timeZone, address.timeZone) && Intrinsics.m67018c(this.latitude, address.latitude) && Intrinsics.m67018c(this.longitude, address.longitude);
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:339:            public final String getCountryCode() {
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:340:                return this.countryCode;
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:374:                return ((((((((((((((((this.type == null ? 0 : this.type.hashCode()) * 31) + (this.street == null ? 0 : this.street.hashCode())) * 31) + (this.zipCode == null ? 0 : this.zipCode.hashCode())) * 31) + (this.city == null ? 0 : this.city.hashCode())) * 31) + (this.area == null ? 0 : this.area.hashCode())) * 31) + (this.countryCode == null ? 0 : this.countryCode.hashCode())) * 31) + (this.timeZone == null ? 0 : this.timeZone.hashCode())) * 31) + (this.latitude == null ? 0 : this.latitude.hashCode())) * 31) + (this.longitude != null ? this.longitude.hashCode() : 0);
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:384:                String str6 = this.countryCode;
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:390:                pya0.m79287z(sbM79278q, str5, ", countryCode=", str6, ", timeZone=");
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:1680:            @aw20("countryCode")
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:1682:            private final String countryCode;
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:1726:                this.countryCode = str6;
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:1751:                    str6 = phoneNumber.countryCode;
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:1823:            public final String getCountryCode() {
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:1824:                return this.countryCode;
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:1846:            public final PhoneNumber copy(@Nullable String id, @Nullable String type, @Nullable String e164Format, @Nullable String nationalFormat, @Nullable String dialingCode, @Nullable String countryCode, @Nullable String numberType, @Nullable String carrier, @Nullable String telType, @Nullable String spamScore, @Nullable String spamType) {
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:1847:                return new PhoneNumber(id, type, e164Format, nationalFormat, dialingCode, countryCode, numberType, carrier, telType, spamScore, spamType);
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:1858:                return Intrinsics.m67018c(this.id, phoneNumber.id) && Intrinsics.m67018c(this.type, phoneNumber.type) && Intrinsics.m67018c(this.e164Format, phoneNumber.e164Format) && Intrinsics.m67018c(this.nationalFormat, phoneNumber.nationalFormat) && Intrinsics.m67018c(this.dialingCode, phoneNumber.dialingCode) && Intrinsics.m67018c(this.countryCode, phoneNumber.countryCode) && Intrinsics.m67018c(this.numberType, phoneNumber.numberType) && Intrinsics.m67018c(this.carrier, phoneNumber.carrier) && Intrinsics.m67018c(this.telType, phoneNumber.telType) && Intrinsics.m67018c(this.spamScore, phoneNumber.spamScore) && Intrinsics.m67018c(this.spamType, phoneNumber.spamType);
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:1867:            public final String getCountryCode() {
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:1868:                return this.countryCode;
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:1917:                return ((((((((((((((((((((this.id == null ? 0 : this.id.hashCode()) * 31) + (this.type == null ? 0 : this.type.hashCode())) * 31) + (this.e164Format == null ? 0 : this.e164Format.hashCode())) * 31) + (this.nationalFormat == null ? 0 : this.nationalFormat.hashCode())) * 31) + (this.dialingCode == null ? 0 : this.dialingCode.hashCode())) * 31) + (this.countryCode == null ? 0 : this.countryCode.hashCode())) * 31) + (this.numberType == null ? 0 : this.numberType.hashCode())) * 31) + (this.carrier == null ? 0 : this.carrier.hashCode())) * 31) + (this.telType == null ? 0 : this.telType.hashCode())) * 31) + (this.spamScore == null ? 0 : this.spamScore.hashCode())) * 31) + (this.spamType != null ? this.spamType.hashCode() : 0);
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:1927:                String str6 = this.countryCode;
+truecaller_jadx/sources/com/truecaller\search\ContactDto.java:1935:                pya0.m79287z(sbM79278q, str5, ", countryCode=", str6, ", numberType=");
+truecaller_jadx/sources/com/truecaller\search\qux.java:42:    public static final Set f84895d = Collections.unmodifiableSet(EnumSet.of(PhoneNumberUtil.MatchType.SHORT_NSN_MATCH, PhoneNumberUtil.MatchType.NSN_MATCH, PhoneNumberUtil.MatchType.EXACT_MATCH));
+truecaller_jadx/sources/com/truecaller\search\qux.java:45:    public final PhoneNumberUtil f84896a;
+truecaller_jadx/sources/com/truecaller\search\qux.java:53:    public qux(PhoneNumberUtil phoneNumberUtil, ra20 ra20Var, Gson gson) {
+truecaller_jadx/sources/com/truecaller\search\qux.java:54:        this.f84896a = phoneNumberUtil;
+truecaller_jadx/sources/com/truecaller\search\qux.java:106:                m48744g(contentValues3, "data7", phoneNumber.getCountryCode());
+truecaller_jadx/sources/com/truecaller\search\qux.java:124:                    m48744g(contentValues2, "data4", address.getCountryCode());
+truecaller_jadx/sources/com/truecaller\settings\api\SettingsLaunchConfig.java:68:        this((i & 1) != 0 ? GrsBaseInfo.CountryCodeSource.UNKNOWN : str, (i & 2) != 0 ? null : str2, (i & 4) != 0 ? "n/a" : str3, (i & 8) != 0 ? true : z, (i & 16) != 0 ? false : z2, (i & 32) != 0 ? false : z3);
+truecaller_jadx/sources/com/truecaller\settings\impl\p209ui\block\BlockSettings$ManualBlock$CountryCode.java:11:public final class BlockSettings$ManualBlock$CountryCode implements BlockSettings {
+truecaller_jadx/sources/com/truecaller\settings\impl\p209ui\block\BlockSettings$ManualBlock$CountryCode.java:14:    public static final BlockSettings$ManualBlock$CountryCode f85076b = new BlockSettings$ManualBlock$CountryCode();
+truecaller_jadx/sources/com/truecaller\settings\impl\p209ui\block\BlockSettings$ManualBlock$CountryCode.java:17:    public static final Parcelable.Creator<BlockSettings$ManualBlock$CountryCode> CREATOR = new ql5((byte) 23);
+truecaller_jadx/sources/com/truecaller\swish\model\SwishNumber.java:56:        return pya0.m79275n(pya0.m79278q("SwishNumber(normalizedNumber=", this.f85693b, ", displayNumber=", this.f85694c, ", displayType="), this.f85695d, ")");
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:42:        private final String normalizedNumber;
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:61:            this.normalizedNumber = str;
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:78:                str = businessVideo.normalizedNumber;
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:110:        public final String getNormalizedNumber() {
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:111:            return this.normalizedNumber;
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:145:        public final BusinessVideo copy(@NotNull Contact contact, @Nullable String normalizedNumber, @NotNull BusinessVideoType type, @Nullable String url, @Nullable String identifier, @NotNull String source, @Nullable Integer simSlotIndex) {
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:149:            return new BusinessVideo(contact, normalizedNumber, type, url, identifier, source, simSlotIndex);
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:165:            return Intrinsics.m67018c(this.contact, businessVideo.contact) && Intrinsics.m67018c(this.normalizedNumber, businessVideo.normalizedNumber) && this.type == businessVideo.type && Intrinsics.m67018c(this.url, businessVideo.url) && Intrinsics.m67018c(this.identifier, businessVideo.identifier) && Intrinsics.m67018c(this.source, businessVideo.source) && Intrinsics.m67018c(this.simSlotIndex, businessVideo.simSlotIndex);
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:179:        public final String getNormalizedNumber() {
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:180:            return this.normalizedNumber;
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:205:            String str = this.normalizedNumber;
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:218:            String str = this.normalizedNumber;
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:226:            sb.append(", normalizedNumber=");
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:241:            dest.writeString(this.normalizedNumber);
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:289:        private final String normalizedNumber;
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:302:            this.normalizedNumber = str;
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:318:                str = businessVideoWithUrl.normalizedNumber;
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:350:        public final String getNormalizedNumber() {
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:351:            return this.normalizedNumber;
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:397:        public final BusinessVideoWithUrl copy(@Nullable String normalizedNumber, @NotNull BusinessVideoType type, @Nullable String url, @Nullable String identifier, @Nullable String businessVideoId, @Nullable ContactType contactType, @Nullable String source, @Nullable Long contactId) {
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:399:            return new BusinessVideoWithUrl(normalizedNumber, type, url, identifier, businessVideoId, contactType, source, contactId);
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:415:            return Intrinsics.m67018c(this.normalizedNumber, businessVideoWithUrl.normalizedNumber) && this.type == businessVideoWithUrl.type && Intrinsics.m67018c(this.url, businessVideoWithUrl.url) && Intrinsics.m67018c(this.identifier, businessVideoWithUrl.identifier) && Intrinsics.m67018c(this.businessVideoId, businessVideoWithUrl.businessVideoId) && this.contactType == businessVideoWithUrl.contactType && Intrinsics.m67018c(this.source, businessVideoWithUrl.source) && Intrinsics.m67018c(this.contactId, businessVideoWithUrl.contactId);
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:439:        public final String getNormalizedNumber() {
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:440:            return this.normalizedNumber;
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:459:            String str = this.normalizedNumber;
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:477:            String str = this.normalizedNumber;
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:485:            StringBuilder sb = new StringBuilder("BusinessVideoWithUrl(normalizedNumber=");
+truecaller_jadx/sources/com/truecaller\videocallerid\p224ui\fullscreenpopupvideo\VideoExpansionType.java:505:            dest.writeString(this.normalizedNumber);

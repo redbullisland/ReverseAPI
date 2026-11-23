@@ -1,0 +1,168 @@
+truecaller_jadx/sources/com/truecaller\R.java:2354:        public static final int tcx_messageIncomingTimestamp = 0x7f04096f;
+truecaller_jadx/sources/com/truecaller\R.java:2364:        public static final int tcx_messageOutgoingImTimestamp = 0x7f040979;
+truecaller_jadx/sources/com/truecaller\R.java:2372:        public static final int tcx_messageOutgoingSmsTimestamp = 0x7f040981;
+truecaller_jadx/sources/com/truecaller\R.java:2376:        public static final int tcx_messageScheduledTimestamp = 0x7f040985;
+truecaller_jadx/sources/com/truecaller\R.java:2648:        public static final int theme_textColorTimestamp = 0x7f040aad;
+truecaller_jadx/sources/com/truecaller\R.java:4595:        public static final int tcx_message_incomingTimestamp_dark = 0x7f06091a;
+truecaller_jadx/sources/com/truecaller\R.java:4596:        public static final int tcx_message_incomingTimestamp_light = 0x7f06091b;
+truecaller_jadx/sources/com/truecaller\R.java:4611:        public static final int tcx_message_outgoingImTimestamp_dark = 0x7f06092a;
+truecaller_jadx/sources/com/truecaller\R.java:4612:        public static final int tcx_message_outgoingImTimestamp_light = 0x7f06092b;
+truecaller_jadx/sources/com/truecaller\R.java:4627:        public static final int tcx_message_outgoingSmsTimestamp_dark = 0x7f06093a;
+truecaller_jadx/sources/com/truecaller\R.java:4628:        public static final int tcx_message_outgoingSmsTimestamp_light = 0x7f06093b;
+truecaller_jadx/sources/com/truecaller\R.java:4639:        public static final int tcx_message_scheduledTimestamp_dark = 0x7f060946;
+truecaller_jadx/sources/com/truecaller\R.java:4640:        public static final int tcx_message_scheduledTimestamp_light = 0x7f060947;
+truecaller_jadx/sources/com/truecaller\R.java:4887:        public static final int text_timestamp_dark = 0x7f060a3f;
+truecaller_jadx/sources/com/truecaller\R.java:4888:        public static final int text_timestamp_default = 0x7f060a40;
+truecaller_jadx/sources/com/truecaller\R.java:6012:        public static final int message_timestamp_spacing = 0x7f0705d2;
+truecaller_jadx/sources/com/truecaller\R.java:11222:        public static final int carousel_timestamp = 0x7f0a0442;
+truecaller_jadx/sources/com/truecaller\R.java:15414:        public static final int timestamp = 0x7f0a14a2;
+truecaller_jadx/sources/com/truecaller\R.java:15415:        public static final int timestampText = 0x7f0a14a3;
+truecaller_jadx/sources/com/truecaller\R.java:15416:        public static final int timestamp_linear_layout = 0x7f0a14a4;
+truecaller_jadx/sources/com/truecaller\R.java:15417:        public static final int timestamp_relative_layout = 0x7f0a14a5;
+truecaller_jadx/sources/com/truecaller\R.java:15418:        public static final int timestamp_sim_indicator = 0x7f0a14a6;
+truecaller_jadx/sources/com/truecaller\R.java:21344:        public static final int StrSignature = 0x7f14075c;
+truecaller_jadx/sources/com/truecaller\R.java:22749:        public static final int details_view_share_contact_signature = 0x7f140d06;
+truecaller_jadx/sources/com/truecaller\R.java:22848:        public static final int detailsview_menu_share_contact_signature = 0x7f140d69;
+truecaller_jadx/sources/com/truecaller\R.java:24716:        public static final int restore_onboarding_timestamp = 0x7f1415d6;
+truecaller_jadx/sources/com/truecaller\R.java:28219:        public static final int Widget_Truecaller_TextView_TimestampSimIndicator = 0x7f150890;
+truecaller_jadx/sources/com/truecaller\account\domain\attestation\data\AttestationNonceDto.java:11:public final class AttestationNonceDto {
+truecaller_jadx/sources/com/truecaller\account\domain\attestation\data\AttestationNonceDto.java:14:    private final String nonce;
+truecaller_jadx/sources/com/truecaller\account\domain\attestation\data\AttestationNonceDto.java:16:    public AttestationNonceDto(@NotNull String str) {
+truecaller_jadx/sources/com/truecaller\account\domain\attestation\data\AttestationNonceDto.java:18:        this.nonce = str;
+truecaller_jadx/sources/com/truecaller\account\domain\attestation\data\AttestationNonceDto.java:22:    public final String getNonce() {
+truecaller_jadx/sources/com/truecaller\account\domain\attestation\data\AttestationNonceDto.java:23:        return this.nonce;
+truecaller_jadx/sources/com/truecaller\android\sdk\PartnerInformation.java:21:    private static final String REQ_NONCE = "PARTNERINFO_REQ_NONCE";
+truecaller_jadx/sources/com/truecaller\android\sdk\PartnerInformation.java:41:    public final String reqNonce;
+truecaller_jadx/sources/com/truecaller\android\sdk\PartnerInformation.java:62:        this.reqNonce = bundle.getString(REQ_NONCE, "");
+truecaller_jadx/sources/com/truecaller\android\sdk\PartnerInformation.java:74:        this.reqNonce = UUID.randomUUID().toString();
+truecaller_jadx/sources/com/truecaller\android\sdk\PartnerInformation.java:84:        this.reqNonce = str5;
+truecaller_jadx/sources/com/truecaller\android\sdk\PartnerInformation.java:101:        bundle.putString(REQ_NONCE, this.reqNonce);
+truecaller_jadx/sources/com/truecaller\android\sdk\common\TrueException.java:9:    public static final String TYPE_APP_SIGNATURE_MISSING = "Could not fetch application's signature";
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\CreateInstallationModel.java:30:    @aw20("requestNonce")
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\CreateInstallationModel.java:31:    public final String requestNonce;
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\CreateInstallationModel.java:54:        this.requestNonce = str;
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:42:    private static final String REQ_NONCE = "TRUEPROFILE_REQ_NONCE";
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:43:    private static final String SIGNATURE = "TRUEPROFILE_SIGNATURE";
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:44:    private static final String SIGNATURE_ALGORITHM = "TRUEPROFILE_SIGNATURE_ALGORITHM";
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:50:    private static final String VERIFICATION_TIMESTAMP = "TRUEPROFILE_VERIFICATION_TIMESTAMP";
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:68:    public String requestNonce;
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:69:    public String signature;
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:70:    public String signatureAlgorithm;
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:76:    public long verificationTimestamp;
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:138:        this.signature = bundle.getString(SIGNATURE);
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:139:        this.signatureAlgorithm = bundle.getString(SIGNATURE_ALGORITHM);
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:140:        this.requestNonce = bundle.getString(REQ_NONCE);
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:147:        if (bundle.getString(VERIFICATION_TIMESTAMP) != null) {
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:148:            this.verificationTimestamp = Long.parseLong(bundle.getString(VERIFICATION_TIMESTAMP));
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:174:        this.signature = parcel.readString();
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:213:        bundle.putString(SIGNATURE, this.signature);
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:214:        bundle.putString(SIGNATURE_ALGORITHM, this.signatureAlgorithm);
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:215:        bundle.putString(REQ_NONCE, this.requestNonce);
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:218:        bundle.putString(VERIFICATION_TIMESTAMP, String.valueOf(this.verificationTimestamp));
+truecaller_jadx/sources/com/truecaller\android\sdk\common\models\TrueProfile.java:242:        parcel.writeString(this.signature);
+truecaller_jadx/sources/com/truecaller\android\sdk\legacy\TrueError.java:25:    public static final int ERROR_TYPE_REQUEST_NONCE_MISMATCH = 9;
+truecaller_jadx/sources/com/truecaller\android\sdk\legacy\TrueError.java:26:    public static final int ERROR_TYPE_RESPONSE_SIGNATURE_MISMATCH = 8;
+truecaller_jadx/sources/com/truecaller\backup\BackupDto.java:20:    private final long timestamp;
+truecaller_jadx/sources/com/truecaller\backup\BackupDto.java:23:        this.timestamp = j;
+truecaller_jadx/sources/com/truecaller\backup\BackupDto.java:27:    public final long getTimestamp() {
+truecaller_jadx/sources/com/truecaller\backup\BackupDto.java:28:        return this.timestamp;
+truecaller_jadx/sources/com/truecaller\backup\BackupDto.java:39:        parcel.writeLong(this.timestamp);
+truecaller_jadx/sources/com/truecaller\calling\missedcallreminder\MissedCallReminder.java:27:    @aw20(alternate = {ApsMetricsDataMap.APSMETRICS_FIELD_CUSTOM}, value = "timestamp")
+truecaller_jadx/sources/com/truecaller\calllog\presentation\p134ui\screen\model\CallLogHistoryItem$HistoryEntry$TimestampGroup.java:10:public enum CallLogHistoryItem$HistoryEntry$TimestampGroup {
+truecaller_jadx/sources/com/truecaller\data\entity\HistoryEvent.java:258:        sb2.append(", timestamp=");
+truecaller_jadx/sources/com/truecaller\namesuggestion\api\network\NameSuggestionRestModel.java:28:        @aw20(ApsMetricsDataMap.APSMETRICS_FIELD_TIMESTAMP)
+truecaller_jadx/sources/com/truecaller\onboarding_education\domain\DemoContent.java:30:    private final long timestamp;
+truecaller_jadx/sources/com/truecaller\onboarding_education\domain\DemoContent.java:38:        this.timestamp = j;
+truecaller_jadx/sources/com/truecaller\onboarding_education\domain\DemoContent.java:55:            j = demoContent.timestamp;
+truecaller_jadx/sources/com/truecaller\onboarding_education\domain\DemoContent.java:86:    public final long getTimestamp() {
+truecaller_jadx/sources/com/truecaller\onboarding_education\domain\DemoContent.java:87:        return this.timestamp;
+truecaller_jadx/sources/com/truecaller\onboarding_education\domain\DemoContent.java:91:    public final DemoContent copy(@NotNull String scamName, @NotNull String phoneNumber, @NotNull String mobileProvider, @NotNull String location, long timestamp) {
+truecaller_jadx/sources/com/truecaller\onboarding_education\domain\DemoContent.java:96:        return new DemoContent(scamName, phoneNumber, mobileProvider, location, timestamp);
+truecaller_jadx/sources/com/truecaller\onboarding_education\domain\DemoContent.java:107:        return Intrinsics.m67018c(this.scamName, demoContent.scamName) && Intrinsics.m67018c(this.phoneNumber, demoContent.phoneNumber) && Intrinsics.m67018c(this.mobileProvider, demoContent.mobileProvider) && Intrinsics.m67018c(this.location, demoContent.location) && this.timestamp == demoContent.timestamp;
+truecaller_jadx/sources/com/truecaller\onboarding_education\domain\DemoContent.java:130:    public final long getTimestamp() {
+truecaller_jadx/sources/com/truecaller\onboarding_education\domain\DemoContent.java:131:        return this.timestamp;
+truecaller_jadx/sources/com/truecaller\onboarding_education\domain\DemoContent.java:136:        long j = this.timestamp;
+truecaller_jadx/sources/com/truecaller\onboarding_education\domain\DemoContent.java:146:        long j = this.timestamp;
+truecaller_jadx/sources/com/truecaller\onboarding_education\domain\DemoContent.java:148:        pya0.m79287z(sbM79278q, str3, ", location=", str4, ", timestamp=");
+truecaller_jadx/sources/com/truecaller\premium\data\PurchaseSourceCache$SourceEntry.java:19:    private final long timestamp;
+truecaller_jadx/sources/com/truecaller\premium\data\PurchaseSourceCache$SourceEntry.java:24:        this.timestamp = j;
+truecaller_jadx/sources/com/truecaller\premium\data\PurchaseSourceCache$SourceEntry.java:32:            j = purchaseSourceCache$SourceEntry.timestamp;
+truecaller_jadx/sources/com/truecaller\premium\data\PurchaseSourceCache$SourceEntry.java:44:    public final long getTimestamp() {
+truecaller_jadx/sources/com/truecaller\premium\data\PurchaseSourceCache$SourceEntry.java:45:        return this.timestamp;
+truecaller_jadx/sources/com/truecaller\premium\data\PurchaseSourceCache$SourceEntry.java:49:    public final PurchaseSourceCache$SourceEntry copy(@NotNull String source, long timestamp) {
+truecaller_jadx/sources/com/truecaller\premium\data\PurchaseSourceCache$SourceEntry.java:51:        return new PurchaseSourceCache$SourceEntry(source, timestamp);
+truecaller_jadx/sources/com/truecaller\premium\data\PurchaseSourceCache$SourceEntry.java:62:        return Intrinsics.m67018c(this.source, purchaseSourceCache$SourceEntry.source) && this.timestamp == purchaseSourceCache$SourceEntry.timestamp;
+truecaller_jadx/sources/com/truecaller\premium\data\PurchaseSourceCache$SourceEntry.java:70:    public final long getTimestamp() {
+truecaller_jadx/sources/com/truecaller\premium\data\PurchaseSourceCache$SourceEntry.java:71:        return this.timestamp;
+truecaller_jadx/sources/com/truecaller\premium\data\PurchaseSourceCache$SourceEntry.java:76:        long j = this.timestamp;
+truecaller_jadx/sources/com/truecaller\premium\data\PurchaseSourceCache$SourceEntry.java:82:        StringBuilder sbM8749s = c2b0.m8749s("SourceEntry(source=", this.source, ", timestamp=", this.timestamp);
+truecaller_jadx/sources/com/truecaller\premium\data\familysharing\FamilyMember.java:17:    private final long createdTimeStamp;
+truecaller_jadx/sources/com/truecaller\premium\data\familysharing\FamilyMember.java:50:        this.createdTimeStamp = j;
+truecaller_jadx/sources/com/truecaller\premium\data\familysharing\FamilyMember.java:79:            j = familyMember.createdTimeStamp;
+truecaller_jadx/sources/com/truecaller\premium\data\familysharing\FamilyMember.java:136:    public final long getCreatedTimeStamp() {
+truecaller_jadx/sources/com/truecaller\premium\data\familysharing\FamilyMember.java:137:        return this.createdTimeStamp;
+truecaller_jadx/sources/com/truecaller\premium\data\familysharing\FamilyMember.java:141:    public final FamilyMember copy(@NotNull FamilyRole role, int rank, @Nullable String name, @Nullable String fullName, @Nullable String imageUrl, @NotNull String tcId, boolean isResolved, @Nullable String phoneNumber, long createdTimeStamp) {
+truecaller_jadx/sources/com/truecaller\premium\data\familysharing\FamilyMember.java:144:        return new FamilyMember(role, rank, name, fullName, imageUrl, tcId, isResolved, phoneNumber, createdTimeStamp);
+truecaller_jadx/sources/com/truecaller\premium\data\familysharing\FamilyMember.java:155:        return this.role == familyMember.role && this.rank == familyMember.rank && Intrinsics.m67018c(this.name, familyMember.name) && Intrinsics.m67018c(this.fullName, familyMember.fullName) && Intrinsics.m67018c(this.imageUrl, familyMember.imageUrl) && Intrinsics.m67018c(this.tcId, familyMember.tcId) && this.isResolved == familyMember.isResolved && Intrinsics.m67018c(this.phoneNumber, familyMember.phoneNumber) && this.createdTimeStamp == familyMember.createdTimeStamp;
+truecaller_jadx/sources/com/truecaller\premium\data\familysharing\FamilyMember.java:158:    public final long getCreatedTimeStamp() {
+truecaller_jadx/sources/com/truecaller\premium\data\familysharing\FamilyMember.java:159:        return this.createdTimeStamp;
+truecaller_jadx/sources/com/truecaller\premium\data\familysharing\FamilyMember.java:206:        long j = this.createdTimeStamp;
+truecaller_jadx/sources/com/truecaller\premium\data\familysharing\FamilyMember.java:224:        long j = this.createdTimeStamp;
+truecaller_jadx/sources/com/truecaller\premium\data\familysharing\FamilyMember.java:232:        pya0.m79285x(", phoneNumber=", str5, ", createdTimeStamp=", sb, z);
+truecaller_jadx/sources/com/truecaller\scamfeed\domain\entities\comments\CommentInfo.java:40:    private final String formattedTimeStamp;
+truecaller_jadx/sources/com/truecaller\scamfeed\domain\entities\comments\CommentInfo.java:78:        this.formattedTimeStamp = str4;
+truecaller_jadx/sources/com/truecaller\scamfeed\domain\entities\comments\CommentInfo.java:106:        String str14 = (i & 8) != 0 ? commentInfo.formattedTimeStamp : str4;
+truecaller_jadx/sources/com/truecaller\scamfeed\domain\entities\comments\CommentInfo.java:200:    public final String getFormattedTimeStamp() {
+truecaller_jadx/sources/com/truecaller\scamfeed\domain\entities\comments\CommentInfo.java:201:        return this.formattedTimeStamp;
+truecaller_jadx/sources/com/truecaller\scamfeed\domain\entities\comments\CommentInfo.java:234:    public final CommentInfo copy(@Nullable String commentId, @Nullable String content, @Nullable String contentTranslated, @Nullable String formattedTimeStamp, @Nullable String userId, @Nullable String userName, @Nullable String avatarUrl, @Nullable String createdAt, boolean isSelfCommented, @Nullable String score, @Nullable Long noOfLikes, boolean isCommentLiked, @Nullable String parentCommentId, @Nullable Long noOfReplies, boolean isDeleted, @NotNull List<? extends fcb> permissions, boolean isPostOwner, boolean isAnonymous) {
+truecaller_jadx/sources/com/truecaller\scamfeed\domain\entities\comments\CommentInfo.java:236:        return new CommentInfo(commentId, content, contentTranslated, formattedTimeStamp, userId, userName, avatarUrl, createdAt, isSelfCommented, score, noOfLikes, isCommentLiked, parentCommentId, noOfReplies, isDeleted, permissions, isPostOwner, isAnonymous);
+truecaller_jadx/sources/com/truecaller\scamfeed\domain\entities\comments\CommentInfo.java:247:        return Intrinsics.m67018c(this.commentId, commentInfo.commentId) && Intrinsics.m67018c(this.content, commentInfo.content) && Intrinsics.m67018c(this.contentTranslated, commentInfo.contentTranslated) && Intrinsics.m67018c(this.formattedTimeStamp, commentInfo.formattedTimeStamp) && Intrinsics.m67018c(this.userId, commentInfo.userId) && Intrinsics.m67018c(this.userName, commentInfo.userName) && Intrinsics.m67018c(this.avatarUrl, commentInfo.avatarUrl) && Intrinsics.m67018c(this.createdAt, commentInfo.createdAt) && this.isSelfCommented == commentInfo.isSelfCommented && Intrinsics.m67018c(this.score, commentInfo.score) && Intrinsics.m67018c(this.noOfLikes, commentInfo.noOfLikes) && this.isCommentLiked == commentInfo.isCommentLiked && Intrinsics.m67018c(this.parentCommentId, commentInfo.parentCommentId) && Intrinsics.m67018c(this.noOfReplies, commentInfo.noOfReplies) && this.isDeleted == commentInfo.isDeleted && Intrinsics.m67018c(this.permissions, commentInfo.permissions) && this.isPostOwner == commentInfo.isPostOwner && this.isAnonymous == commentInfo.isAnonymous;
+truecaller_jadx/sources/com/truecaller\scamfeed\domain\entities\comments\CommentInfo.java:276:    public final String getFormattedTimeStamp() {
+truecaller_jadx/sources/com/truecaller\scamfeed\domain\entities\comments\CommentInfo.java:277:        return this.formattedTimeStamp;
+truecaller_jadx/sources/com/truecaller\scamfeed\domain\entities\comments\CommentInfo.java:322:        String str4 = this.formattedTimeStamp;
+truecaller_jadx/sources/com/truecaller\scamfeed\domain\entities\comments\CommentInfo.java:367:        String str4 = this.formattedTimeStamp;
+truecaller_jadx/sources/com/truecaller\scamfeed\domain\entities\comments\CommentInfo.java:383:        pya0.m79287z(sbM79278q, str3, ", formattedTimeStamp=", str4, ", userId=");
+truecaller_jadx/sources/com/truecaller\sdk\network\legacy\UserProfileResponse.java:26:    private final String signature;
+truecaller_jadx/sources/com/truecaller\sdk\network\legacy\UserProfileResponse.java:31:        this.signature = str;
+truecaller_jadx/sources/com/truecaller\sdk\network\legacy\UserProfileResponse.java:37:            str = userProfileResponse.signature;
+truecaller_jadx/sources/com/truecaller\sdk\network\legacy\UserProfileResponse.java:47:    public final String getSignature() {
+truecaller_jadx/sources/com/truecaller\sdk\network\legacy\UserProfileResponse.java:48:        return this.signature;
+truecaller_jadx/sources/com/truecaller\sdk\network\legacy\UserProfileResponse.java:58:    public final UserProfileResponse copy(@NotNull String signature, @NotNull String payload) {
+truecaller_jadx/sources/com/truecaller\sdk\network\legacy\UserProfileResponse.java:59:        signature.getClass();
+truecaller_jadx/sources/com/truecaller\sdk\network\legacy\UserProfileResponse.java:61:        return new UserProfileResponse(signature, payload);
+truecaller_jadx/sources/com/truecaller\sdk\network\legacy\UserProfileResponse.java:72:        return Intrinsics.m67018c(this.signature, userProfileResponse.signature) && Intrinsics.m67018c(this.payload, userProfileResponse.payload);
+truecaller_jadx/sources/com/truecaller\sdk\network\legacy\UserProfileResponse.java:81:    public final String getSignature() {
+truecaller_jadx/sources/com/truecaller\sdk\network\legacy\UserProfileResponse.java:82:        return this.signature;
+truecaller_jadx/sources/com/truecaller\sdk\network\legacy\UserProfileResponse.java:86:        return this.payload.hashCode() + (this.signature.hashCode() * 31);
+truecaller_jadx/sources/com/truecaller\sdk\network\legacy\UserProfileResponse.java:91:        return pya0.m79271j("UserProfileResponse(signature=", this.signature, ", payload=", this.payload, ")");
+truecaller_jadx/sources/com/truecaller\sdk\network\oneStepMid\NumberVerificationRequest.java:17:    private final String requestNonce;
+truecaller_jadx/sources/com/truecaller\sdk\network\oneStepMid\NumberVerificationRequest.java:21:        this.requestNonce = str;
+truecaller_jadx/sources/com/truecaller\sdk\network\oneStepMid\NumberVerificationRequest.java:26:            str = numberVerificationRequest.requestNonce;
+truecaller_jadx/sources/com/truecaller\sdk\network\oneStepMid\NumberVerificationRequest.java:33:    public final String getRequestNonce() {
+truecaller_jadx/sources/com/truecaller\sdk\network\oneStepMid\NumberVerificationRequest.java:34:        return this.requestNonce;
+truecaller_jadx/sources/com/truecaller\sdk\network\oneStepMid\NumberVerificationRequest.java:38:    public final NumberVerificationRequest copy(@NotNull String requestNonce) {
+truecaller_jadx/sources/com/truecaller\sdk\network\oneStepMid\NumberVerificationRequest.java:39:        requestNonce.getClass();
+truecaller_jadx/sources/com/truecaller\sdk\network\oneStepMid\NumberVerificationRequest.java:40:        return new NumberVerificationRequest(requestNonce);
+truecaller_jadx/sources/com/truecaller\sdk\network\oneStepMid\NumberVerificationRequest.java:47:        return (other instanceof NumberVerificationRequest) && Intrinsics.m67018c(this.requestNonce, ((NumberVerificationRequest) other).requestNonce);
+truecaller_jadx/sources/com/truecaller\sdk\network\oneStepMid\NumberVerificationRequest.java:51:    public final String getRequestNonce() {
+truecaller_jadx/sources/com/truecaller\sdk\network\oneStepMid\NumberVerificationRequest.java:52:        return this.requestNonce;
+truecaller_jadx/sources/com/truecaller\sdk\network\oneStepMid\NumberVerificationRequest.java:56:        return this.requestNonce.hashCode();
+truecaller_jadx/sources/com/truecaller\sdk\network\oneStepMid\NumberVerificationRequest.java:61:        return pya0.m79270i("NumberVerificationRequest(requestNonce=", this.requestNonce, ")");
+truecaller_jadx/sources/com/truecaller\utils\TimestampSource.java:11:public enum TimestampSource {
+truecaller_jadx/sources/com/truecaller\utils\TimestampSource.java:20:    TimestampSource(String str) {
+truecaller_jadx/sources/com/truecaller\voicemail\navigation\CallerPreview.java:95:        sb.append(", timestamp=");
+truecaller_jadx/sources/com/truecaller\whosearchedforme\network\data\WSFMProfileSearch.java:22:    @aw20("timestamp")
+truecaller_jadx/sources/com/truecaller\whosearchedforme\network\data\WSFMProfileSearch.java:24:    private final String timestamp;
+truecaller_jadx/sources/com/truecaller\whosearchedforme\network\data\WSFMProfileSearch.java:30:        this.timestamp = str2;
+truecaller_jadx/sources/com/truecaller\whosearchedforme\network\data\WSFMProfileSearch.java:39:            str2 = wSFMProfileSearch.timestamp;
+truecaller_jadx/sources/com/truecaller\whosearchedforme\network\data\WSFMProfileSearch.java:55:    public final String getTimestamp() {
+truecaller_jadx/sources/com/truecaller\whosearchedforme\network\data\WSFMProfileSearch.java:56:        return this.timestamp;
+truecaller_jadx/sources/com/truecaller\whosearchedforme\network\data\WSFMProfileSearch.java:65:    public final WSFMProfileSearch copy(@NotNull String tcId, @NotNull String timestamp, boolean isViewed) {
+truecaller_jadx/sources/com/truecaller\whosearchedforme\network\data\WSFMProfileSearch.java:67:        timestamp.getClass();
+truecaller_jadx/sources/com/truecaller\whosearchedforme\network\data\WSFMProfileSearch.java:68:        return new WSFMProfileSearch(tcId, timestamp, isViewed);
+truecaller_jadx/sources/com/truecaller\whosearchedforme\network\data\WSFMProfileSearch.java:79:        return Intrinsics.m67018c(this.tcId, wSFMProfileSearch.tcId) && Intrinsics.m67018c(this.timestamp, wSFMProfileSearch.timestamp) && this.isViewed == wSFMProfileSearch.isViewed;
+truecaller_jadx/sources/com/truecaller\whosearchedforme\network\data\WSFMProfileSearch.java:88:    public final String getTimestamp() {
+truecaller_jadx/sources/com/truecaller\whosearchedforme\network\data\WSFMProfileSearch.java:89:        return this.timestamp;
+truecaller_jadx/sources/com/truecaller\whosearchedforme\network\data\WSFMProfileSearch.java:93:        return lc90.m68428h(this.tcId.hashCode() * 31, 31, this.timestamp) + (this.isViewed ? 1231 : 1237);
+truecaller_jadx/sources/com/truecaller\whosearchedforme\network\data\WSFMProfileSearch.java:103:        String str2 = this.timestamp;
+truecaller_jadx/sources/com/truecaller\whosearchedforme\network\data\WSFMProfileSearch.java:104:        return pya0.m79276o(pya0.m79278q("WSFMProfileSearch(tcId=", str, ", timestamp=", str2, ", isViewed="), this.isViewed, ")");

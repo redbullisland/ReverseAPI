@@ -1,0 +1,282 @@
+truecaller_jadx/sources\androidx\recyclerview\widget\RecyclerView.java:256:        LAYOUT_MANAGER_CONSTRUCTOR_SIGNATURE = new Class[]{Context.class, AttributeSet.class, cls, cls};
+truecaller_jadx/sources\com\amazon\aps\shared\util\APSNetworkManager.java:22:    private static final String API_HEADER = "x-api-key";
+truecaller_jadx/sources\com\appsflyer\internal\AFf1zSDK.java:59:            httpURLConnection.setRequestProperty("User-agent", "Dalvik/2.1.0 (Linux; U; Android 6.0.1; Nexus 5 Build/M4B30Z)");
+truecaller_jadx/sources\com\appsflyer\internal\AFj1dSDK.java:74:            Mac mac = Mac.getInstance("HmacSHA256");
+truecaller_jadx/sources\com\appsflyer\internal\AFj1dSDK.java:75:            mac.init(new SecretKeySpec(str2.getBytes(Charset.defaultCharset()), "HmacSHA256"));
+truecaller_jadx/sources\com\freshchat\consumer\sdk\p016b\SharedPreferencesC1767m.java:324:            secretKeyM15734a = m15734a(charArray, bytes, "PBKDF2WithHmacSHA1", 2000, 256);
+truecaller_jadx/sources\com\fyber\inneractive\sdk\util\AbstractC3645o.java:63:            Signature signature = signatureArr[0];
+truecaller_jadx/sources\com\huawei\agconnect\config\impl\C4080i.java:22:            return new SecretKeySpec(SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1").generateSecret(new PBEKeySpec(Hex.encodeHexString(m21283a(bArr, bArr2, bArr3)).toCharArray(), bArr4, i, 128)).getEncoded(), "AES");
+truecaller_jadx/sources\com\huawei\hms\api\HuaweiApiAvailability.java:56:    public static final String SERVICES_SIGNATURE = "B92825C2BD5D6D6D1E7F39EECD17843B7D9016F611136B75441BC6F4D3F00F05";
+truecaller_jadx/sources\com\huawei\hms\api\HuaweiApiClientImpl.java:498:        String packageSignature = new PackageManagerHelper(this.f47865b).getPackageSignature(this.f47865b.getPackageName());
+truecaller_jadx/sources\com\huawei\hms\api\HuaweiApiClientImpl.java:499:        if (packageSignature == null) {
+truecaller_jadx/sources\com\huawei\hms\api\HuaweiApiClientImpl.java:500:            packageSignature = "";
+truecaller_jadx/sources\com\huawei\hms\api\HuaweiMobileServicesUtil.java:79:            String packageSignature = packageManagerHelper.getPackageSignature(hMSPackageNameForMultiService);
+truecaller_jadx/sources\com\huawei\hms\common\PackageConstants.java:18:    public static final String SERVICES_SIGNATURE = "B92825C2BD5D6D6D1E7F39EECD17843B7D9016F611136B75441BC6F4D3F00F05";
+truecaller_jadx/sources\com\huawei\hms\device\C4164a.java:217:            Signature signature = Signature.getInstance(x509Certificate.getSigAlgName());
+truecaller_jadx/sources\com\huawei\hms\utils\HMSPackageManager.java:303:                String packageSignature = this.f48683b.getPackageSignature(str);
+truecaller_jadx/sources\com\huawei\hms\utils\HMSPackageManager.java:347:            String packageSignature = this.f48683b.getPackageSignature(str);
+truecaller_jadx/sources\com\huawei\hms\utils\ReadApkFileUtil.java:40:    public static final String KEY_SIGNATURE = "Signature:";
+truecaller_jadx/sources\com\huawei\hms\utils\ReadApkFileUtil.java:176:        Signature signature = Signature.getInstance(str);
+truecaller_jadx/sources\com\huawei\secure\android\common\encrypt\hash\HMACSHA256.java:13:public abstract class HMACSHA256 {
+truecaller_jadx/sources\com\huawei\secure\android\common\encrypt\hash\HMACSHA256.java:16:    private static final String f48772a = "HMACSHA256";
+truecaller_jadx/sources\com\huawei\secure\android\common\encrypt\hash\HMACSHA256.java:19:    private static final String f48773b = "HmacSHA256";
+truecaller_jadx/sources\com\huawei\secure\android\common\encrypt\hash\HMACSHA256.java:42:            C4373b.m22744b(f48772a, "hmacsha256 encrypt exception" + e.getMessage());
+truecaller_jadx/sources\com\huawei\secure\android\common\encrypt\hash\HMACSHA256.java:47:    public static String hmacSHA256Encrypt(String str, String str2) {
+truecaller_jadx/sources\com\huawei\secure\android\common\encrypt\hash\HMACSHA256.java:48:        return (TextUtils.isEmpty(str) || TextUtils.isEmpty(str2)) ? "" : hmacSHA256Encrypt(str, HexUtil.hexStr2ByteArray(str2));
+truecaller_jadx/sources\com\huawei\secure\android\common\encrypt\hash\HMACSHA256.java:51:    public static String hmacSHA256Encrypt(String str, byte[] bArr) {
+truecaller_jadx/sources\com\huawei\secure\android\common\encrypt\hash\HMACSHA256.java:63:            C4373b.m22744b(f48772a, "hmacsha256 encrypt exception" + e.getMessage());
+truecaller_jadx/sources\com\huawei\secure\android\common\encrypt\hash\PBKDF2.java:20:    private static final String f48777b = "PBKDF2WithHmacSHA1";
+truecaller_jadx/sources\com\huawei\secure\android\common\encrypt\hash\PBKDF2.java:23:    private static final String f48778c = "PBKDF2WithHmacSHA256";
+truecaller_jadx/sources\com\huawei\secure\android\common\encrypt\keystore\rsa\RSASignKS.java:114:            Signature signature = Signature.getInstance(f48811c);
+truecaller_jadx/sources\com\huawei\secure\android\common\encrypt\keystore\rsa\RSASignKS.java:150:            Signature signature = Signature.getInstance(f48811c);
+truecaller_jadx/sources\com\huawei\secure\android\common\encrypt\rsa\RSASign.java:141:                signature = Signature.getInstance(f48822b);
+truecaller_jadx/sources\com\huawei\secure\android\common\encrypt\rsa\RSASign.java:144:                signature = Signature.getInstance(f48821a);
+truecaller_jadx/sources\com\huawei\secure\android\common\encrypt\rsa\RSASign.java:178:                signature = Signature.getInstance(f48822b);
+truecaller_jadx/sources\com\huawei\secure\android\common\encrypt\rsa\RSASign.java:181:                signature = Signature.getInstance(f48821a);
+truecaller_jadx/sources\com\huawei\secure\android\common\encrypt\rsa\RSASign.java:222:                signature = Signature.getInstance(f48822b);
+truecaller_jadx/sources\com\huawei\secure\android\common\encrypt\rsa\RSASign.java:225:                signature = Signature.getInstance(f48821a);
+truecaller_jadx/sources\com\huawei\secure\android\common\encrypt\rsa\RSASign.java:247:                signature = Signature.getInstance(f48822b);
+truecaller_jadx/sources\com\huawei\secure\android\common\encrypt\rsa\RSASign.java:250:                signature = Signature.getInstance(f48821a);
+truecaller_jadx/sources\com\huawei\secure\android\common\sign\HiPkgSignManager.java:135:        byte[] installedAPPSignature = getInstalledAPPSignature(context, str);
+truecaller_jadx/sources\com\huawei\secure\android\common\sign\HiPkgSignManager.java:136:        return (installedAPPSignature == null || installedAPPSignature.length <= 0) ? "" : m22751b(installedAPPSignature);
+truecaller_jadx/sources\com\huawei\secure\android\common\sign\HiPkgSignManager.java:176:            Signature signature = packageInfoM22748a.signatures[0];
+truecaller_jadx/sources\com\huawei\secure\android\common\sign\HiPkgSignManager.java:187:        byte[] unInstalledAPPSignature = getUnInstalledAPPSignature(context, str);
+truecaller_jadx/sources\com\huawei\secure\android\common\sign\HiPkgSignManager.java:188:        return (unInstalledAPPSignature == null || unInstalledAPPSignature.length <= 0) ? "" : m22751b(unInstalledAPPSignature);
+truecaller_jadx/sources\com\inmobi\media\AbstractC5890hg.java:133:            java.lang.String r9 = "User-Agent"
+truecaller_jadx/sources\com\ironsource\adqualitysdk\sdk\p067i\C7110jv.java:25:            Mac mac = Mac.getInstance("HmacSHA1");
+truecaller_jadx/sources\com\mbridge\msdk\foundation\download\Command.java:19:    public static final String HTTP_HEADER_USER_AGENT = "User-Agent";
+truecaller_jadx/sources\com\mbridge\msdk\playercommon\exoplayer2\extractor\ogg\OpusReader.java:21:    private static final byte[] OPUS_SIGNATURE = {79, 112, 117, 115, 72, 101, 97, 100};
+truecaller_jadx/sources\com\mbridge\msdk\thrid\okhttp\internal\http\C8783j.java:163:            aVarM43818f.m43824a("Authorization");
+truecaller_jadx/sources\com\mbridge\msdk\thrid\okhttp\internal\http2\C8789d.java:557:        f69529a = new C8788c[]{c8788c, c8788c2, c8788c3, c8788c4, c8788c5, c8788c6, c8788c7, new C8788c(c8835f4, "200"), new C8788c(c8835f4, "204"), new C8788c(c8835f4, "206"), new C8788c(c8835f4, "304"), new C8788c(c8835f4, "400"), new C8788c(c8835f4, "404"), new C8788c(c8835f4, "500"), new C8788c("accept-charset", ""), new C8788c("accept-encoding", "gzip, deflate"), new C8788c("accept-language", ""), new C8788c("accept-ranges", ""), new C8788c("accept", ""), new C8788c("access-control-allow-origin", ""), new C8788c("age", ""), new C8788c("allow", ""), new C8788c("authorization", ""), new C8788c("cache-control", ""), new C8788c("content-disposition", ""), new C8788c("content-encoding", ""), new C8788c("content-language", ""), new C8788c("content-length", ""), new C8788c("content-location", ""), new C8788c("content-range", ""), new C8788c("content-type", ""), new C8788c("cookie", ""), new C8788c("date", ""), new C8788c(DownloadModel.ETAG, ""), new C8788c("expect", ""), new C8788c("expires", ""), new C8788c(RemoteMessageConst.FROM, ""), new C8788c("host", ""), new C8788c("if-match", ""), new C8788c("if-modified-since", ""), new C8788c("if-none-match", ""), new C8788c("if-range", ""), new C8788c("if-unmodified-since", ""), new C8788c("last-modified", ""), new C8788c("link", ""), new C8788c(MRAIDNativeFeature.LOCATION, ""), new C8788c("max-forwards", ""), new C8788c("proxy-authenticate", ""), new C8788c("proxy-authorization", ""), new C8788c("range", ""), new C8788c("referer", ""), new C8788c(ToolBar.REFRESH, ""), new C8788c("retry-after", ""), new C8788c(C6435Db.f54807a, ""), new C8788c("set-cookie", ""), new C8788c("strict-transport-security", ""), new C8788c("transfer-encoding", ""), new C8788c("user-agent", ""), new C8788c("vary", ""), new C8788c("via", ""), new C8788c("www-authenticate", "")};
+truecaller_jadx/sources\com\razorpay\AnalyticsConstants.java:56:    static final String CB_VERIFY_SIGNATURE = "cb:sign_encrypt_response";
+truecaller_jadx/sources\com\razorpay\C$0o__.java:46:    static final String RAZORPAY_SIGNATURE = "razorpay_signature";
+truecaller_jadx/sources\com\razorpay\CheckoutPresenterImpl.java:389:            map.put("Authorization", "Basic " + strConstructBasicAuth);
+truecaller_jadx/sources\com\razorpay\PaymentData.java:61:        this.signature = str;
+truecaller_jadx/sources\com\razorpay\RzpAssist.java:127:            map.put("Authorization", "Basic " + strConstructBasicAuth);
+truecaller_jadx/sources\com\truecaller\R.java:21344:        public static final int StrSignature = 0x7f14075c;
+truecaller_jadx/sources\com\truecaller\R.java:22749:        public static final int details_view_share_contact_signature = 0x7f140d06;
+truecaller_jadx/sources\com\truecaller\R.java:22848:        public static final int detailsview_menu_share_contact_signature = 0x7f140d69;
+truecaller_jadx/sources\com\truecaller\android\sdk\common\models\TrueProfile.java:43:    private static final String SIGNATURE = "TRUEPROFILE_SIGNATURE";
+truecaller_jadx/sources\com\truecaller\android\sdk\common\models\TrueProfile.java:138:        this.signature = bundle.getString(SIGNATURE);
+truecaller_jadx/sources\com\truecaller\android\sdk\common\models\TrueProfile.java:174:        this.signature = parcel.readString();
+truecaller_jadx/sources\com\truecaller\sdk\network\legacy\UserProfileResponse.java:31:        this.signature = str;
+truecaller_jadx/sources\com\truecaller\sdk\network\legacy\UserProfileResponse.java:91:        return pya0.m79271j("UserProfileResponse(signature=", this.signature, ", payload=", this.payload, ")");
+truecaller_jadx/sources\com\truecaller\voicemail\domain\data\network\model\VoicemailRecordingResponse.java:40:        this.fileSignature = str2;
+truecaller_jadx/sources\com\truecaller\voicemail\domain\data\network\model\VoicemailRecordingResponse.java:149:        sbM6817n.append(", fileSignature=");
+truecaller_jadx/sources\com\unity3d\ads\core\domain\events\AndroidGetTransactionData.java:44:        String signature = purchaseDetail.getSignature();
+truecaller_jadx/sources\com\unity3d\ads\metadata\InAppPurchaseMetaData.java:20:    public static final String KEY_SIGNATURE = "signature";
+truecaller_jadx/sources\gatewayprotocol\p234v1\TransactionDataKt.java:141:            String signature = this._builder.getSignature();
+truecaller_jadx/sources\io\agora\utils2\HttpAsyncTask.java:85:                httpURLConnection.setRequestProperty("Authorization", sb.toString());
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\ConvertFromMetadataKt.java:141:        JvmMethodSignature getterSignature = JvmExtensionsKt.getGetterSignature(kmProperty);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\ConvertFromMetadataKt.java:145:        JvmFieldSignature fieldSignature = JvmExtensionsKt.getFieldSignature(kmProperty);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\ConvertFromMetadataKt.java:146:        if (fieldSignature == null) {
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\ConvertFromMetadataKt.java:239:        JvmMethodSignature signature = JvmExtensionsKt.getSignature(kmConstructor);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\ConvertFromMetadataKt.java:251:        JvmMethodSignature signature = JvmExtensionsKt.getSignature(kmFunction);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\ConvertFromMetadataKt.java:269:        String strComputeJvmSignature = computeJvmSignature(kmProperty, kDeclarationContainerImpl);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\ConvertFromMetadataKt.java:271:        if (strComputeJvmSignature == null) {
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\ConvertFromMetadataKt.java:294:        throw new KotlinReflectionInternalError("Unsupported property: name=" + kmProperty.getName() + " signature=" + strComputeJvmSignature + " container=" + kDeclarationContainerImpl);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\DescriptorKFunction.java:92:        this.signature = str2;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\DescriptorKFunction.java:153:        JvmFunctionSignature jvmFunctionSignatureMapSignature = RuntimeTypeMapper.INSTANCE.mapSignature(descriptorKFunction.getDescriptor());
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\DescriptorKFunction.java:244:        JvmFunctionSignature jvmFunctionSignatureMapSignature = RuntimeTypeMapper.INSTANCE.mapSignature(descriptorKFunction.getDescriptor());
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\DescriptorKProperty.java:375:        this.signature = str2;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\DescriptorKProperty.java:426:        JvmPropertySignature jvmPropertySignatureMapPropertySignature = RuntimeTypeMapper.INSTANCE.mapPropertySignature(descriptorKProperty.getDescriptor());
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\DescriptorKProperty.java:464:        JvmPropertySignature jvmPropertySignatureMapPropertySignature = RuntimeTypeMapper.INSTANCE.mapPropertySignature(getDescriptor());
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\DescriptorKPropertyKt.java:47:        JvmPropertySignature jvmPropertySignatureMapPropertySignature = RuntimeTypeMapper.INSTANCE.mapPropertySignature(accessor.getProperty().getDescriptor());
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\DescriptorKPropertyKt.java:50:            JvmProtoBuf.JvmPropertySignature signature = kotlinProperty.getSignature();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\DescriptorKPropertyKt.java:62:            Method methodFindMethodBySignature = setter != null ? accessor.getProperty().getContainer().findMethodBySignature(kotlinProperty.getNameResolver().getString(setter.getName()), kotlinProperty.getNameResolver().getString(setter.getDesc())) : null;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\DescriptorKPropertyKt.java:95:                    setterSignature = ((JvmPropertySignature.MappedKotlinProperty) jvmPropertySignatureMapPropertySignature).getGetterSignature();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\DescriptorKPropertyKt.java:97:                    setterSignature = ((JvmPropertySignature.MappedKotlinProperty) jvmPropertySignatureMapPropertySignature).getSetterSignature();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\DescriptorKPropertyKt.java:98:                    if (setterSignature == null) {
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\EquatableCallableSignature.java:109:            EquatableCallableSignature equatableCallableSignature = (EquatableCallableSignature) other;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\JvmFunctionSignature.java:150:            this.signature = method;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\JvmFunctionSignature.java:151:            this._signature = method.asString();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\JvmFunctionSignature.java:180:            this.signature = method;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\JvmFunctionSignature.java:181:            this._signature = method.asString();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\JvmPropertySignature.java:139:            this.signature = jvmPropertySignature;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\JvmPropertySignature.java:235:            this.getterSignature = kotlinFunction;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\JvmPropertySignature.java:236:            this.setterSignature = kotlinFunction2;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\KDeclarationContainerImpl.java:58:    public static final Regex LOCAL_PROPERTY_SIGNATURE = new Regex("<v#(\\d+)>");
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\KotlinKConstructor.java:79:        JvmMethodSignature signature = JvmExtensionsKt.getSignature(this.kmConstructor);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\KotlinKFunction.java:79:        this.signature = str;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\KotlinKFunction.java:145:        JvmMethodSignature jvmSignature = kotlinKFunction.getJvmSignature();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\KotlinKFunction.java:147:            genericDeclarationFindMethodBySignature = kotlinKFunction.getContainer().findMethodBySignature(jvmSignature.getName(), jvmSignature.getDescriptor());
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\KotlinKFunction.java:161:            genericDeclarationFindMethodBySignature = kotlinKFunction.getContainer().findConstructorBySignature(jvmSignature.getDescriptor());
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\KotlinKFunction.java:197:        JvmMethodSignature jvmSignature = kotlinKFunction.getJvmSignature();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\KotlinKNamedFunction.java:129:        JvmMethodSignature signature = JvmExtensionsKt.getSignature(this.kmFunction);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\KotlinKProperty.java:421:        this.signature = str;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\KotlinKProperty.java:495:        if (ReflectKPropertyKt.isLocalDelegated(kotlinKProperty) || (fieldSignature = JvmExtensionsKt.getFieldSignature(kotlinKProperty.kmProperty)) == null) {
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\KotlinKProperty.java:604:        Method methodFindMethodBySignature = getContainer().findMethodBySignature(syntheticMethodForAnnotations.getName(), syntheticMethodForAnnotations.getDescriptor());
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\KotlinKPropertyKt.java:43:        JvmMethodSignature getterSignature = z ? JvmExtensionsKt.getGetterSignature(kmProperty) : JvmExtensionsKt.getSetterSignature(kmProperty);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\KotlinKPropertyKt.java:44:        Method methodFindMethodBySignature = getterSignature != null ? property.getContainer().findMethodBySignature(getterSignature.getName(), getterSignature.getDescriptor()) : null;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\ReflectionFactoryImpl.java:107:        String signature = f8lVar.getSignature();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\ReflectionFactoryImpl.java:142:        final String signature = w7tVar.getSignature();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\ReflectionFactoryImpl.java:164:        final String signature = y7tVar.getSignature();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\ReflectionFactoryImpl.java:199:        final String signature = mmyVar.getSignature();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\ReflectionFactoryImpl.java:221:        final String signature = omyVar.getSignature();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\RuntimeTypeMapper.java:123:            JvmProtoBuf.JvmPropertySignature jvmPropertySignature = (JvmProtoBuf.JvmPropertySignature) ProtoBufUtilKt.getExtensionOrNull(proto, generatedExtension);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\RuntimeTypeMapper.java:149:        JvmFunctionSignature.KotlinFunction kotlinFunctionMapJvmFunctionSignature = mapJvmFunctionSignature(getter);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\RuntimeTypeMapper.java:165:            if ((proto instanceof ProtoBuf.Function) && (jvmMethodSignature = JvmProtoBufUtil.INSTANCE.getJvmMethodSignature((ProtoBuf.Function) proto, deserializedMemberDescriptor.getNameResolver(), deserializedMemberDescriptor.getTypeTable())) != null) {
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\RuntimeTypeMapper.java:168:            if (!(proto instanceof ProtoBuf.Constructor) || (jvmConstructorSignature = JvmProtoBufUtil.INSTANCE.getJvmConstructorSignature((ProtoBuf.Constructor) proto, deserializedMemberDescriptor.getNameResolver(), deserializedMemberDescriptor.getTypeTable())) == null) {
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\builtins\jvm\JvmBuiltInsCustomizer.java:397:                String strSignature = MethodSignatureBuildingUtilsKt.signature(SignatureBuildingComponents.INSTANCE, classDescriptor, strComputeJvmDescriptor$default);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\java\BuiltinMethodsWithDifferentJvmName.java:34:        String strComputeJvmSignature = MethodSignatureMappingKt.computeJvmSignature(simpleFunctionDescriptor);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\java\BuiltinMethodsWithDifferentJvmName.java:35:        if (strComputeJvmSignature == null) {
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\java\BuiltinMethodsWithSpecialGenericSignature.java:29:        BuiltinMethodsWithSpecialGenericSignature builtinMethodsWithSpecialGenericSignature = INSTANCE;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\java\BuiltinMethodsWithSpecialGenericSignature.java:61:        }, 1, null)) == null || (strComputeJvmSignature = MethodSignatureMappingKt.computeJvmSignature(callableMemberDescriptorFirstOverridden$default)) == null) {
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\java\JavaIncompatibilityRulesOverridabilityCondition.java:99:            BuiltinMethodsWithSpecialGenericSignature builtinMethodsWithSpecialGenericSignature = BuiltinMethodsWithSpecialGenericSignature.INSTANCE;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\java\SpecialBuiltinMembers.java:96:        BuiltinMethodsWithSpecialGenericSignature builtinMethodsWithSpecialGenericSignature = BuiltinMethodsWithSpecialGenericSignature.INSTANCE;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\java\SpecialGenericSignatures.java:104:                this.signature = SignatureBuildingComponents.INSTANCE.signature(str, name + '(' + str2 + ')' + str3);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\java\SpecialGenericSignatures.java:139:                NameAndSignature nameAndSignature = (NameAndSignature) obj;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\java\SpecialGenericSignatures.java:257:            this.valueParametersSignature = str;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\java\SpecialGenericSignatures.java:405:        REMOVE_AT_NAME_AND_SIGNATURE = nameAndSignatureMethod4;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\java\lazy\descriptors\LazyJavaClassMemberScope.java:1049:        BuiltinMethodsWithSpecialGenericSignature builtinMethodsWithSpecialGenericSignature = BuiltinMethodsWithSpecialGenericSignature.INSTANCE;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\java\lazy\descriptors\LazyJavaClassMemberScope.java:1314:        SignaturePropagator.PropagatedSignature propagatedSignatureResolvePropagatedSignature = getC().getComponents().getSignaturePropagator().resolvePropagatedSignature(javaMethod, getOwnerDescriptor(), kotlinType, null, list2, list);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\java\lazy\descriptors\LazyJavaScope.java:704:        MethodSignatureData methodSignatureDataResolveMethodSignature = resolveMethodSignature(javaMethod, arrayList, computeMethodReturnType(javaMethod, lazyJavaResolverContextChildForMethod$default), resolvedValueParametersResolveValueParameters.getDescriptors());
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\java\typeEnhancement\PredefinedEnhancementInfoKt.java:587:        PREDEFINED_FUNCTION_ENHANCEMENT_INFO_BY_SIGNATURE = signatureEnhancementBuilder.build();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\java\typeEnhancement\SignatureEnhancementBuilder.java:73:                String strSignature = signatureBuildingComponents.signature(className, signatureBuildingComponents.jvmDescriptor(str, arrayList, (String) this.returnType.f136095b));
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\kotlin\AbstractBinaryClassAnnotationAndConstantLoader.java:103:                    this.signature = memberSignature;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\kotlin\AbstractBinaryClassAnnotationAndConstantLoader.java:165:        MemberSignature callableSignature = getCallableSignature(property, protoContainer.getNameResolver(), protoContainer.getTypeTable(), annotatedCallableKind, kotlinJvmBinaryClassFindClassWithAnnotationsAndInitializers.getClassHeader().getMetadataVersion().isAtLeast(DeserializedDescriptorResolver.Companion.getKOTLIN_1_3_RC_METADATA_VERSION$descriptors_jvm()));
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\kotlin\AbstractBinaryClassAnnotationAndConstantLoader.java:166:        if (callableSignature == null || (c = (C) function2.invoke(this.storage.invoke(kotlinJvmBinaryClassFindClassWithAnnotationsAndInitializers), callableSignature)) == null) {
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\kotlin\AbstractBinaryClassAnnotationLoader.java:348:            JvmMemberSignature.Method jvmConstructorSignature = JvmProtoBufUtil.INSTANCE.getJvmConstructorSignature((ProtoBuf.Constructor) messageLite, nameResolver, typeTable);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\kotlin\AbstractBinaryClassAnnotationLoader.java:349:            if (jvmConstructorSignature == null) {
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\kotlin\AbstractBinaryClassAnnotationLoader.java:356:            JvmMemberSignature.Method jvmMethodSignature = JvmProtoBufUtil.INSTANCE.getJvmMethodSignature((ProtoBuf.Function) messageLite, nameResolver, typeTable);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\kotlin\AbstractBinaryClassAnnotationLoader.java:357:            if (jvmMethodSignature == null) {
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\kotlin\AbstractBinaryClassAnnotationLoader.java:365:            JvmProtoBuf.JvmPropertySignature jvmPropertySignature = (JvmProtoBuf.JvmPropertySignature) ProtoBufUtilKt.getExtensionOrNull((GeneratedMessageLite.ExtendableMessage) messageLite, generatedExtension);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\kotlin\AbstractBinaryClassAnnotationLoader.java:366:            if (jvmPropertySignature == null) {
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\kotlin\AbstractBinaryClassAnnotationLoaderKt.java:23:        JvmProtoBuf.JvmPropertySignature jvmPropertySignature = (JvmProtoBuf.JvmPropertySignature) ProtoBufUtilKt.getExtensionOrNull(property, generatedExtension);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\kotlin\AbstractBinaryClassAnnotationLoaderKt.java:24:        if (jvmPropertySignature == null) {
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\kotlin\AbstractBinaryClassAnnotationLoaderKt.java:28:            JvmMemberSignature.Field jvmFieldSignature = JvmProtoBufUtil.INSTANCE.getJvmFieldSignature(property, nameResolver, typeTable, z3);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\kotlin\AbstractBinaryClassAnnotationLoaderKt.java:29:            if (jvmFieldSignature == null) {
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\kotlin\MemberSignature.java:75:        this.signature = str;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\load\kotlin\MemberSignature.java:100:        return psd.m78992t(new StringBuilder("MemberSignature(signature="), this.signature, ')');
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\JvmProtoBuf.java:79:                JvmFieldSignature jvmFieldSignature = new JvmFieldSignature(this);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\JvmProtoBuf.java:109:                if (jvmFieldSignature == JvmFieldSignature.getDefaultInstance()) {
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\JvmProtoBuf.java:125:                JvmFieldSignature jvmFieldSignature = null;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\JvmProtoBuf.java:139:                            jvmFieldSignature = jvmFieldSignature2;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\JvmProtoBuf.java:169:            JvmFieldSignature jvmFieldSignature = new JvmFieldSignature(true);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\JvmProtoBuf.java:373:                JvmMethodSignature jvmMethodSignature = new JvmMethodSignature(this);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\JvmProtoBuf.java:403:                if (jvmMethodSignature == JvmMethodSignature.getDefaultInstance()) {
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\JvmProtoBuf.java:419:                JvmMethodSignature jvmMethodSignature = null;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\JvmProtoBuf.java:433:                            jvmMethodSignature = jvmMethodSignature2;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\JvmProtoBuf.java:463:            JvmMethodSignature jvmMethodSignature = new JvmMethodSignature(true);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\JvmProtoBuf.java:673:                JvmPropertySignature jvmPropertySignature = new JvmPropertySignature(this);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\JvmProtoBuf.java:735:                if (jvmPropertySignature == JvmPropertySignature.getDefaultInstance()) {
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\JvmProtoBuf.java:760:                JvmPropertySignature jvmPropertySignature = null;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\JvmProtoBuf.java:774:                            jvmPropertySignature = jvmPropertySignature2;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\JvmProtoBuf.java:857:            JvmPropertySignature jvmPropertySignature = new JvmPropertySignature(true);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\JvmProtoBuf.java:876:                                JvmFieldSignature jvmFieldSignature = (JvmFieldSignature) codedInputStream.readMessage(JvmFieldSignature.PARSER, extensionRegistryLite);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\JvmProtoBuf.java:885:                                JvmMethodSignature jvmMethodSignature = (JvmMethodSignature) codedInputStream.readMessage(JvmMethodSignature.PARSER, extensionRegistryLite);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\JvmProtoBuf.java:2035:        constructorSignature = GeneratedMessageLite.newSingularGeneratedExtension(defaultInstance, defaultInstance2, defaultInstance3, null, 100, fieldType, JvmMethodSignature.class);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\JvmProtoBuf.java:2036:        methodSignature = GeneratedMessageLite.newSingularGeneratedExtension(ProtoBuf.Function.getDefaultInstance(), JvmMethodSignature.getDefaultInstance(), JvmMethodSignature.getDefaultInstance(), null, 100, fieldType, JvmMethodSignature.class);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\JvmProtoBuf.java:2040:        propertySignature = GeneratedMessageLite.newSingularGeneratedExtension(ProtoBuf.Property.getDefaultInstance(), JvmPropertySignature.getDefaultInstance(), JvmPropertySignature.getDefaultInstance(), null, 100, fieldType, JvmPropertySignature.class);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\deserialization\JvmProtoBufUtil.java:131:        JvmProtoBuf.JvmMethodSignature jvmMethodSignature = (JvmProtoBuf.JvmMethodSignature) ProtoBufUtilKt.getExtensionOrNull(constructor, generatedExtension);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\deserialization\JvmProtoBufUtil.java:132:        String string = (jvmMethodSignature == null || !jvmMethodSignature.hasName()) ? "<init>" : nameResolver.getString(jvmMethodSignature.getName());
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\deserialization\JvmProtoBufUtil.java:133:        if (jvmMethodSignature == null || !jvmMethodSignature.hasDesc()) {
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\deserialization\JvmProtoBufUtil.java:162:        JvmProtoBuf.JvmPropertySignature jvmPropertySignature = (JvmProtoBuf.JvmPropertySignature) ProtoBufUtilKt.getExtensionOrNull(property, generatedExtension);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\deserialization\JvmProtoBufUtil.java:163:        if (jvmPropertySignature == null) {
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\deserialization\JvmProtoBufUtil.java:190:        JvmProtoBuf.JvmMethodSignature jvmMethodSignature = (JvmProtoBuf.JvmMethodSignature) ProtoBufUtilKt.getExtensionOrNull(function, generatedExtension);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\deserialization\JvmProtoBufUtil.java:191:        int name = (jvmMethodSignature == null || !jvmMethodSignature.hasName()) ? function.getName() : jvmMethodSignature.getName();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\metadata\jvm\deserialization\JvmProtoBufUtil.java:192:        if (jvmMethodSignature == null || !jvmMethodSignature.hasDesc()) {
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\p239km\jvm\JvmFieldSignature.java:32:        JvmFieldSignature jvmFieldSignature = (JvmFieldSignature) obj;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\p239km\jvm\JvmMethodSignature.java:32:        JvmMethodSignature jvmMethodSignature = (JvmMethodSignature) obj;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\p239km\jvm\internal\JvmConstructorExtension.java:44:        this.signature = jvmMethodSignature;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\p239km\jvm\internal\JvmFunctionExtension.java:56:        this.signature = jvmMethodSignature;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\p239km\jvm\internal\JvmMetadataExtensions.java:189:        kotlin.reflect.jvm.internal.impl.metadata.jvm.deserialization.JvmMemberSignature.Method jvmConstructorSignature = JvmProtoBufUtil.INSTANCE.getJvmConstructorSignature(constructor, readContext.getStrings(), readContext.getTypes());
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\p239km\jvm\internal\JvmMetadataExtensions.java:225:        kotlin.reflect.jvm.internal.impl.metadata.jvm.deserialization.JvmMemberSignature.Method jvmMethodSignature = JvmProtoBufUtil.INSTANCE.getJvmMethodSignature(function, readContext.getStrings(), readContext.getTypes());
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\p239km\jvm\internal\JvmMetadataExtensions.java:316:        JvmProtoBuf.JvmPropertySignature jvmPropertySignature = (JvmProtoBuf.JvmPropertySignature) ProtoBufUtilKt.getExtensionOrNull(property, generatedExtension);
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\p239km\jvm\internal\JvmMetadataExtensions.java:317:        JvmProtoBuf.JvmMethodSignature getter = (jvmPropertySignature == null || !jvmPropertySignature.hasGetter()) ? null : jvmPropertySignature.getGetter();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\p239km\jvm\internal\JvmMetadataExtensions.java:318:        JvmProtoBuf.JvmMethodSignature setter2 = (jvmPropertySignature == null || !jvmPropertySignature.hasSetter()) ? null : jvmPropertySignature.getSetter();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\p239km\jvm\internal\JvmMetadataExtensions.java:325:        JvmProtoBuf.JvmMethodSignature syntheticMethod = (jvmPropertySignature == null || !jvmPropertySignature.hasSyntheticMethod()) ? null : jvmPropertySignature.getSyntheticMethod();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\p239km\jvm\internal\JvmMetadataExtensions.java:327:        JvmProtoBuf.JvmMethodSignature delegateMethod = (jvmPropertySignature == null || !jvmPropertySignature.hasDelegateMethod()) ? null : jvmPropertySignature.getDelegateMethod();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\p239km\jvm\internal\JvmMetadataExtensions.java:421:        JvmMethodSignature signature = jvm.getSignature();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\p239km\jvm\internal\JvmMetadataExtensions.java:456:        JvmMethodSignature signature = jvm.getSignature();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\p239km\jvm\internal\JvmMetadataExtensions.java:543:            JvmFieldSignature fieldSignature = jvm.getFieldSignature();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\p239km\jvm\internal\JvmMetadataExtensions.java:555:            JvmMethodSignature getterSignature = jvm.getGetterSignature();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\p239km\jvm\internal\JvmMetadataExtensions.java:561:            JvmMethodSignature setterSignature = jvm.getSetterSignature();
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\p239km\jvm\internal\JvmPropertyExtension.java:82:        this.fieldSignature = jvmFieldSignature;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\p239km\jvm\internal\JvmPropertyExtension.java:86:        this.getterSignature = jvmMethodSignature;
+truecaller_jadx/sources\kotlin\reflect\jvm\internal\impl\p239km\jvm\internal\JvmPropertyExtension.java:94:        this.setterSignature = jvmMethodSignature;
+truecaller_jadx/sources\okhttp3\internal\Util.java:291:        return baz.m67118r(str, "Authorization", true) || baz.m67118r(str, "Cookie", true) || baz.m67118r(str, "Proxy-Authorization", true) || baz.m67118r(str, "Set-Cookie", true);
+truecaller_jadx/sources\okhttp3\internal\authenticator\JavaNetAuthenticator.java:142:                            str2 = "Authorization";
+truecaller_jadx/sources\okhttp3\internal\authenticator\JavaNetAuthenticator.java:220:                        str2 = "Authorization";
+truecaller_jadx/sources\okhttp3\internal\http\RetryAndFollowUpInterceptor.java:158:                            builderM75977b.f162000c.m75933g("Authorization");
+truecaller_jadx/sources\okhttp3\internal\http\RetryAndFollowUpInterceptor.java:233:                                            builderM75977b.f162000c.m75933g("Authorization");
+truecaller_jadx/sources\okhttp3\internal\http2\Hpack.java:478:        Header[] headerArr = {header, header2, header3, header4, header5, header6, header7, new Header(eh7Var4, "200"), new Header(eh7Var4, "204"), new Header(eh7Var4, "206"), new Header(eh7Var4, "304"), new Header(eh7Var4, "400"), new Header(eh7Var4, "404"), new Header(eh7Var4, "500"), new Header("accept-charset", ""), new Header("accept-encoding", "gzip, deflate"), new Header("accept-language", ""), new Header("accept-ranges", ""), new Header("accept", ""), new Header("access-control-allow-origin", ""), new Header("age", ""), new Header("allow", ""), new Header("authorization", ""), new Header("cache-control", ""), new Header("content-disposition", ""), new Header("content-encoding", ""), new Header("content-language", ""), new Header("content-length", ""), new Header("content-location", ""), new Header("content-range", ""), new Header("content-type", ""), new Header("cookie", ""), new Header("date", ""), new Header(DownloadModel.ETAG, ""), new Header("expect", ""), new Header("expires", ""), new Header(RemoteMessageConst.FROM, ""), new Header("host", ""), new Header("if-match", ""), new Header("if-modified-since", ""), new Header("if-none-match", ""), new Header("if-range", ""), new Header("if-unmodified-since", ""), new Header("last-modified", ""), new Header("link", ""), new Header(MRAIDNativeFeature.LOCATION, ""), new Header("max-forwards", ""), new Header("proxy-authenticate", ""), new Header("proxy-authorization", ""), new Header("range", ""), new Header("referer", ""), new Header(ToolBar.REFRESH, ""), new Header("retry-after", ""), new Header(C6435Db.f54807a, ""), new Header("set-cookie", ""), new Header("strict-transport-security", ""), new Header("transfer-encoding", ""), new Header("user-agent", ""), new Header("vary", ""), new Header("via", ""), new Header("www-authenticate", "")};
+truecaller_jadx/sources\org\chromium\net\AndroidKeyStore.java:72:            Signature signature = Signature.getInstance(str);
+truecaller_jadx/sources\p000\ag1.java:32:            str = "HmacSha1";
+truecaller_jadx/sources\p000\ag1.java:34:            str = "HmacSha256";
+truecaller_jadx/sources\p000\ag1.java:40:            str = "HmacSha512";
+truecaller_jadx/sources\p000\bd9.java:34:        this.signature = str2;
+truecaller_jadx/sources\p000\bg80.java:134:                d810 d810VarMo62309K0 = x710Var.mo62309K0("UPDATE voicemail SET recordingFilePath = ?, fileSignature = ? WHERE id = ?");
+truecaller_jadx/sources\p000\cf80.java:2425:                return new SecretKeySpec(MessageDigest.getInstance("SHA-" + length).digest(byteArrayOutputStream.toByteArray()), br6.m7811n(length, "HMACSHA"));
+truecaller_jadx/sources\p000\cfh.java:92:                    Signature signature = Signature.getInstance("Ed25519", (Provider) this.f30164e);
+truecaller_jadx/sources\p000\di00.java:119:        return "ResourceCacheKey{sourceKey=" + this.f92832c + ", signature=" + this.f92833d + ", width=" + this.f92834e + ", height=" + this.f92835f + ", decodedResourceClass=" + this.f92836g + ", transformation='" + this.f92838i + "', options=" + this.f92837h + UrlTreeKt.COMPONENT_PARAM_SUFFIX_CHAR;
+truecaller_jadx/sources\p000\edz.java:164:            Signature signature = Signature.getInstance(str2);
+truecaller_jadx/sources\p000\fwc.java:137:                secretKeySpec = new SecretKeySpec(encoded, 0, 16, "HMACSHA256");
+truecaller_jadx/sources\p000\fwc.java:142:                    secretKeySpec = new SecretKeySpec(encoded, 0, 24, "HMACSHA384");
+truecaller_jadx/sources\p000\fwc.java:148:                    secretKeySpec = new SecretKeySpec(encoded, 0, 32, "HMACSHA512");
+truecaller_jadx/sources\p000\fwc.java:306:                secretKeySpec = new SecretKeySpec(encoded, 0, 16, "HMACSHA256");
+truecaller_jadx/sources\p000\fwc.java:310:                secretKeySpec = new SecretKeySpec(encoded, 0, 24, "HMACSHA384");
+truecaller_jadx/sources\p000\fwc.java:316:                secretKeySpec = new SecretKeySpec(encoded, 0, 32, "HMACSHA512");
+truecaller_jadx/sources\p000\g2h.java:138:                    Signature signature = provider != null ? Signature.getInstance(str, provider) : Signature.getInstance(str);
+truecaller_jadx/sources\p000\g6r.java:90:            str = "HMACSHA256";
+truecaller_jadx/sources\p000\g6r.java:92:            str = "HMACSHA384";
+truecaller_jadx/sources\p000\g6r.java:97:            str = "HMACSHA512";
+truecaller_jadx/sources\p000\g7f.java:22:    static final String f108613g = "User-Agent";
+truecaller_jadx/sources\p000\g7f.java:149:        return this.f108627b.m59992b(this.f108626a, map).m56181d("User-Agent", f108615i + ujd.m89182u()).m56181d("X-CRASHLYTICS-DEVELOPER-TOKEN", "470fa2b4ae81cd56ecbcda9735803434cec591fa");
+truecaller_jadx/sources\p000\gi90.java:92:        sbM79278q.append(", fileSignature=");
+truecaller_jadx/sources\p000\gl7.java:36:            builderM75977b.m75982d("Authorization", "Bearer " + str);
+truecaller_jadx/sources\p000\h4o.java:26:        builderM75977b.m75979a("x-tc-insights-alpha-user", String.valueOf(this.f114448b));
+truecaller_jadx/sources\p000\hc4.java:759:                ((mfy) cseVar.f88377b).m71016a("Bearer " + str2, trueProfile).mo74880X(this);
+truecaller_jadx/sources\p000\hkm.java:16:        f117309a = new xis("Authorization", jlmVar);
+truecaller_jadx/sources\p000\i5n.java:32:    @nhp("Authorization")
+truecaller_jadx/sources\p000\i5n.java:112:        String str2 = (("Authorization".equalsIgnoreCase(str) || "Cookie".equalsIgnoreCase(str)) && (logger == null || !logger.isLoggable(Level.ALL))) ? "<Not Logged>" : string;
+truecaller_jadx/sources\p000\j410.java:136:        Signature signature = Signature.getInstance(this.f126353b, this.f126357f);
+truecaller_jadx/sources\p000\j9z.java:606:            Signature signature = provider != null ? Signature.getInstance(str, provider) : Signature.getInstance(str);
+truecaller_jadx/sources\p000\je00.java:58:        LinkedHashMap linkedHashMapM87332k = tfr.m87332k(tfr.m87328g(new Pair("Accept", C6375A5.f54391M), new Pair("Stripe-Version", this.f128172d), new Pair("Authorization", pya0.m79269h("Bearer ", apiRequest$Options.f75556b))), this.f128174f.m95741a());
+truecaller_jadx/sources\p000\jeh.java:139:        Signature signature = provider != null ? Signature.getInstance(str, provider) : (Signature) mzh.f149767d.f149771a.mo5382g(str);
+truecaller_jadx/sources\p000\jiz.java:81:        sb.append(", signature=");
+truecaller_jadx/sources\p000\jwj.java:22:        ((mfy) cseVar.f88377b).m71017b("Bearer " + str).mo74880X(this);
+truecaller_jadx/sources\p000\kbe.java:44:        return "DataCacheKey{sourceKey=" + this.f133994b + ", signature=" + this.f133995c + UrlTreeKt.COMPONENT_PARAM_SUFFIX_CHAR;
+truecaller_jadx/sources\p000\kdn.java:62:            ((mfy) cseVar.f88377b).m71017b("Bearer " + str).mo74880X(jwjVar);
+truecaller_jadx/sources\p000\klm.java:92:        f135621k = new xis("user-agent", jlmVar);
+truecaller_jadx/sources\p000\ko90.java:594:                    String fileSignature = voicemailRecordingResponse.getFileSignature();
+truecaller_jadx/sources\p000\ksd.java:65:            strConcat = "Bearer ".concat(strM96010b);
+truecaller_jadx/sources\p000\l730.java:251:                            httpURLConnectionM75288c.addRequestProperty("Authorization", "FIS_v2 " + str4);
+truecaller_jadx/sources\p000\lf4.java:12:        this.f140255l = str != null ? "Bearer ".concat(str) : null;
+truecaller_jadx/sources\p000\lzz.java:641:            Signature signature = Signature.getInstance(str2);
+truecaller_jadx/sources\p000\m3m.java:246:        Signature signature = (Signature) s030Var.f184102b;
+truecaller_jadx/sources\p000\mbm.java:142:        String signature = purchase.getSignature();
+truecaller_jadx/sources\p000\mdt.java:91:                strConcat = "Bearer ".concat(strM51837k);
+truecaller_jadx/sources\p000\mf4.java:14:        f146395a = new xis("Authorization", jlmVar);
+truecaller_jadx/sources\p000\mfy.java:11:    yq7<JSONObject> m71016a(@NonNull @bqm("Authorization") String str, @NonNull @zn6 TrueProfile trueProfile);
+truecaller_jadx/sources\p000\mfy.java:15:    yq7<TrueProfile> m71017b(@NonNull @bqm("Authorization") String str);
+truecaller_jadx/sources\p000\ms0.java:21:        this.signature = str2;
+truecaller_jadx/sources\p000\oqd.java:174:            if (str.startsWith("Bearer ")) {
+truecaller_jadx/sources\p000\oqd.java:201:                        if (str3.startsWith("Bearer ")) {
+truecaller_jadx/sources\p000\oqd.java:311:                e6nVar.f96771b.m61939q("Bearer " + str);
+truecaller_jadx/sources\p000\pg4.java:128:                builderM75977b.m75979a("Authorization", "Bearer ".concat(strM96010b));
+truecaller_jadx/sources\p000\pn90.java:40:        return pya0.m79275n(pya0.m79278q("VoicemailRecordingDownloadInfo(voicemailId=", this.f169696a, ", url=", this.f169697b, ", fileSignature="), this.f169698c, ")");
+truecaller_jadx/sources\p000\q010.java:145:                Signature signature = provider2 != null ? Signature.getInstance(str, provider2) : (Signature) mzh.f149767d.f149771a.mo5382g(str);
+truecaller_jadx/sources\p000\q310.java:83:        Signature signature = Signature.getInstance(this.f172087b, this.f172090e);
+truecaller_jadx/sources\p000\q9k.java:174:                    httpURLConnectionM75288c.addRequestProperty("Authorization", "FIS_v2 " + str4);
+truecaller_jadx/sources\p000\qcr.java:1026:                        String signature = userProfileResponse.getSignature();
+truecaller_jadx/sources\p000\qcr.java:1032:                        trueProfile.signature = signature;
+truecaller_jadx/sources\p000\qi7.java:33:        builderM75977b.m75982d("Authorization", "Bearer ".concat(str));
+truecaller_jadx/sources\p000\qn90.java:38:        return pya0.m79271j("VoicemailRecordingInfo(recordingFilePath=", this.f175715a, ", fileSignature=", this.f175716b, ")");
+truecaller_jadx/sources\p000\r0y.java:56:                if (!str.equals("HMACSHA1")) {
+truecaller_jadx/sources\p000\r0y.java:61:                b = !str.equals("HMACSHA224") ? (byte) -1 : (byte) 1;
+truecaller_jadx/sources\p000\r0y.java:64:                b = !str.equals("HMACSHA256") ? (byte) -1 : (byte) 2;
+truecaller_jadx/sources\p000\r0y.java:67:                b = !str.equals("HMACSHA384") ? (byte) -1 : (byte) 3;
+truecaller_jadx/sources\p000\r0y.java:70:                b = !str.equals("HMACSHA512") ? (byte) -1 : (byte) 4;
+truecaller_jadx/sources\p000\r410.java:78:                        builder.m75979a("Authorization", authHeader);
+truecaller_jadx/sources\p000\t2n.java:41:        cqm[] cqmVarArr = {cqmVar, cqmVar2, cqmVar3, cqmVar4, cqmVar5, cqmVar6, cqmVar7, new cqm(eh7Var5, "200"), new cqm(eh7Var5, "204"), new cqm(eh7Var5, "206"), new cqm(eh7Var5, "304"), new cqm(eh7Var5, "400"), new cqm(eh7Var5, "404"), new cqm(eh7Var5, "500"), new cqm("accept-charset", ""), new cqm("accept-encoding", "gzip, deflate"), new cqm("accept-language", ""), new cqm("accept-ranges", ""), new cqm("accept", ""), new cqm("access-control-allow-origin", ""), new cqm("age", ""), new cqm("allow", ""), new cqm("authorization", ""), new cqm("cache-control", ""), new cqm("content-disposition", ""), new cqm("content-encoding", ""), new cqm("content-language", ""), new cqm("content-length", ""), new cqm("content-location", ""), new cqm("content-range", ""), new cqm("content-type", ""), new cqm("cookie", ""), new cqm("date", ""), new cqm(DownloadModel.ETAG, ""), new cqm("expect", ""), new cqm("expires", ""), new cqm(RemoteMessageConst.FROM, ""), new cqm("host", ""), new cqm("if-match", ""), new cqm("if-modified-since", ""), new cqm("if-none-match", ""), new cqm("if-range", ""), new cqm("if-unmodified-since", ""), new cqm("last-modified", ""), new cqm("link", ""), new cqm(MRAIDNativeFeature.LOCATION, ""), new cqm("max-forwards", ""), new cqm("proxy-authenticate", ""), new cqm("proxy-authorization", ""), new cqm("range", ""), new cqm("referer", ""), new cqm(ToolBar.REFRESH, ""), new cqm("retry-after", ""), new cqm(C6435Db.f54807a, ""), new cqm("set-cookie", ""), new cqm("strict-transport-security", ""), new cqm("transfer-encoding", ""), new cqm("user-agent", ""), new cqm("vary", ""), new cqm("via", ""), new cqm("www-authenticate", "")};
+truecaller_jadx/sources\p000\tp30.java:567:            e6nVar.f96771b.m61939q("Bearer " + ((String) this.f198276d));
+truecaller_jadx/sources\p000\ue1.java:44:        String str = "HmacSha512";
+truecaller_jadx/sources\p000\ue1.java:45:        this.f202857f = bf1Var4.equals(bf1Var5) ? "HmacSha1" : bf1Var4.equals(bf1Var2) ? "HmacSha256" : bf1Var4.equals(bf1Var) ? "HmacSha512" : "";
+truecaller_jadx/sources\p000\ue1.java:48:            str = "HmacSha1";
+truecaller_jadx/sources\p000\ue1.java:50:            str = "HmacSha256";
+truecaller_jadx/sources\p000\uxf.java:73:                        httpURLConnection2.setRequestProperty("user-agent", "[FBAN/AudienceNetworkForAndroid;FBSN/Android]");
+truecaller_jadx/sources\p000\v290.java:70:        ((mfy) cseVar.f88377b).m71016a("Bearer " + str, trueProfile).mo74880X(new hc4(str, trueProfile, cseVar, b));
+truecaller_jadx/sources\p000\xk90.java:102:        pya0.m79285x(", fileSignature=", this.f223065k, ", fullTranscriptionAvailable=", sbM79278q, this.f223064j);
+truecaller_jadx/sources\p000\xzh.java:86:        return "EngineKey{model=" + this.f225722b + ", width=" + this.f225723c + ", height=" + this.f225724d + ", resourceClass=" + this.f225725e + ", transcodeClass=" + this.f225726f + ", signature=" + this.f225727g + ", hashCode=" + this.f225730j + ", transformations=" + this.f225728h + ", options=" + this.f225729i + UrlTreeKt.COMPONENT_PARAM_SUFFIX_CHAR;
+truecaller_jadx/sources\p000\y2y.java:380:            return new Pair("X-TC-Token", str);
