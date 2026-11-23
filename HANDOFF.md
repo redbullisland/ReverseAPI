@@ -466,5 +466,51 @@ Key design decisions to carry into the Next.js app:
 ### Repo state
 Commits after the original Eyecon work: `6e26996` (client app), `3107b46` + `acb63c6`
 (TrueCaller research/docs), `615d704` (TrueCaller provider), `86098ff` (URL display),
-`a9b9a25` + `068efa0` (auth findings + ignores), `94e95a3` (live verification + parser fix).
+`a9b9a25` + `068efa0` (auth findings + ignores), `94e95a3` (live verification + parser fix),
+`3fdbfef` (design/handoff), `064c3f0` (relay + env defaults), `0a18ebd` (Cloudflare Worker relay).
 Working tree is clean; bulky artifacts and captures are gitignored but retained on disk.
+
+---
+
+## END OF DAY 2026-11-23 — FINAL SUMMARY / NEXT SESSION
+
+### Working state
+- Next.js app in `app/`: `npm run build` passes; dev server running at **http://localhost:3000**.
+- **Eyecon: fully working**, including in the browser via the built-in same-origin rewrite relay
+  (verified HTTP 200, `TAS IF?` for `01632-027018`). Proxy field should be left blank.
+- **TrueCaller: API contract fully verified** (HTTP 200 `Tasif` via terminal `curl`), parser fixed,
+  but **not reachable from the web app** locally because its WAF fingerprints TLS: curl/Schannel
+  passes, Node/OpenSSL (next dev) gets 401/429. Browser-direct is CORS-blocked (`OPTIONS` 403).
+- Dev credentials in gitignored `app/.env.local` (CID + a 72 h installationId obtained today).
+  Never commit real tokens; copy `app/.env.example` to recreate.
+
+### User decisions / preferences carried forward
+- Both providers are required. **NumVerify is wanted later** (third provider in the design zip).
+- App must stay client-only (no API routes, no server-held secrets). User pastes their own secrets;
+  stored in browser localStorage. Vercel Root Directory = `app`.
+- Keep the design intent from `caller_id_lookup_design.zip` in mind (multi-select providers,
+  batch/CSV input, per-provider result cards, settings modal) — none implemented yet.
+- Research style: document findings in `.md`; user wants to be told what to do, not shown UI capture.
+
+### Next session — ordered
+1. **Test TrueCaller through a different TLS stack** (the only real blocker):
+   - (a) Deploy current app to **Vercel** (Root Directory `app`) and retry TrueCaller with blank
+     proxy field — the edge rewrite may pass the WAF. Cheapest first test, and deploy is needed anyway.
+   - (b) If that fails, deploy **`app/relay-worker.js`** to a free Cloudflare Worker and paste
+     `https://<worker>.workers.dev/?url={url}&{headers}` into the app's proxy template.
+   - (c) If both fail: TLS-impersonating client (`tls-client` Chrome profile) in a Vercel function,
+     or a headless-Chrome container. Less portable, but reliable.
+2. **Token lifetime / refresh questions** — see `truecaller_research/AUTH_AND_TESTING_FINDINGS.md` §8.
+   Local TTL is 72 h (today's token expires ~2026-11-26 12:11 UTC). Confirm server behaviour,
+   whether the app auto-renews, what error expiry returns, and how to refresh without OTP.
+3. **Add NumVerify provider** — easy: `GET https://apilayer.net/api/validate?access_key=...&
+   number=...&country_code=...`, direct browser fetch works (`Access-Control-Allow-Origin: *`),
+   no proxy needed. User supplies their own access key via localStorage.
+4. Revisit the design gaps (multi-provider selection, batch input, settings UI) once TrueCaller
+   reachability is settled.
+
+### Key references
+- `truecaller_research/AUTH_AND_TESTING_FINDINGS.md` §6 = live verification, §8 = open questions,
+  §9 = TLS fingerprint diagnosis, §10 = Cloudflare Worker relay + NumVerify CORS.
+- `HANDOFF.md` earlier sections = full Eyecon reverse-engineering history.
+- `tc_signin_logcat.txt`, `tc_live_response.txt` = gitignored captures kept on disk.
