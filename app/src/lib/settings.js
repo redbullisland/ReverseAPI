@@ -16,8 +16,24 @@ export const COUNTRIES = [
   { code: '', label: 'Custom / full number', placeholder: '+880 17XX XXX XXX', iso: '' },
 ];
 
+// NEXT_PUBLIC_* values are inlined into the browser bundle by Next.js. They are
+// convenience defaults only — anything pasted in the UI overrides them and is
+// persisted to localStorage by saveSettings().
+const ENV_SECRET_VALUES = {
+  eyecon: { cid: (process.env.NEXT_PUBLIC_EYECON_CLIENT_ID || '').trim() },
+  truecaller: { token: (process.env.NEXT_PUBLIC_TRUECALLER_TOKEN || '').trim() },
+};
+
 const DEFAULT_SECRETS = Object.fromEntries(
-  PROVIDERS.map((provider) => [provider.id, { ...(provider.DEFAULT_SECRETS ?? {}) }])
+  PROVIDERS.map((provider) => [
+    provider.id,
+    {
+      ...(provider.DEFAULT_SECRETS ?? {}),
+      ...Object.fromEntries(
+        Object.entries(ENV_SECRET_VALUES[provider.id] ?? {}).filter(([, value]) => value)
+      ),
+    },
+  ])
 );
 
 export const DEFAULT_SETTINGS = {

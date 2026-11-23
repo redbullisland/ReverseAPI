@@ -1,6 +1,7 @@
-// TrueCaller /v2/search — reconstructed from v26.43.5 static analysis.
-// NOT live-verified yet: the request shape is from truecaller_research/TRUE_CALLER_ENDPOINTS.md.
-// The one thing that cannot be derived statically is a real Bearer token, so the user pastes it.
+// TrueCaller /v2/search — reconstructed from v26.43.5 static analysis and LIVE-VERIFIED on
+// 2026-11-23 (see truecaller_research/AUTH_AND_TESTING_FINDINGS.md §6).
+// The Bearer value is the account's server-issued installationId (~72 h TTL); it cannot be
+// derived statically, so it comes from .env.local or is pasted into the credentials field.
 import { buildProxyRequest, fetchText } from './http';
 import { normalizeNumber } from './eyecon';
 
@@ -12,8 +13,8 @@ export const placeholder = false;
 export const SECRET_FIELDS = [
   {
     key: 'token',
-    label: 'Bearer token',
-    help: 'Paste the Authorization token from your own signed-in TrueCaller app. Stored only in this browser.',
+    label: 'Bearer token (installationId)',
+    help: 'Paste the installationId from account.xml in your own signed-in TrueCaller app. Expires ~72 h after fetch. Stored only in this browser.',
   },
   {
     key: 'host',
@@ -160,7 +161,7 @@ export async function lookup(payload) {
   } = payload;
 
   if (!String(token ?? '').trim()) {
-    throw new Error('Paste the Bearer token from your own signed-in TrueCaller app first.');
+    throw new Error('Paste your TrueCaller installationId (Bearer token) in settings first.');
   }
 
   const { cli, targetUrl, headers } = buildRequest({
@@ -191,7 +192,7 @@ export async function lookup(payload) {
       spam_text: 'Unavailable',
       error: request.proxied
         ? `CORS proxy request failed: ${err.message}`
-        : `Request blocked or failed: ${err.message}. TrueCaller sends a custom Authorization header, so a direct browser request is usually blocked — configure a CORS proxy below.`,
+        : `Request blocked or failed: ${err.message}. The built-in same-origin relay should handle CORS; set a custom proxy template below if it does not.`,
     };
   }
 
@@ -201,7 +202,7 @@ export async function lookup(payload) {
     parsed.spam_level = -1;
     parsed.spam_text = 'Unavailable';
     if (response.status === 401 || response.status === 403) {
-      error = 'TrueCaller rejected the token. Capture a fresh Bearer token from your signed-in app.';
+      error = 'TrueCaller rejected the installationId. Capture a fresh one from your signed-in app (it expires after ~72 hours).';
     } else {
       error = `Upstream returned HTTP ${response.status}.`;
     }

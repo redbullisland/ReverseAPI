@@ -189,7 +189,7 @@ export async function lookup({
       spam_text: 'Unavailable',
       error: request.proxied
         ? `CORS proxy request failed: ${err.message}`
-        : `Request blocked or failed: ${err.message}. Eyecon does not send CORS headers, so direct browser requests usually fail — configure a CORS proxy below.`,
+        : `Request blocked or failed: ${err.message}. The built-in same-origin relay should handle CORS; set a custom proxy template below if it does not.`,
     };
   }
 }

@@ -2,6 +2,15 @@
 
 const TIMEOUT_MS = 20000;
 
+// Built-in same-origin relay via next.config.mjs rewrites. Chosen automatically
+// when no external proxy template is set, so lookups work without any setup.
+const RELAYS = [
+  [/^https:\/\/api\.eyecon-app\.com\//, '/p/eyecon/'],
+  [/^https:\/\/search5-eu\.truecaller\.com\//, '/p/tc-eu/'],
+  [/^https:\/\/search5-noneu\.truecaller\.com\//, '/p/tc-noneu/'],
+  [/^https:\/\/search5\.truecaller\.com\//, '/p/tc/'],
+];
+
 /**
  * Map a direct upstream URL onto an optional, user-controlled CORS proxy.
  *
@@ -11,12 +20,25 @@ const TIMEOUT_MS = 20000;
  *   {headers}  - repeated `reqHeaders=<encoded "Name: value">` params
  *                (used by corsproxy.io to set the upstream headers)
  *
- * If no token is present, the encoded URL is appended to the template, e.g.
+ * If no template is set, a built-in same-origin relay (next.config.mjs rewrites)
+ * is used automatically for the known upstream hosts, so no user setup is needed.
+ * If no token is present in a custom template, the encoded URL is appended, e.g.
  * `https://proxy.example.com/?` becomes `https://proxy.example.com/?<encoded url>`.
  */
 export function buildProxyRequest(targetUrl, headers, proxyTemplate) {
   const template = String(proxyTemplate ?? '').trim();
-  if (!template) return { url: targetUrl, headers, proxied: false };
+  if (!template) {
+    for (const [pattern, prefix] of RELAYS) {
+      if (pattern.test(targetUrl)) {
+        return {
+          url: targetUrl.replace(pattern, prefix),
+          headers, // same origin: browser sends the user's own credentials directly
+          proxied: true,
+        };
+      }
+    }
+    return { url: targetUrl, headers, proxied: false };
+  }
 
   const headerQuery = Object.entries(headers)
     .map(([key, value]) => `reqHeaders=${encodeURIComponent(`${key}:${value}`)}`)

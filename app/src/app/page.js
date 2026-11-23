@@ -89,9 +89,10 @@ export default function Home() {
     <main style={styles.main}>
       <h1>Caller ID lookup</h1>
       <p style={styles.sub}>
-        Client-only Next.js app: requests go straight from your browser to the provider. Secrets are kept in
-        this browser&apos;s localStorage — there are no Next.js API routes. If a lookup is blocked by CORS,
-        open <strong>Advanced — CORS proxy</strong> and configure a proxy URL template.
+        No Next.js API routes: the browser sends requests through a same-origin rewrite relay
+        (config only, no server-held secrets). Your CID / installationId stays in this browser&apos;s
+        localStorage. If a lookup is blocked, you can override the relay under{' '}
+        <strong>Advanced — CORS proxy</strong>.
       </p>
 
       <form onSubmit={submit}>
@@ -192,16 +193,17 @@ export default function Home() {
         <details style={styles.card}>
           <summary style={{ cursor: 'pointer', fontWeight: 600, fontSize: 14 }}>Advanced — CORS proxy</summary>
           <p style={styles.help}>
-            <code>api.eyecon-app.com</code> sends no <code>Access-Control-Allow-Origin</code> header, and the
-            custom <code>e-auth-*</code> headers trigger a preflight that returns 401. So a direct browser
-            lookup is normally blocked. If it fails, point this at a CORS proxy you control or trust.
+            Neither upstream sends CORS headers. By default the app uses a built-in same-origin relay
+            (<code>/p/eyecon/...</code>, <code>/p/tc/...</code>) backed by <code>next.config.mjs</code> rewrites
+            — no API route, no server-held secrets. Leave this blank to use it. Only set a custom template if
+            you want to route through a proxy you control or trust.
           </p>
           <label style={styles.label}>
-            Proxy URL template (blank = direct)
+            Proxy URL template (blank = built-in relay)
             <input
               value={settings.proxyTemplate}
               onChange={(event) => patch({ proxyTemplate: event.target.value })}
-              placeholder="https://corsproxy.io/?url={url}&{headers}"
+              placeholder="https://your-proxy.example/?url={url}&{headers}"
               autoComplete="off"
               spellCheck={false}
               style={styles.input}

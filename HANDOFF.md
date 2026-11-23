@@ -398,6 +398,14 @@ deliverable; the Vite app at `http://127.0.0.1:5173` is an older reference only.
 - The Bearer value is the account's **`installationId`**, read from
   `shared_prefs/account.xml` on a debuggable rebuild of the app. It has a **72-hour TTL**
   (`installationIdTtl=259200000`). **Never commit it** — each user pastes their own in the UI.
+- The value fetched today was dated `2026-11-23T12:11:22Z`, so its local expiry estimate is
+  **`2026-11-26T12:11:22Z`**. Server-side enforcement and the refresh procedure are **open
+  questions** — recorded in `truecaller_research/AUTH_AND_TESTING_FINDINGS.md` §8; ask/investigate
+  next time.
+- Local dev convenience: both credentials are in gitignored `app/.env.local` as `NEXT_PUBLIC_*`
+  defaults; copy `app/.env.example` to create it on another machine. The UI overrides them and
+  saves to localStorage. **Next.js inlines `NEXT_PUBLIC_*` into the client bundle** — use only
+  dev/throwaway values there; real credentials belong in the browser UI.
 - Real response returned `"name":"Tasif"` for `+8801632027018` (matching Eyecon's `TAS IF?`).
 - Response shape uses `isFraud` and `feedback.feedbackType` (not `spamInfo`); the provider
   parser was corrected accordingly.
@@ -439,9 +447,17 @@ Key design decisions to carry into the Next.js app:
 - Dev server was started in the background for testing: **http://localhost:3000** → HTTP 200.
 - Tests to run before handoff: select Eyecon (CID pre-filled) → `01632-027018` → Look up;
   then TrueCaller with a **fresh** installationId pasted into the "Bearer token" field.
-- Both providers need an external CORS proxy (custom `e-auth-*` / `Authorization` headers
-  trigger preflight). Proxy template field is in the UI; `https://corsproxy.io/?url={url}&{headers}`
-  is the documented default.
+- **CORS is now handled by default**: `next.config.mjs` has same-origin rewrite prefixes
+  `/p/eyecon/`, `/p/tc/`, `/p/tc-eu/`, `/p/tc-noneu/`; `http.js` selects them automatically when
+  the proxy field is blank. No API route, no server-held secrets — the browser sends its own
+  CID/token. Eyecon verified HTTP 200 through the relay.
+- **TrueCaller caveat**: its WAF fingerprints TLS. Windows `curl` (Schannel) gets 200, but
+  Node/OpenSSL clients used by `next dev` rewrites get 401/429. The older Vite app worked only
+  because it proxied Eyecon, which does not fingerprint. Options and details in
+  `truecaller_research/AUTH_AND_TESTING_FINDINGS.md` §9. Next test: check if Vercel's edge rewrite
+  passes the WAF after deployment.
+- Public CORS proxies are not a fallback: corsproxy.io now requires a paid key and the other free
+  ones tested were dead. `app/.env.local` holds dev defaults; copy `app/.env.example` to recreate.
 
 ### Repo state
 Commits after the original Eyecon work: `6e26996` (client app), `3107b46` + `acb63c6`

@@ -200,4 +200,73 @@ Accept: application/json
 
 If the installationId is obtained, verify these remaining variables against a real response:
 host (`search5` / `search5-eu` / `search5-noneu`), `type` (`2` first, then `4`),
-and `Accept` (`application/json` vs `application/x-protobuf`).
+and `Accept` (`application/json` vs `application/x-protobuf`). Those variables were
+subsequently confirmed — see §6.
+
+## 8. OPEN QUESTIONS — ask / investigate next time
+
+Raised by the user on 2026-11-23. These were **not** answered during this session; do not
+assume the local TTL below is the server's actual behaviour.
+
+1. **How long does a copied installationId keep working?**
+   - On-device evidence: `installationIdFetchTime=1795435882180`
+     (`2026-11-23T12:11:22Z`) and `installationIdTtl=259200000` ms = **72 hours**,
+     giving a local expiry estimate of **`2026-11-26T12:11:22Z`**.
+   - Not confirmed: whether the server enforces the same TTL, or whether the value stays
+     valid for longer/shorter. Re-test the same token after the estimate passes and record
+     the exact result.
+2. **Do we have to refresh it, and how?**
+   - Does the TrueCaller app silently renew `installationId` in the background?
+   - Is there a rotation/refresh endpoint we could call, or is a fresh OTP sign-in the only
+     way? Inspect callers of `dd70.m51831e()` / `C12032ec.f97680a` and logcat around
+     `installationIdFetchTime`.
+3. **What exactly happens on expiry?**
+   - Capture the real HTTP status and JSON body. Expected 401 with a code such as
+     `40101` (cf. the `/v1/credentials/exchange` failure in §2), but this is unverified.
+     Update the provider's error text once known.
+4. **Is the token bound to the account / number / region?**
+   - `account.xml` also contains `profileNumber`, `profileCountryIso` and
+     `networkDomain=noneu`. Determine whether any of these must be sent, or whether they
+     only influence which host the app chooses.
+5. **Do hosts behave the same after rotation and for non-BD numbers?**
+   - `search5`, `search5-noneu` both worked for `+8801632027018`. Re-check `search5-eu`
+     with a EU number, and repeat the matrix after a token rotation.
+
+## 9. CORS relay experiment — TLS fingerprinting blocks TrueCaller (2026-11-23)
+
+The browser cannot call either API directly (Eyecon `OPTIONS` → 401, TrueCaller `OPTIONS` → 403,
+neither with CORS headers). Public free proxies are dead or paywalled (corsproxy.io now returns
+401 "A valid API key is required"; allorigins/codetabs/cors.eu.org/r.jina.ai also failed).
+
+A **same-origin relay** was added to the Next.js app using `next.config.mjs` rewrites only
+(`/p/eyecon/...` → api.eyecon-app.com, `/p/tc/...` → search5.truecaller.com, plus `-eu`/`-noneu`).
+No API route and no server-held secrets — the browser sends its own CID/token as request headers.
+
+Results:
+
+| Provider | Direct `curl` | Via Next.js rewrite relay |
+|---|---|---|
+| Eyecon | 200, `TAS IF?` | **200, `TAS IF?`** ✅ |
+| TrueCaller | 200, `Tasif` | **429** (empty body, `tc-event-id` header) ❌ |
+
+Diagnosis — this is **not a Next.js problem**, it is TLS client fingerprinting:
+
+- `curl` on Windows uses **Schannel** → always HTTP 200.
+- Node `fetch` / Node `https.request` (OpenSSL) → HTTP 401 `{"status":40101,"message":"Unauthorized"}`.
+- Python `urllib` (OpenSSL) → HTTP 429.
+- All from the same IP, same URL, same Authorization/Accept headers, same HTTP/1.1. Different
+  TLS ClientHello → TrueCaller's WAF accepts the Windows-native stack and rejects OpenSSL stacks.
+- This also explains why the older **Vite** reference app worked: it proxied only **Eyecon**,
+  which does not fingerprint clients. TrueCaller was never tested through that proxy.
+- Direct browser fetch is not a workaround: `OPTIONS` to `search5.truecaller.com` returns 403
+  with no `Access-Control-Allow-*`.
+
+Options if TrueCaller must work through the web app (not yet decided):
+1. Deploy and test — Vercel's edge rewrite may use a different TLS stack than local `next dev`.
+2. Add a serverless proxy using a TLS-impersonating client (`tls-client` with a Chrome profile).
+   This breaks the original "no server routes" constraint and native binaries may not deploy cleanly.
+3. Browser extension / Electron desktop wrapper that rewrites CORS headers — the browser's own
+   TLS fingerprint is then accepted, but it is no longer a plain hosted web app.
+4. Keep TrueCaller out of the hosted app and treat it as a manual verification tool only.
+
+Open question added for next time: **does Vercel's rewrite proxy pass TrueCaller's WAF?**

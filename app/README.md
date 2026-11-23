@@ -29,15 +29,30 @@ Open http://localhost:3000. Verify a production build with `npm run build`.
    **Custom / full number** and paste `+880...` or `00880...` directly.
 3. Choose **Caller ID** (name + spam level) or **Search / name history**.
 4. Paste your own Eyecon CID (`e-auth` / `clientId`) in the Credentials section. A working CID
-   is pre-filled as a convenience default, but it is fully editable and persists in localStorage.
-   The `e-auth-c` checksum is computed automatically.
-5. For **TrueCaller**, paste the Bearer token from your own signed-in app. The host (`search5`,
-   `search5-eu`, `search5-noneu`), search `type` (`2` = caller ID) and `Accept` header are editable
-   because the exact combination still needs live confirmation. The country code select supplies
-   the ISO2 `countryCode` parameter (e.g. `BD`).
+   is pre-filled as a convenience default (from `.env.local` or the built-in default), but it is
+   fully editable and persists in localStorage. The `e-auth-c` checksum is computed automatically.
+5. For **TrueCaller**, paste the Bearer token — i.e. the account's **`installationId`** — from your
+   own signed-in app. It expires roughly **72 hours** after being fetched, so refresh it when
+   lookups start returning 401. The host (`search5`, `search5-eu`, `search5-noneu`), search `type`
+   (`2` = caller ID) and `Accept` header are editable; all combinations tested so far work. The
+   country code select supplies the ISO2 `countryCode` parameter (e.g. `BD`).
 6. Click **Look up**. Names, spam flags, the request URL and the raw response are shown below.
 
 All settings and secrets live under the localStorage key `callerid-lookup:settings:v1`.
+
+### Local credential defaults (`.env.local`)
+
+Copy `app/.env.example` to `app/.env.local` and set:
+
+```text
+NEXT_PUBLIC_EYECON_CLIENT_ID=<your CID>
+NEXT_PUBLIC_TRUECALLER_TOKEN=<your TrueCaller installationId>
+```
+
+These pre-fill the credential fields on first load. Anything you paste in the UI overrides them
+and is saved to browser localStorage. **Next.js inlines `NEXT_PUBLIC_*` values into the public JS
+bundle at build time** — only put dev/throwaway values there. Never commit `.env.local`; for a
+production deployment leave these blank in Vercel and paste real credentials in the browser UI.
 
 ### TrueCaller request (live-verified)
 
@@ -62,23 +77,43 @@ Details: `truecaller_research/AUTH_AND_TESTING_FINDINGS.md` and `TRUE_CALLER_END
 
 ## CORS caveat (important)
 
-Eyecon does not allow browser cross-origin access (TrueCaller sends a custom `Authorization`
-header, so the same preflight concern applies):
+Neither upstream sends CORS headers:
 
 - `GET /app/getnames.jsp` with an `Origin` header returns HTTP 200 with the name data, but
   **no `Access-Control-Allow-Origin` response header**.
 - The custom `e-auth-*` headers trigger a CORS preflight; `OPTIONS` returns **HTTP 401** with no
-  CORS headers. Browsers therefore block the direct `fetch()` even though the same request works
-  from `curl` or a server-side proxy.
+  CORS headers. TrueCaller's `OPTIONS` returns 403. Browsers therefore block a direct `fetch()`.
 
-This is inherent to a client-only app. To work around it, expand **Advanced — CORS proxy** in the
-UI and set a proxy URL template (also stored in localStorage). Tokens:
+### Built-in same-origin relay (default)
+
+`next.config.mjs` defines **rewrites only** (no API route, no server-held secrets):
+
+| Browser calls | Upstream |
+| --- | --- |
+| `/p/eyecon/...` | `https://api.eyecon-app.com/...` |
+| `/p/tc/...` | `https://search5.truecaller.com/...` |
+| `/p/tc-eu/...` | `https://search5-eu.truecaller.com/...` |
+| `/p/tc-noneu/...` | `https://search5-noneu.truecaller.com/...` |
+
+`src/lib/providers/http.js` picks the right prefix automatically when the proxy field is blank.
+The browser still sends the user's own CID/token in request headers, so the server holds no
+secrets. **Eyecon is verified working through this relay (HTTP 200).**
+
+> **TrueCaller caveat:** TrueCaller's WAF fingerprints the TLS client. `curl` (Windows Schannel)
+> gets HTTP 200, but Node/OpenSSL clients (`next dev` rewrites, Python) get 401/429. The relay
+> therefore works for Eyecon but currently fails for TrueCaller in local dev. It may work when
+> deployed on Vercel's edge routing; otherwise a TLS-impersonating proxy or a browser extension
+> is needed. See `truecaller_research/AUTH_AND_TESTING_FINDINGS.md` §9.
+
+### Optional external proxy override
+
+Expand **Advanced — CORS proxy** in the UI to override the relay. Tokens:
 
 | Token | Meaning |
 | --- | --- |
 | `{url}` | `encodeURIComponent()` of the full upstream URL |
 | `{rawUrl}` | the full upstream URL unencoded |
-| `{headers}` | upstream headers as repeated `reqHeaders=<encoded "Name: value">` params (corsproxy.io style) |
+| `{headers}` | upstream headers as repeated `reqHeaders=<encoded "Name: value">` params |
 
 Examples:
 
@@ -88,13 +123,13 @@ https://your-proxy.example.com/?url={url}
 https://your-proxy.example.com/?{rawUrl}
 ```
 
-With no token, the encoded URL is simply appended (prefix style). When `{headers}` is present,
-the browser does not send the `e-auth-*` / `Authorization` headers itself — the proxy sets them
-upstream — so no preflight is needed. A proxy that strips or ignores custom headers will get a
+Public free proxies tested in Nov 2026 were dead/paywalled (corsproxy.io now requires an API key).
+With no token the encoded URL is appended. With `{headers}`, the browser sends no custom headers
+and the proxy sets them upstream, avoiding a preflight. A proxy that strips custom headers gets a
 401 from the provider.
 
-**Privacy:** a third-party proxy sees your CID/token and the phone numbers you look up. Use a proxy you
-control for anything sensitive. Leaving the field blank keeps requests direct (and likely CORS-blocked).
+**Privacy:** a third-party proxy sees your CID/token and the phone numbers you look up. Use one you
+control for anything sensitive. Blank = built-in relay.
 
 ## Provider architecture
 
