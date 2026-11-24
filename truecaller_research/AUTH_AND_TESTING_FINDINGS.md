@@ -305,10 +305,9 @@ Live results through the worker, with `Origin: http://localhost:3000`:
 Both responses included `Access-Control-Allow-Origin: *`. **Conclusion: Cloudflare's outbound TLS
 passes TrueCaller's WAF.** The app now defaults to this worker via
 `NEXT_PUBLIC_CORS_PROXY_TEMPLATE` (gitignored `.env.local`), so both providers work from the
-browser without a local server-side proxy. The app currently defaults to the verified temporary
-worker URL. A permanent worker was deployed at `https://callerid-relay.everse.workers.dev`, but its
-TLS certificate was not yet serving (alert 40) — switch `.env.local` to it once `curl -I` succeeds.
-The temporary account must be claimed within 1 hour of creation to keep its URL.
+browser without a local server-side proxy. The app defaults to the **permanent** worker `https://callerid-relay.everse.workers.dev`,
+which was re-verified with both providers after its TLS certificate became active. The temporary
+preview account is no longer needed.
 
 Also confirmed: **NumVerify does not need a proxy** — `OPTIONS https://apilayer.net/api/validate`
 returns `access-control-allow-origin: *` with allowed methods, so a direct browser `fetch()` works.

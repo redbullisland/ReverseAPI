@@ -464,10 +464,9 @@ Key design decisions to carry into the Next.js app:
   worker URL so both providers work out of the box; `app/.env.example` documents the variable.
   Wrangler 4.167.0 is installed globally and logged in as `redbullisland@gmail.com` (account
   `RedBull` / `30a1c3fa06575a01ad506abb4b3f2a59`). The first deploy used a temporary preview
-  account. A **permanent worker** was also deployed at
-  `https://callerid-relay.everse.workers.dev`, but its TLS certificate was not serving yet at the
-  time of writing (handshake alert 40) — keep using the verified temporary URL in `.env.local`
-  until it resolves, then switch it. Deploy command:
+  account. The **permanent worker** `https://callerid-relay.everse.workers.dev` is deployed and
+  verified (TrueCaller `Tasif`, Eyecon `TAS IF?`, both HTTP 200) and is now the URL in `.env.local`.
+  Deploy command:
   `wrangler deploy app/relay-worker.js --name callerid-relay --compatibility-date 2026-11-24`.
   NumVerify needs no proxy at all (`Access-Control-Allow-Origin: *`).
 
