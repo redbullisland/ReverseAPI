@@ -77,6 +77,11 @@ export function loadSettings() {
     }
     merged.provider = merged.providers[0];
 
+    // The single/batch screens were merged: one text field now holds all numbers.
+    if (!String(merged.number ?? '').trim() && String(merged.batchNumbers ?? '').trim()) {
+      merged.number = merged.batchNumbers;
+    }
+
     // A stale empty proxy override should fall back to the env-provided relay URL.
     if (!String(merged.proxyTemplate ?? '').trim()) {
       merged.proxyTemplate = DEFAULT_SETTINGS.proxyTemplate;

@@ -40,7 +40,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { PROVIDERS, getProvider, lookup } from '@/lib/providers';
@@ -148,7 +147,7 @@ export default function Home() {
   }
 
   const selectedCountry = COUNTRIES.find((country) => country.code === settings.dialCode);
-  const batchCount = parseNumbers(settings.batchNumbers).length;
+  const numberCount = parseNumbers(settings.number).length;
 
   function patch(patchObject) {
     setSettings((previous) => ({ ...previous, ...patchObject }));
@@ -272,8 +271,7 @@ export default function Home() {
 
   function submit(event) {
     event.preventDefault();
-    if (settings.inputMode === 'batch') runLookups(parseNumbers(settings.batchNumbers));
-    else runLookups([settings.number]);
+    runLookups(parseNumbers(settings.number));
   }
 
   async function loadCsv(event) {
@@ -281,8 +279,7 @@ export default function Home() {
     if (!file) return;
     setCsvName(file.name);
     const text = await file.text();
-    const numbers = parseNumbers(text);
-    patch({ batchNumbers: numbers.join('\n') });
+    patch({ number: parseNumbers(text).join('\n') });
     event.target.value = '';
   }
 
@@ -297,7 +294,7 @@ export default function Home() {
           <div className="flex size-9 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <Phone className="size-[18px]" />
           </div>
-          <span className="text-base font-medium">Caller ID Lookup</span>
+          <span className="text-sm font-semibold tracking-tight">Caller ID Lookup</span>
         </div>
 
         <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
@@ -403,7 +400,7 @@ export default function Home() {
         </Dialog>
       </header>
 
-      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-6 px-4 pb-12">
+      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-4 px-4 pb-8">
         {missingProvider && (
           <Alert>
             <AlertCircle className="size-4" />
@@ -422,7 +419,9 @@ export default function Home() {
         <Card>
           <div className="flex flex-wrap items-center justify-between gap-4 px-(--card-spacing) pt-(--card-spacing)">
             <div className="flex flex-col gap-1">
-              <h2 className="font-heading text-lg leading-snug font-medium">Look up a number</h2>
+              <h2 className="font-heading text-base leading-snug font-semibold tracking-tight">
+                Look up a number
+              </h2>
               <p className="text-xs text-muted-foreground">
                 Client-only lookups. Credentials stay in your browser.
               </p>
@@ -447,136 +446,80 @@ export default function Home() {
           </div>
 
           <CardContent>
-            <form onSubmit={submit} className="flex flex-col gap-4">
-              <Tabs
-                value={settings.inputMode}
-                onValueChange={(value) => patch({ inputMode: value })}
-              >
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <TabsList variant="line">
-                    <TabsTrigger value="single">Single number</TabsTrigger>
-                    <TabsTrigger value="batch">Multiple / CSV</TabsTrigger>
-                  </TabsList>
-                  {settings.inputMode === 'batch' && (
-                    <span className="text-xs tabular-nums text-muted-foreground">
-                      {batchCount} {batchCount === 1 ? 'number' : 'numbers'}
-                    </span>
-                  )}
+            <form onSubmit={submit} className="flex flex-col gap-3">
+              <div className="grid gap-3 md:grid-cols-12 md:items-end">
+                <div className="flex flex-col gap-1.5 md:col-span-3">
+                  <Label htmlFor="dial-code">Country code</Label>
+                  <Select
+                    value={countryValue(settings.dialCode)}
+                    onValueChange={(value) => patch({ dialCode: value === 'custom' ? '' : value })}
+                  >
+                    <SelectTrigger id="dial-code" className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {COUNTRIES.map((country) => (
+                        <SelectItem
+                          key={country.code || 'custom'}
+                          value={country.code || 'custom'}
+                        >
+                          {country.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
 
-                <TabsContent value="single" className="pt-4">
-                  <div className="grid gap-3 md:grid-cols-12 md:items-end">
-                    <div className="flex flex-col gap-1.5 md:col-span-4">
-                      <Label htmlFor="dial-code-single">Country code</Label>
-                      <Select
-                        value={countryValue(settings.dialCode)}
-                        onValueChange={(value) =>
-                          patch({ dialCode: value === 'custom' ? '' : value })
-                        }
-                      >
-                        <SelectTrigger id="dial-code-single" className="w-full">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {COUNTRIES.map((country) => (
-                            <SelectItem
-                              key={country.code || 'custom'}
-                              value={country.code || 'custom'}
-                            >
-                              {country.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="flex flex-col gap-1.5 md:col-span-5">
-                      <Label htmlFor="phone-single">Phone number</Label>
-                      <Input
-                        id="phone-single"
-                        type="tel"
-                        inputMode="tel"
-                        value={settings.number}
-                        onChange={(event) => patch({ number: event.target.value })}
-                        placeholder={selectedCountry?.placeholder ?? '017XX XXX XXX'}
-                      />
-                    </div>
-                    <div className="md:col-span-3">
-                      <Button type="submit" className="w-full" disabled={busy}>
-                        {busy ? (
-                          <LoaderCircle className="animate-spin" />
-                        ) : (
-                          <Search />
-                        )}
-                        {busy ? 'Looking up…' : 'Look up'}
-                      </Button>
-                    </div>
+                <div className="flex flex-col gap-1.5 md:col-span-6">
+                  <div className="flex items-baseline justify-between gap-2">
+                    <Label htmlFor="phone-numbers">Phone number(s)</Label>
+                    <span className="text-xs tabular-nums text-muted-foreground">
+                      {numberCount} {numberCount === 1 ? 'number' : 'numbers'}
+                    </span>
                   </div>
-                </TabsContent>
+                  <Textarea
+                    id="phone-numbers"
+                    rows={2}
+                    className="min-h-16 font-mono"
+                    value={settings.number}
+                    onChange={(event) => patch({ number: event.target.value })}
+                    placeholder="01632-027018, 01711-004521"
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    One number or many — separate with commas or new lines.
+                  </p>
+                </div>
 
-                <TabsContent value="batch" className="pt-4">
-                  <div className="flex flex-col gap-3">
-                    <div className="grid gap-3 md:grid-cols-12 md:items-start">
-                      <div className="flex flex-col gap-1.5 md:col-span-4">
-                        <Label htmlFor="dial-code-batch">Default country code</Label>
-                        <Select
-                          value={countryValue(settings.dialCode)}
-                          onValueChange={(value) =>
-                            patch({ dialCode: value === 'custom' ? '' : value })
-                          }
-                        >
-                          <SelectTrigger id="dial-code-batch" className="w-full">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {COUNTRIES.map((country) => (
-                              <SelectItem
-                                key={country.code || 'custom'}
-                                value={country.code || 'custom'}
-                              >
-                                {country.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="flex flex-col gap-1.5 md:col-span-8">
-                        <Label htmlFor="phone-batch">
-                          Phone numbers (comma or newline separated)
-                        </Label>
-                        <Textarea
-                          id="phone-batch"
-                          rows={3}
-                          className="font-mono"
-                          value={settings.batchNumbers}
-                          onChange={(event) => patch({ batchNumbers: event.target.value })}
-                          placeholder="01632-027018, 01711-004521"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                      <input
-                        ref={csvInputRef}
-                        type="file"
-                        accept=".csv,text/csv"
-                        className="hidden"
-                        onChange={loadCsv}
-                      />
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() => csvInputRef.current?.click()}
-                      >
-                        <Upload />
-                        {csvName || 'Upload .csv'}
-                      </Button>
-                      <Button type="submit" disabled={busy}>
-                        {busy ? <LoaderCircle className="animate-spin" /> : <Search />}
-                        {busy ? 'Looking up…' : 'Look up all'}
-                      </Button>
-                    </div>
+                <div className="flex flex-col gap-1.5 md:col-span-3">
+                  <span className="text-xs font-medium text-muted-foreground">Actions</span>
+                  <div className="flex gap-1.5">
+                    <input
+                      ref={csvInputRef}
+                      type="file"
+                      accept=".csv,text/csv"
+                      className="hidden"
+                      onChange={loadCsv}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      title="Upload .csv"
+                      aria-label="Upload .csv"
+                      onClick={() => csvInputRef.current?.click()}
+                    >
+                      <Upload />
+                    </Button>
+                    <Button type="submit" className="flex-1" disabled={busy}>
+                      {busy ? <LoaderCircle className="animate-spin" /> : <Search />}
+                      {busy ? 'Working…' : 'Look up'}
+                    </Button>
                   </div>
-                </TabsContent>
-              </Tabs>
+                  {csvName && (
+                    <p className="truncate text-xs text-muted-foreground">Loaded {csvName}</p>
+                  )}
+                </div>
+              </div>
 
               <div className="flex flex-col gap-2 pt-1 sm:flex-row sm:items-center sm:gap-6">
                 <span className="text-xs text-muted-foreground">Mode</span>
@@ -614,7 +557,7 @@ export default function Home() {
           <section className="flex flex-col gap-3">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex flex-wrap items-baseline gap-3">
-                <h2 className="text-base font-medium">Results</h2>
+                <h2 className="text-sm font-semibold tracking-tight">Results</h2>
                 {results[0].cli && (
                   <span className="font-mono text-sm text-muted-foreground">{results[0].cli}</span>
                 )}

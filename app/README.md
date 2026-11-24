@@ -28,11 +28,12 @@ the Stitch design refs in `caller_id_lookup_design.zip`.
 
 1. In the **provider toggle group**, enable one or more of **Eyecon**, **TrueCaller**
    (both live-verified end-to-end). **NumVerify** is shown as a disabled placeholder for later.
-2. Pick a country code (Bangladesh `+880` is the default) and type a number, e.g. `01632-027018`.
-   A leading trunk `0` is stripped when the country code is added. You can also choose
-   **Custom / full number** and paste `+880...` or `00880...` directly.
-3. Use **Multiple / CSV** to look up several numbers from a comma/newline-separated list or an
-   uploaded `.csv`; each number gets its own group of provider cards.
+2. Pick a country code (Bangladesh `+880` is the default) and type a number in **Phone number(s)**,
+   e.g. `01632-027018`. A leading trunk `0` is stripped when the country code is added. You can
+   also choose **Custom / full number** and paste `+880...` or `00880...` directly.
+3. The input is a single merged field: enter one number, or several separated by commas/new lines,
+   or load a `.csv` with the upload button. The count updates live and each number gets its own
+   group of provider cards.
 4. Choose **Caller ID** (name + spam level) or **Search / name history**, then click **Look up**
    (or **Look up all**). Results appear as one card per provider with names, spam badge, carrier
    and HTTP status. **Request URL & raw response** expands for debugging.

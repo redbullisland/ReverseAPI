@@ -538,13 +538,15 @@ Wrangler deploy command:
 The earlier temporary preview worker (`humdrum-bell.workers.dev`) is no longer needed.
 
 ### Design refs implemented with shadcn/ui
-`app/` now uses Tailwind v4 + shadcn/ui (Radix, neutral base theme; theming intentionally deferred).
+`app/` now uses Tailwind v4 + shadcn/ui (Radix, custom work-tool theme: slate-blue palette, 15px
+base, Inter/Segoe UI + JetBrains Mono, tabular numerals, **0px radius** everywhere).
 `components.json`, `postcss.config.mjs`, `src/app/globals.css`, `src/components/ui/*` added.
 `src/app/page.js` was rebuilt around the Stitch lookup screen:
 
 - Header with brand mark + **Settings** button (Radix Dialog).
 - Multi-select **provider toggle group** (Eyecon + TrueCaller; NumVerify disabled placeholder).
-- **Single number** / **Multiple / CSV** tabs, count label, `.csv` upload.
+- **Merged single view**: one **Phone number(s)** field for one or many numbers (comma/newline),
+  live count, `.csv` upload — no separate tabs/screens.
 - **Caller ID** / **Search / name history** radio group.
 - **Per-provider result cards** (names, spam badge, carrier, HTTP status) grouped per input number.
 - Expandable **Request URL & raw response** section.
@@ -560,4 +562,3 @@ and TrueCaller `Tasif`; batch lookup of two numbers returned four HTTP 200 provi
 ### Still open
 - NumVerify provider (direct browser fetch works; no proxy needed).
 - TrueCaller token lifetime/refresh questions (§8 of the auth findings).
-- Theming (user wants to do this later).
