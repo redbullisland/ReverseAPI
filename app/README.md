@@ -42,27 +42,30 @@ Open http://localhost:3000. Verify a production build with `npm run build`.
 
 ## UI walkthrough
 
-The UI is built with **shadcn/ui** (Tailwind v4, Radix, neutral base theme). The structure follows
-the Stitch design refs in `caller_id_lookup_design.zip`.
+The UI is built with **shadcn/ui** (Tailwind v4 + Radix) and a square-cornered, names-first design
+based on the Stitch design refs in `caller_id_lookup_design.zip`.
 
-1. In the **provider toggle group**, enable one or more of **Eyecon**, **TrueCaller**
-   (both live-verified end-to-end). **NumVerify** is shown as a disabled placeholder for later.
-2. Pick a country code (Bangladesh `+880` is the default) and type a number in **Phone number(s)**,
+1. If a source needs credentials, a single status strip at the top says exactly which value to add
+   and offers **Open Settings**. The **Settings** button in the header opens the same dialog.
+2. In **Sources**, keep one or more providers enabled — **Eyecon**, **TrueCaller**, or both
+   (both live-verified end-to-end). Active sources show a checkmark.
+3. Pick a country code (Bangladesh `+880` is the default) and type a number in **Phone numbers**,
    e.g. `01632-027018`. A leading trunk `0` is stripped when the country code is added. You can
    also choose **Custom / full number** and paste `+880...` or `00880...` directly.
-3. The input is a single merged field: enter one number, or several separated by commas/new lines,
-   or load a `.csv` with the upload button. The count updates live and each number gets its own
-   group of provider cards.
-4. Choose **Caller ID** or **Search / name history**, then click **Look up**. Results are
-   **names-first**: one bordered panel per number, with a numbered name list and small source tags
-   showing which provider supplied each name. HTTP/proxy/mode noise is hidden; a spam warning only
-   appears when a provider actually flags one. Raw request/response is collapsed under
-   **Technical details** for debugging.
-5. Open **Settings** to edit credentials and enable/disable providers. Eyecon needs your CID
-   (`e-auth` / `clientId`); the `e-auth-c` checksum is computed automatically. TrueCaller needs the
-   Bearer token — the account's **`installationId`** — which expires roughly **72 hours** after
-   being fetched. Host (`search5`, `search5-eu`, `search5-noneu`), search `type` (`2` = caller ID)
-   and `Accept` header are editable. The country select supplies the ISO2 `countryCode` (e.g. `BD`).
+4. The input is a single merged field: enter one number, or several separated by commas/new lines,
+   or load a `.csv` with **Upload .csv**. The count beside **Mode** updates live ("No numbers yet"
+   when empty), and each number gets its own result panel.
+5. Choose **Caller ID** (current caller) or **Name history** (past names), then click **Look up**.
+   Results are **names-first**: one bordered panel per number, with the highest-ranked name large
+   and smaller source chips showing which provider supplied each name. HTTP/proxy/mode noise stays
+   out of the main view; a spam warning only appears when a source actually flags one. Raw
+   request/response is collapsed under **Technical details**.
+6. In **Settings**, paste credentials for the providers you enabled, then **Save settings**. Eyecon
+   needs your CID (`e-auth` / `clientId`); the `e-auth-c` checksum is computed automatically.
+   TrueCaller needs the Bearer token — the account's **`installationId`** — which expires roughly
+   **72 hours** after being fetched. Host (`search5`, `search5-eu`, `search5-noneu`), search `type`
+   (`2` = caller ID) and `Accept` header are editable under **Advanced · relay / CORS proxy**.
+   The country select supplies the ISO2 `countryCode` (e.g. `BD`).
 
 All settings and secrets live under the localStorage key `callerid-lookup:settings:v1`. Empty saved
 values fall back to the env defaults so a stale browser entry cannot erase a working credential.

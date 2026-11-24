@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@500;600;700&family=Radio+Canada+Big:wght@400;500;600;700&family=Red+Hat+Mono:wght@400;500&display=swap');
 @import 'tailwindcss';
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -5,9 +6,18 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-heading: var(--font-sans);
-  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: "JetBrains Mono", "Cascadia Code", "Consolas", ui-monospace, monospace;
+  --font-heading: "Afacad Flux", "Radio Canada Big", "Segoe UI", sans-serif;
+  --font-sans: "Radio Canada Big", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "Red Hat Mono", "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-blue: var(--brand-blue);
+  --color-surface-low: var(--surface-low);
+  --color-outline-variant: var(--outline-variant);
+  --color-success: var(--success);
+  --color-success-container: var(--success-container);
+  --color-error-container: var(--error-container);
+  --color-error-ink: var(--error-ink);
 
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -52,72 +62,82 @@
 }
 
 :root {
-  --background: oklch(0.975 0.005 250);
-  --foreground: oklch(0.22 0.025 255);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.22 0.025 255);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.22 0.025 255);
-  --primary: oklch(0.44 0.13 258);
-  --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.945 0.008 250);
-  --secondary-foreground: oklch(0.26 0.025 255);
-  --muted: oklch(0.955 0.006 250);
-  --muted-foreground: oklch(0.51 0.02 255);
-  --accent: oklch(0.93 0.02 252);
-  --accent-foreground: oklch(0.25 0.04 255);
-  --destructive: oklch(0.55 0.2 25);
-  --border: oklch(0.89 0.01 250);
-  --input: oklch(0.89 0.01 250);
-  --ring: oklch(0.55 0.12 258);
-  --chart-1: oklch(0.55 0.13 258);
-  --chart-2: oklch(0.65 0.09 230);
-  --chart-3: oklch(0.75 0.05 220);
-  --chart-4: oklch(0.45 0.08 260);
-  --chart-5: oklch(0.35 0.06 260);
+  --brand-dark: #1E293B;
+  --brand-blue: #2563EB;
+  --surface: #F8FAFC;
+  --surface-low: #F1F5F9;
+  --outline-variant: #CBD5E1;
+  --success: #15803D;
+  --success-container: #DCFCE7;
+  --error-container: #FFDAD6;
+  --error-ink: #93000A;
+
+  --background: #F8FAFC;
+  --foreground: #191B23;
+  --card: #FFFFFF;
+  --card-foreground: #191B23;
+  --popover: #FFFFFF;
+  --popover-foreground: #191B23;
+  --primary: #2563EB;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F1F5F9;
+  --secondary-foreground: #1E293B;
+  --muted: #F1F5F9;
+  --muted-foreground: #434655;
+  --accent: #EEF2FF;
+  --accent-foreground: #1E293B;
+  --destructive: #BA1A1A;
+  --border: #CBD5E1;
+  --input: #CBD5E1;
+  --ring: #2563EB;
+  --chart-1: #2563EB;
+  --chart-2: #004AC6;
+  --chart-3: #495C95;
+  --chart-4: #15803D;
+  --chart-5: #BA1A1A;
   --radius: 0;
-  --sidebar: oklch(0.965 0.006 250);
-  --sidebar-foreground: oklch(0.22 0.025 255);
-  --sidebar-primary: oklch(0.44 0.13 258);
-  --sidebar-primary-foreground: oklch(0.99 0 0);
-  --sidebar-accent: oklch(0.93 0.02 252);
-  --sidebar-accent-foreground: oklch(0.25 0.04 255);
-  --sidebar-border: oklch(0.89 0.01 250);
-  --sidebar-ring: oklch(0.55 0.12 258);
+  --sidebar: #F1F5F9;
+  --sidebar-foreground: #191B23;
+  --sidebar-primary: #2563EB;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #EEF2FF;
+  --sidebar-accent-foreground: #1E293B;
+  --sidebar-border: #CBD5E1;
+  --sidebar-ring: #2563EB;
 }
 
 .dark {
-  --background: oklch(0.16 0.015 255);
-  --foreground: oklch(0.95 0.005 250);
-  --card: oklch(0.21 0.018 255);
-  --card-foreground: oklch(0.95 0.005 250);
-  --popover: oklch(0.21 0.018 255);
-  --popover-foreground: oklch(0.95 0.005 250);
-  --primary: oklch(0.68 0.13 255);
-  --primary-foreground: oklch(0.16 0.02 255);
-  --secondary: oklch(0.27 0.02 255);
-  --secondary-foreground: oklch(0.95 0.005 250);
-  --muted: oklch(0.26 0.02 255);
-  --muted-foreground: oklch(0.7 0.02 255);
-  --accent: oklch(0.3 0.03 255);
-  --accent-foreground: oklch(0.95 0.005 250);
-  --destructive: oklch(0.7 0.18 25);
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 16%);
-  --ring: oklch(0.6 0.12 255);
-  --chart-1: oklch(0.68 0.13 255);
-  --chart-2: oklch(0.7 0.09 230);
-  --chart-3: oklch(0.8 0.05 220);
-  --chart-4: oklch(0.55 0.08 260);
-  --chart-5: oklch(0.45 0.06 260);
-  --sidebar: oklch(0.19 0.015 255);
-  --sidebar-foreground: oklch(0.95 0.005 250);
-  --sidebar-primary: oklch(0.68 0.13 255);
-  --sidebar-primary-foreground: oklch(0.16 0.02 255);
-  --sidebar-accent: oklch(0.3 0.03 255);
-  --sidebar-accent-foreground: oklch(0.95 0.005 250);
-  --sidebar-border: oklch(1 0 0 / 12%);
-  --sidebar-ring: oklch(0.6 0.12 255);
+  --background: #11131B;
+  --foreground: #E1E2ED;
+  --card: #191B23;
+  --card-foreground: #E1E2ED;
+  --popover: #191B23;
+  --popover-foreground: #E1E2ED;
+  --primary: #B4C5FF;
+  --primary-foreground: #002A78;
+  --secondary: #282A32;
+  --secondary-foreground: #E1E2ED;
+  --muted: #282A32;
+  --muted-foreground: #C3C6D7;
+  --accent: #33467E;
+  --accent-foreground: #E1E2ED;
+  --destructive: #FFB4AB;
+  --border: #434655;
+  --input: #434655;
+  --ring: #B4C5FF;
+  --chart-1: #B4C5FF;
+  --chart-2: #A4B6F5;
+  --chart-3: #8D90A0;
+  --chart-4: #15803D;
+  --chart-5: #BA1A1A;
+  --sidebar: #191B23;
+  --sidebar-foreground: #E1E2ED;
+  --sidebar-primary: #B4C5FF;
+  --sidebar-primary-foreground: #002A78;
+  --sidebar-accent: #33467E;
+  --sidebar-accent-foreground: #E1E2ED;
+  --sidebar-border: #434655;
+  --sidebar-ring: #B4C5FF;
 }
 
 @layer base {
@@ -125,11 +145,12 @@
     @apply border-border outline-ring/50;
   }
   html {
-    font-size: 15px;
+    font-size: 16px;
     @apply font-sans;
   }
   body {
     @apply bg-background text-foreground antialiased;
+    font-size: 15px;
     font-variant-numeric: tabular-nums;
   }
   ::selection {
@@ -140,4 +161,105 @@
   kbd {
     @apply font-mono;
   }
+}
+
+/*
+ * Unlayered so these work-tool primitives reliably win over the utility classes
+ * baked into the shadcn components. Every rule keeps square corners.
+ */
+.btn {
+  @apply inline-flex h-9 shrink-0 items-center justify-center gap-2 border border-transparent px-3 text-[13px] font-medium whitespace-nowrap transition-colors outline-none select-none focus-visible:ring-2 focus-visible:ring-primary/25 disabled:pointer-events-none disabled:opacity-50;
+}
+.btn-primary {
+  @apply border-brand-blue bg-brand-blue text-white hover:bg-[#004AC6];
+}
+.btn-secondary {
+  @apply border-border bg-card text-foreground hover:bg-muted;
+}
+.btn-compact {
+  @apply h-8 px-2.5 text-[12px];
+}
+.field-label {
+  @apply mb-1.5 flex h-4 items-center text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground;
+}
+.kicker {
+  @apply text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground;
+}
+.control {
+  @apply h-10 w-full min-w-0 border border-input bg-card px-3 text-[14px] text-foreground transition-colors outline-none placeholder:text-[#737686] focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/15 disabled:pointer-events-none disabled:opacity-50;
+}
+.control-compact {
+  @apply h-9 px-2.5 text-[13px];
+}
+.control-textarea {
+  @apply h-20 min-h-20 resize-none py-2 font-mono text-[13px] leading-5;
+}
+.segment-group {
+  @apply inline-flex h-9 border border-border bg-card;
+}
+.segment-group-sm {
+  @apply h-8;
+}
+.segment-button {
+  @apply inline-flex h-full flex-1 items-center justify-center gap-1.5 px-3 text-[12px] font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary/25 focus-visible:outline-none sm:flex-none;
+}
+.segment-button-sm {
+  @apply px-2.5;
+}
+.segment-button[data-active='true'] {
+  @apply bg-brand-blue text-white hover:bg-brand-blue;
+}
+.ui-panel {
+  @apply border border-border bg-card;
+}
+.ui-panel-header {
+  @apply border-b border-border bg-muted/40 px-5 py-3;
+}
+.checkbox-square,
+.radio-square,
+.radio-square span {
+  border-radius: 0 !important;
+}
+.dialog-shell {
+  width: calc(100% - 24px);
+  max-width: 560px;
+  padding: 0 !important;
+  gap: 0 !important;
+  border-radius: 0 !important;
+}
+.dialog-header {
+  gap: 4px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.dialog-title {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 600;
+}
+.dialog-description {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--muted-foreground);
+}
+.dialog-footer {
+  margin: 0 !important;
+  padding: 12px 20px !important;
+  flex-direction: row !important;
+  justify-content: flex-end;
+  border-radius: 0 !important;
+}
+.raw-block {
+  max-height: 224px;
+  overflow: auto;
+  border: 1px solid var(--border);
+  background: var(--muted);
+  padding: 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--muted-foreground);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }

@@ -2,7 +2,7 @@ import './globals.css';
 
 export const metadata = {
   title: 'Caller ID Lookup',
-  description: 'Name and spam lookups for phone numbers',
+  description: 'Names-first caller ID and spam lookups for phone numbers',
 };
 
 export default function RootLayout({ children }) {

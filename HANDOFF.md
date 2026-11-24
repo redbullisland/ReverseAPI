@@ -565,3 +565,41 @@ and TrueCaller `Tasif`; batch lookup of two numbers returned four HTTP 200 provi
 ### Still open
 - NumVerify provider (direct browser fetch works; no proxy needed).
 - TrueCaller token lifetime/refresh questions (§8 of the auth findings).
+
+---
+
+## UPDATE 2026-11-24 — UI polish + redeploy
+
+### Presentation-only redesign
+`app/src/app/page.js`, `globals.css`, `layout.js` and `app/README.md` were updated without touching
+provider, settings or relay logic. The redesign follows the Stitch refs more closely: Afacad Flux
+headings, Radio Canada Big body, Red Hat Mono numbers, the exact #1E293B / #2563EB / #F8FAFC
+palette, and strict 4/8/12/16/24px spacing. All corners remain **0px**.
+
+UX fixes:
+
+- One compact status strip replaces stacked alerts and gives first-run visitors a direct
+  **Open Settings** action; the header Settings button remains the secondary entry point.
+- Country, phone number and action labels share a baseline; controls line up on one row.
+- Mode is now a compact **Caller ID / Name history** segment with a short meaning cue.
+- The count moved out of the button row and reads **No numbers yet** when empty.
+- Results keep names dominant: ranked numbered list, large primary name, quieter secondary names,
+  small source chips, spam badge only when flagged. HTTP/proxy/mode details stay collapsed.
+- Loading, empty and no-name states are deliberate panels instead of raw text.
+
+### Static build and deployment
+Removed a leftover dynamic `@opennextjs/cloudflare` import from `app/next.config.mjs`; it depended
+on an undeclared package left over from the failed OpenNext experiment. The static export was
+rebuilt with `.env.local` temporarily hidden and only the public relay URL inlined. Secret scan of
+`out/` was clean. Deployed with:
+
+```
+wrangler pages deploy out --project-name callerid-lookup --branch main
+```
+
+Deployment: **https://f00558f1.callerid-lookup.pages.dev**
+(alias: **https://callerid-lookup.pages.dev**).
+
+Browser verification on the live alias: no console errors, no horizontal overflow, zero elements
+with non-zero `border-radius`, correct fonts, first-run status strip visible, no credentials in the
+DOM or bundle. Local live lookup verification returned Eyecon `TAS IF?` and TrueCaller `Tasif`.
