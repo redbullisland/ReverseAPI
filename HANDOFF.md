@@ -355,7 +355,8 @@ WHPX(10.0.26200) is installed and usable.
 - CID extracted from app data (SQLite, **not** XML):
   - `EyeconSharedPreference` stores prefs in table `shared_preference_v2` of `databases/contactdb`.
   - Query: `sqlite3 contactdb_live.db "SELECT key,data FROM shared_preference_v2 WHERE key='clientId';"`
-  - **CID = `976f3b43-253a-48fa-a49a-d76be98e3d88`**
+  - **CID = (redacted)** — was hardcoded as a convenience default, now removed from source; supply
+    your own via localStorage Settings or gitignored `.env.local`.
   - Important gotcha: a raw binary grep showed `...3d8844` because `44` was the next field's
     type marker byte. Use sqlite3 to get the exact value.
   - Checksum (`e-auth-c`) = **38**.

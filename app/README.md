@@ -4,12 +4,31 @@ Browser-only caller-ID / spam lookup UI for Eyecon and TrueCaller.
 There are **no Next.js API routes**: every lookup is a `fetch()` made directly from the user's
 browser. Secrets are pasted in the UI and saved in that browser's `localStorage`.
 
-## Vercel setup
+## Deployment — Cloudflare Pages (current)
 
-- **Root Directory:** `app`
-- Framework preset: Next.js (auto-detected)
-- Build command: `npm run build` (default)
-- No environment variables are required or used for lookups.
+Live: **https://callerid-lookup.pages.dev**
+
+The site is a **static export**: no Next.js server runtime, no API routes, and no credentials in
+the bundle. Cloudflare Pages serves `out/` as plain files; the Cloudflare Worker supplies CORS.
+
+From `D:\ReverseAPI\app` in Git Bash (temporarily hide `.env.local` so no local secrets are inlined):
+
+```bash
+mv .env.local .env.local.bak
+STATIC_EXPORT=1 \
+  NEXT_PUBLIC_CORS_PROXY_TEMPLATE='https://callerid-relay.everse.workers.dev/?url={url}&{headers}' \
+  npm run build
+mv .env.local.bak .env.local
+wrangler pages deploy out --project-name callerid-lookup --branch main
+```
+
+`STATIC_EXPORT=1` switches `next.config.mjs` from local dev rewrites to `output: 'export'`. If the
+Pages project ever needs recreating, use `wrangler pages project create callerid-lookup
+--production-branch main --force` — without `--force`, Wrangler delegates to Workers/OpenNext and
+runs an unwanted server build. Do not add a `wrangler.jsonc` to this app; Pages will try to use it.
+
+Vercel would also work (Root Directory `app`), but offers no benefit here: the app needs no server
+features and TrueCaller still depends on the external worker.
 
 ## Local dev
 
@@ -47,6 +66,8 @@ the Stitch design refs in `caller_id_lookup_design.zip`.
 
 All settings and secrets live under the localStorage key `callerid-lookup:settings:v1`. Empty saved
 values fall back to the env defaults so a stale browser entry cannot erase a working credential.
+**No working credentials are compiled into the deployed site** — visitors paste their own once in
+Settings and that browser remembers them.
 
 ### Local credential defaults (`.env.local`)
 
@@ -55,12 +76,12 @@ Copy `app/.env.example` to `app/.env.local` and set:
 ```text
 NEXT_PUBLIC_EYECON_CLIENT_ID=<your CID>
 NEXT_PUBLIC_TRUECALLER_TOKEN=<your TrueCaller installationId>
+NEXT_PUBLIC_CORS_PROXY_TEMPLATE=https://callerid-relay.everse.workers.dev/?url={url}&{headers}
 ```
 
-These pre-fill the credential fields on first load. Anything you paste in the UI overrides them
-and is saved to browser localStorage. **Next.js inlines `NEXT_PUBLIC_*` values into the public JS
-bundle at build time** — only put dev/throwaway values there. Never commit `.env.local`; for a
-production deployment leave these blank in Vercel and paste real credentials in the browser UI.
+These pre-fill the credential fields on first load for local development only. **Next.js inlines
+`NEXT_PUBLIC_*` values into the public JS bundle at build time**, so the Cloudflare Pages build is
+made with `.env.local` removed and only the public relay URL supplied. Never commit `.env.local`.
 
 ### TrueCaller request (live-verified)
 

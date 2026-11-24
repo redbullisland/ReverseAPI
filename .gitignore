@@ -64,12 +64,14 @@ coverage/
 .turbo/
 .vercel/
 .wrangler/
+.open-next/
 *.tsbuildinfo
 next-env.d.ts
 
 # --- Local environment / secrets (example templates stay tracked) ---
 .env
 .env.*
+.dev.vars*
 !.env.example
 !.env.*.example
 

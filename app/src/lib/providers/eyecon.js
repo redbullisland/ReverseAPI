@@ -5,8 +5,6 @@ export const id = 'eyecon';
 export const name = 'Eyecon';
 export const placeholder = false;
 
-export const DEFAULT_CID = '976f3b43-253a-48fa-a49a-d76be98e3d88';
-
 export const SECRET_FIELDS = [
   {
     key: 'cid',
@@ -15,7 +13,7 @@ export const SECRET_FIELDS = [
   },
 ];
 
-export const DEFAULT_SECRETS = { cid: DEFAULT_CID };
+export const DEFAULT_SECRETS = { cid: '' };
 
 const BASE_URL = 'https://api.eyecon-app.com/app/getnames.jsp';
 const APSVERSION = 'vc_785_vn_4.2026.08.27.2228_a';
@@ -136,7 +134,8 @@ export async function lookup({
   source = DEFAULT_SOURCE,
   proxyTemplate = '',
 }) {
-  const cleanCid = String(cid ?? '').trim() || DEFAULT_CID;
+  const cleanCid = String(cid ?? '').trim();
+  if (!cleanCid) throw new Error('Paste your Eyecon client ID (e-auth / CID) in settings first.');
   if (!['callerid', 'search'].includes(mode)) throw new Error('Invalid lookup mode.');
 
   const { cli, targetUrl, headers } = buildRequest({
