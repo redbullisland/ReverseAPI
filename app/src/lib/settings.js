@@ -43,7 +43,7 @@ export const DEFAULT_SETTINGS = {
   mode: 'callerid',
   lang: 'en',
   source: 'callerid-web',
-  proxyTemplate: '',
+  proxyTemplate: (process.env.NEXT_PUBLIC_CORS_PROXY_TEMPLATE || '').trim(),
   secrets: DEFAULT_SECRETS,
 };
 

@@ -284,8 +284,26 @@ Deploy via Cloudflare dashboard (Workers & Pages → Create Worker → paste the
 Then in the app set **Proxy URL template** to
 `https://<your-worker>.workers.dev/?url={url}&{headers}`.
 
-This is the cheapest portable test of whether a non-OpenSSL TLS stack passes TrueCaller's WAF.
-Not yet verified — no Cloudflare account/CLI was available in this session.
+### VERIFIED 2026-11-24 ✅
+
+Wrangler 4.167.0 installed; first deployment used `--temporary` (no login required):
+
+```text
+Deployed callerid-relay → https://callerid-relay.humdrum-bell.workers.dev
+```
+
+Live results through the worker, with `Origin: http://localhost:3000`:
+
+| Provider | Result |
+|---|---|
+| TrueCaller `/v2/search` (`+8801632027018`) | **HTTP 200**, `"name":"Tasif"` |
+| Eyecon `/app/getnames.jsp` (`8801632027018`) | **HTTP 200**, `[{"name":"TAS IF?"}]` |
+
+Both responses included `Access-Control-Allow-Origin: *`. **Conclusion: Cloudflare's outbound TLS
+passes TrueCaller's WAF.** The app now defaults to this worker via
+`NEXT_PUBLIC_CORS_PROXY_TEMPLATE` (gitignored `.env.local`), so both providers work from the
+browser without a local server-side proxy. The temporary account must be claimed within 1 hour
+of creation, otherwise deploy permanently after `wrangler login`.
 
 Also confirmed: **NumVerify does not need a proxy** — `OPTIONS https://apilayer.net/api/validate`
 returns `access-control-allow-origin: *` with allowed methods, so a direct browser `fetch()` works.

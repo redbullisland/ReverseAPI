@@ -99,11 +99,12 @@ Neither upstream sends CORS headers:
 The browser still sends the user's own CID/token in request headers, so the server holds no
 secrets. **Eyecon is verified working through this relay (HTTP 200).**
 
-> **TrueCaller caveat:** TrueCaller's WAF fingerprints the TLS client. `curl` (Windows Schannel)
-> gets HTTP 200, but Node/OpenSSL clients (`next dev` rewrites, Python) get 401/429. The relay
-> therefore works for Eyecon but currently fails for TrueCaller in local dev. It may work when
-> deployed on Vercel's edge routing; otherwise a TLS-impersonating proxy or a browser extension
-> is needed. See `truecaller_research/AUTH_AND_TESTING_FINDINGS.md` §9.
+> **TrueCaller caveat — SOLVED:** TrueCaller's WAF fingerprints the TLS client and rejects
+> Node/OpenSSL (401/429). The built-in rewrite relay therefore only works for Eyecon. Deploy
+> `relay-worker.js` to a free Cloudflare Worker and set `NEXT_PUBLIC_CORS_PROXY_TEMPLATE`
+> (or the UI proxy field) to `https://<worker>.workers.dev/?url={url}&{headers}`. **Verified
+> 2026-11-24:** both TrueCaller (`Tasif`) and Eyecon (`TAS IF?`) return HTTP 200 through it with
+> `Access-Control-Allow-Origin: *`. See `truecaller_research/AUTH_AND_TESTING_FINDINGS.md` §10.
 
 ### Optional external proxy override
 

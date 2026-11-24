@@ -458,10 +458,13 @@ Key design decisions to carry into the Next.js app:
   passes the WAF after deployment.
 - Public CORS proxies are not a fallback: corsproxy.io now requires a paid key and the other free
   ones tested were dead. `app/.env.local` holds dev defaults; copy `app/.env.example` to recreate.
-- **Portable TrueCaller relay:** `app/relay-worker.js` is a free Cloudflare Worker (paste into the
-  dashboard or `wrangler deploy`). Set the app's proxy template to
-  `https://<worker>.workers.dev/?url={url}&{headers}`. This tests whether Cloudflare's TLS stack
-  passes the WAF. NumVerify needs no proxy at all — its API sends `Access-Control-Allow-Origin: *`.
+- **TrueCaller relay — VERIFIED 2026-11-24:** `app/relay-worker.js` deployed as a free Cloudflare
+  Worker. Its TLS stack passes TrueCaller's WAF: `Tasif` returned HTTP 200 with
+  `Access-Control-Allow-Origin: *`. `app/.env.local` sets `NEXT_PUBLIC_CORS_PROXY_TEMPLATE` to the
+  worker URL so both providers work out of the box; `app/.env.example` documents the variable.
+  Wrangler 4.167.0 is installed globally. The first deploy used a **temporary preview account** —
+  claim it within 1 hour or re-deploy after `wrangler login`. NumVerify needs no proxy at all
+  (`Access-Control-Allow-Origin: *`).
 
 ### Repo state
 Commits after the original Eyecon work: `6e26996` (client app), `3107b46` + `acb63c6`
