@@ -14,7 +14,7 @@ import {
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Collapsible,
@@ -60,52 +60,100 @@ function countryValue(dialCode) {
   return dialCode || 'custom';
 }
 
-function statusVariant(level) {
-  if (level === 0) return 'default';
-  if (level > 0) return 'destructive';
-  return 'secondary';
+function formatE164(cli, fallback) {
+  const digits = String(cli ?? '').replace(/\D/g, '');
+  if (!digits) return fallback;
+  if (digits.startsWith('880') && digits.length === 13) {
+    return `+880 ${digits.slice(3, 7)}-${digits.slice(7)}`;
+  }
+  return `+${digits}`;
 }
 
-function ProviderResultCard({ result, mode }) {
+/** Merge names from every provider so names — not providers — lead the result. */
+function collectNames(results) {
+  const byName = new Map();
+  for (const result of results) {
+    for (const rawName of result.names ?? []) {
+      const name = String(rawName).trim();
+      if (!name) continue;
+      const key = name.toLowerCase();
+      if (!byName.has(key)) byName.set(key, { name, sources: [] });
+      const entry = byName.get(key);
+      if (!entry.sources.includes(result.providerName)) entry.sources.push(result.providerName);
+    }
+  }
+  return [...byName.values()];
+}
+
+function NumberResult({ group }) {
+  const names = collectNames(group.results);
+  const flagged = group.results.some((result) => result.spam_level > 0);
+  const failures = group.results
+    .map((result) => result.error)
+    .filter(Boolean);
+
   return (
-    <Card className="h-full">
-      <CardHeader>
-        <CardTitle className="flex flex-wrap items-center justify-between gap-2">
-          <span>{result.providerName}</span>
-          <Badge variant={statusVariant(result.spam_level)}>{result.spam_text}</Badge>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="flex flex-1 flex-col gap-3">
-        <div className="flex flex-col gap-2">
-          <p className="text-xs font-medium text-muted-foreground">
-            Names{result.names?.length ? ` (${result.names.length})` : ''}
-          </p>
-          {result.names?.length ? (
-            <ul className="flex flex-col gap-1.5">
-              {result.names.map((name, index) => (
-                <li key={`${name}-${index}`} className="flex items-start gap-2">
-                  <span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" />
-                  <span className={index === 0 ? 'font-medium' : 'text-muted-foreground'}>{name}</span>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-sm text-muted-foreground">No names found</p>
-          )}
+    <section className="border border-border bg-card">
+      <header className="flex flex-wrap items-center justify-between gap-3 border-b bg-muted/40 px-4 py-2.5">
+        <div className="flex items-baseline gap-3">
+          <span className="text-[10px] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
+            Number
+          </span>
+          <span className="font-mono text-sm font-medium tracking-wide">
+            {formatE164(group.cli, group.number)}
+          </span>
         </div>
-        {result.entries?.[0]?.carrier && (
-          <p className="text-xs text-muted-foreground">Carrier: {result.entries[0].carrier}</p>
-        )}
-        {result.error && <p className="text-xs text-destructive">{result.error}</p>}
-      </CardContent>
-      <CardFooter className="justify-between gap-2 text-xs text-muted-foreground">
-        <span>
-          HTTP {result.status}
-          {result.proxied ? ' · via proxy' : ''}
-        </span>
-        <span>{mode === 'search' ? 'Search / name history' : 'Caller ID'}</span>
-      </CardFooter>
-    </Card>
+        <div className="flex flex-wrap items-center gap-2">
+          {flagged && <Badge variant="destructive">Spam flagged</Badge>}
+          <span className="text-xs tabular-nums text-muted-foreground">
+            {names.length} {names.length === 1 ? 'name' : 'names'} · {group.results.length}{' '}
+            {group.results.length === 1 ? 'source' : 'sources'}
+          </span>
+        </div>
+      </header>
+
+      {names.length > 0 ? (
+        <ol className="divide-y">
+          {names.map((item, index) => (
+            <li key={item.name} className="flex items-start gap-3 px-4 py-3">
+              <span className="w-6 shrink-0 pt-1 text-right font-mono text-xs text-muted-foreground/70">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <div className="flex min-w-0 flex-1 flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                <span
+                  className={
+                    index === 0
+                      ? 'text-2xl font-semibold tracking-tight text-foreground'
+                      : 'text-lg font-medium text-foreground/85'
+                  }
+                >
+                  {item.name}
+                </span>
+                <div className="flex flex-wrap gap-1">
+                  {item.sources.map((source) => (
+                    <Badge
+                      key={source}
+                      variant="outline"
+                      className="px-1.5 py-0 text-[10px] font-normal"
+                    >
+                      {source}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p className="px-4 py-8 text-center text-sm text-muted-foreground">
+          No names found from any source.
+        </p>
+      )}
+
+      {failures.length > 0 && (
+        <p className="border-t px-4 py-2 text-xs text-muted-foreground">{failures.join(' · ')}</p>
+      )}
+    </section>
   );
 }
 
@@ -115,7 +163,6 @@ export default function Home() {
   const [draft, setDraft] = useState(null);
   const [csvName, setCsvName] = useState('');
   const [results, setResults] = useState([]);
-  const [runMeta, setRunMeta] = useState(null);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
   const csvInputRef = useRef(null);
@@ -260,11 +307,6 @@ export default function Home() {
     }
 
     setResults(groups);
-    setRunMeta({
-      mode: settings.mode,
-      providers: selectedProviders.map((provider) => provider.name),
-      count: list.length,
-    });
     if (errors.length) setError(errors.join('\n'));
     setBusy(false);
   }
@@ -553,36 +595,17 @@ export default function Home() {
           </Alert>
         )}
 
-        {results.length > 0 && runMeta && (
-          <section className="flex flex-col gap-3">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="flex flex-wrap items-baseline gap-3">
-                <h2 className="text-sm font-semibold tracking-tight">Results</h2>
-                {results[0].cli && (
-                  <span className="font-mono text-sm text-muted-foreground">{results[0].cli}</span>
-                )}
-              </div>
-              <Badge variant="outline">
-                {runMeta.providers.join(', ')} ·{' '}
-                {runMeta.mode === 'search' ? 'Search / name history' : 'Caller ID'}
-              </Badge>
+        {results.length > 0 && (
+          <section className="flex flex-col gap-4">
+            <div className="flex items-baseline justify-between gap-3 border-b pb-2">
+              <h2 className="text-sm font-semibold tracking-tight">Names found</h2>
+              <span className="text-xs tabular-nums text-muted-foreground">
+                {results.length} {results.length === 1 ? 'number' : 'numbers'} looked up
+              </span>
             </div>
 
             {results.map((group, groupIndex) => (
-              <div key={`${group.number}-${groupIndex}`} className="flex flex-col gap-2">
-                {results.length > 1 && (
-                  <p className="text-xs text-muted-foreground">Input: {group.number}</p>
-                )}
-                <div className="grid gap-3 md:grid-cols-2">
-                  {group.results.map((result, resultIndex) => (
-                    <ProviderResultCard
-                      key={`${result.providerId}-${resultIndex}`}
-                      result={result}
-                      mode={runMeta.mode}
-                    />
-                  ))}
-                </div>
-              </div>
+              <NumberResult key={`${group.number}-${groupIndex}`} group={group} />
             ))}
 
             <Collapsible>
@@ -593,7 +616,7 @@ export default function Home() {
                   className="-ml-2 text-muted-foreground [&[data-state=open]_svg]:rotate-90"
                 >
                   <ChevronRight className="transition-transform" />
-                  Request URL &amp; raw response
+                  Technical details · request &amp; raw response
                 </Button>
               </CollapsibleTrigger>
               <CollapsibleContent className="flex flex-col gap-3 pt-2">

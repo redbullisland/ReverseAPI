@@ -548,8 +548,10 @@ base, Inter/Segoe UI + JetBrains Mono, tabular numerals, **0px radius** everywhe
 - **Merged single view**: one **Phone number(s)** field for one or many numbers (comma/newline),
   live count, `.csv` upload — no separate tabs/screens.
 - **Caller ID** / **Search / name history** radio group.
-- **Per-provider result cards** (names, spam badge, carrier, HTTP status) grouped per input number.
-- Expandable **Request URL & raw response** section.
+- **Names-first results** (user feedback: names are the tool's prime goal): one panel per input
+  number with a numbered, merged name list (deduplicated across providers), large primary name,
+  small source tags, and a spam warning only when flagged. HTTP status / proxy / mode / carrier
+  removed from the main view; raw request/response collapsed under **Technical details**.
 - Settings modal with per-provider enable checkboxes, credential fields, `e-auth-c` preview and
   the advanced CORS proxy template. Cancel discards draft changes.
 

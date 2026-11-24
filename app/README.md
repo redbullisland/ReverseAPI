@@ -34,9 +34,11 @@ the Stitch design refs in `caller_id_lookup_design.zip`.
 3. The input is a single merged field: enter one number, or several separated by commas/new lines,
    or load a `.csv` with the upload button. The count updates live and each number gets its own
    group of provider cards.
-4. Choose **Caller ID** (name + spam level) or **Search / name history**, then click **Look up**
-   (or **Look up all**). Results appear as one card per provider with names, spam badge, carrier
-   and HTTP status. **Request URL & raw response** expands for debugging.
+4. Choose **Caller ID** or **Search / name history**, then click **Look up**. Results are
+   **names-first**: one bordered panel per number, with a numbered name list and small source tags
+   showing which provider supplied each name. HTTP/proxy/mode noise is hidden; a spam warning only
+   appears when a provider actually flags one. Raw request/response is collapsed under
+   **Technical details** for debugging.
 5. Open **Settings** to edit credentials and enable/disable providers. Eyecon needs your CID
    (`e-auth` / `clientId`); the `e-auth-c` checksum is computed automatically. TrueCaller needs the
    Bearer token — the account's **`installationId`** — which expires roughly **72 hours** after
