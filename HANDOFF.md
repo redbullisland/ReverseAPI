@@ -521,3 +521,43 @@ Working tree is clean; bulky artifacts and captures are gitignored but retained 
   §9 = TLS fingerprint diagnosis, §10 = Cloudflare Worker relay + NumVerify CORS.
 - `HANDOFF.md` earlier sections = full Eyecon reverse-engineering history.
 - `tc_signin_logcat.txt`, `tc_live_response.txt` = gitignored captures kept on disk.
+
+---
+
+## UPDATE 2026-11-24 — TrueCaller relay solved + shadcn UI
+
+### TrueCaller reachability — RESOLVED
+Wrangler 4.167.0 installed and logged in; deployed `app/relay-worker.js` to a permanent free worker:
+**https://callerid-relay.everse.workers.dev** (account `RedBull` /
+`30a1c3fa06575a01ad506abb4b3f2a59`). Cloudflare's outbound TLS passes the WAF. Verified through
+the worker with `Origin: http://localhost:3000`: TrueCaller HTTP 200 `Tasif`; Eyecon HTTP 200
+`TAS IF?`; both with `Access-Control-Allow-Origin: *`. The URL is the default
+`NEXT_PUBLIC_CORS_PROXY_TEMPLATE` in gitignored `app/.env.local`; `app/.env.example` documents it.
+Wrangler deploy command:
+`wrangler deploy app/relay-worker.js --name callerid-relay --compatibility-date 2026-11-24`.
+The earlier temporary preview worker (`humdrum-bell.workers.dev`) is no longer needed.
+
+### Design refs implemented with shadcn/ui
+`app/` now uses Tailwind v4 + shadcn/ui (Radix, neutral base theme; theming intentionally deferred).
+`components.json`, `postcss.config.mjs`, `src/app/globals.css`, `src/components/ui/*` added.
+`src/app/page.js` was rebuilt around the Stitch lookup screen:
+
+- Header with brand mark + **Settings** button (Radix Dialog).
+- Multi-select **provider toggle group** (Eyecon + TrueCaller; NumVerify disabled placeholder).
+- **Single number** / **Multiple / CSV** tabs, count label, `.csv` upload.
+- **Caller ID** / **Search / name history** radio group.
+- **Per-provider result cards** (names, spam badge, carrier, HTTP status) grouped per input number.
+- Expandable **Request URL & raw response** section.
+- Settings modal with per-provider enable checkboxes, credential fields, `e-auth-c` preview and
+  the advanced CORS proxy template. Cancel discards draft changes.
+
+`src/lib/settings.js` now persists `providers[]`, `inputMode`, `batchNumbers` and keeps the legacy
+`provider` field in sync. Empty saved secret/proxy values fall back to env defaults.
+
+Live browser verification (2026-11-24, no console errors): single lookup returned Eyecon `TAS IF?`
+and TrueCaller `Tasif`; batch lookup of two numbers returned four HTTP 200 provider results.
+
+### Still open
+- NumVerify provider (direct browser fetch works; no proxy needed).
+- TrueCaller token lifetime/refresh questions (§8 of the auth findings).
+- Theming (user wants to do this later).

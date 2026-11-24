@@ -23,22 +23,27 @@ Open http://localhost:3000. Verify a production build with `npm run build`.
 
 ## UI walkthrough
 
-1. Pick a provider: **Eyecon** or **TrueCaller** — both live-verified end-to-end.
+The UI is built with **shadcn/ui** (Tailwind v4, Radix, neutral base theme). The structure follows
+the Stitch design refs in `caller_id_lookup_design.zip`.
+
+1. In the **provider toggle group**, enable one or more of **Eyecon**, **TrueCaller**
+   (both live-verified end-to-end). **NumVerify** is shown as a disabled placeholder for later.
 2. Pick a country code (Bangladesh `+880` is the default) and type a number, e.g. `01632-027018`.
    A leading trunk `0` is stripped when the country code is added. You can also choose
    **Custom / full number** and paste `+880...` or `00880...` directly.
-3. Choose **Caller ID** (name + spam level) or **Search / name history**.
-4. Paste your own Eyecon CID (`e-auth` / `clientId`) in the Credentials section. A working CID
-   is pre-filled as a convenience default (from `.env.local` or the built-in default), but it is
-   fully editable and persists in localStorage. The `e-auth-c` checksum is computed automatically.
-5. For **TrueCaller**, paste the Bearer token — i.e. the account's **`installationId`** — from your
-   own signed-in app. It expires roughly **72 hours** after being fetched, so refresh it when
-   lookups start returning 401. The host (`search5`, `search5-eu`, `search5-noneu`), search `type`
-   (`2` = caller ID) and `Accept` header are editable; all combinations tested so far work. The
-   country code select supplies the ISO2 `countryCode` parameter (e.g. `BD`).
-6. Click **Look up**. Names, spam flags, the request URL and the raw response are shown below.
+3. Use **Multiple / CSV** to look up several numbers from a comma/newline-separated list or an
+   uploaded `.csv`; each number gets its own group of provider cards.
+4. Choose **Caller ID** (name + spam level) or **Search / name history**, then click **Look up**
+   (or **Look up all**). Results appear as one card per provider with names, spam badge, carrier
+   and HTTP status. **Request URL & raw response** expands for debugging.
+5. Open **Settings** to edit credentials and enable/disable providers. Eyecon needs your CID
+   (`e-auth` / `clientId`); the `e-auth-c` checksum is computed automatically. TrueCaller needs the
+   Bearer token — the account's **`installationId`** — which expires roughly **72 hours** after
+   being fetched. Host (`search5`, `search5-eu`, `search5-noneu`), search `type` (`2` = caller ID)
+   and `Accept` header are editable. The country select supplies the ISO2 `countryCode` (e.g. `BD`).
 
-All settings and secrets live under the localStorage key `callerid-lookup:settings:v1`.
+All settings and secrets live under the localStorage key `callerid-lookup:settings:v1`. Empty saved
+values fall back to the env defaults so a stale browser entry cannot erase a working credential.
 
 ### Local credential defaults (`.env.local`)
 
@@ -108,7 +113,7 @@ secrets. **Eyecon is verified working through this relay (HTTP 200).**
 
 ### Optional external proxy override
 
-Expand **Advanced — CORS proxy** in the UI to override the relay. Tokens:
+Open **Settings → Advanced → CORS proxy** to override the relay. Tokens:
 
 | Token | Meaning |
 | --- | --- |
@@ -141,8 +146,10 @@ control for anything sensitive. Blank = built-in relay.
 - `src/lib/providers/truecaller.js` — live-verified `/v2/search` provider; needs a user-pasted installationId.
 - `src/lib/providers/index.js` — registry and `lookup(providerId, payload)` dispatcher.
 - `src/lib/providers/http.js` — shared fetch/timeout and proxy-URL mapping helpers.
-- `src/lib/settings.js` — country list, defaults and localStorage persistence.
-- `src/app/page.js` — the `'use client'` UI.
+- `src/lib/settings.js` — country list, defaults and localStorage persistence (multi-provider,
+  single/batch mode, credentials, proxy template).
+- `src/app/page.js` — the `'use client'` UI (shadcn components from `src/components/ui/`).
+- `src/app/globals.css` / `components.json` / `postcss.config.mjs` — Tailwind v4 + shadcn setup.
 
 Both providers expose `SECRET_FIELDS` / `DEFAULT_SECRETS` and a single `lookup()`; the UI,
 persistence and result rendering pick up new fields automatically. Verified request details for

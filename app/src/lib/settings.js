@@ -37,9 +37,14 @@ const DEFAULT_SECRETS = Object.fromEntries(
 );
 
 export const DEFAULT_SETTINGS = {
+  // `providers` is the source of truth for the multi-select UI. `provider` is kept
+  // in sync as the first active provider for the provider lookup helpers.
+  providers: [DEFAULT_PROVIDER],
   provider: DEFAULT_PROVIDER,
+  inputMode: 'single',
   dialCode: '+880',
   number: '',
+  batchNumbers: '',
   mode: 'callerid',
   lang: 'en',
   source: 'callerid-web',
@@ -55,12 +60,28 @@ export function loadSettings() {
 
     const secrets = { ...DEFAULT_SECRETS };
     for (const provider of PROVIDERS) {
-      secrets[provider.id] = {
-        ...DEFAULT_SECRETS[provider.id],
-        ...(saved.secrets?.[provider.id] ?? {}),
-      };
+      // Ignore empty saved values so a stale localStorage entry cannot erase an
+      // env-provided default (NEXT_PUBLIC_* is a dev convenience only).
+      const savedSecrets = Object.fromEntries(
+        Object.entries(saved.secrets?.[provider.id] ?? {}).filter(([, value]) =>
+          String(value ?? '').trim()
+        )
+      );
+      secrets[provider.id] = { ...DEFAULT_SECRETS[provider.id], ...savedSecrets };
     }
-    return { ...DEFAULT_SETTINGS, ...saved, secrets };
+    const merged = { ...DEFAULT_SETTINGS, ...saved, secrets };
+
+    // Migrate the old single-provider settings shape.
+    if (!Array.isArray(merged.providers) || merged.providers.length === 0) {
+      merged.providers = [merged.provider || DEFAULT_PROVIDER];
+    }
+    merged.provider = merged.providers[0];
+
+    // A stale empty proxy override should fall back to the env-provided relay URL.
+    if (!String(merged.proxyTemplate ?? '').trim()) {
+      merged.proxyTemplate = DEFAULT_SETTINGS.proxyTemplate;
+    }
+    return merged;
   } catch {
     return DEFAULT_SETTINGS;
   }
