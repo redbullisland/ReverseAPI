@@ -1,7 +1,8 @@
 # Eyecon Caller ID & Spam Block — decompilation / endpoint map
 
 APK: `Eyecon Caller ID & Spam Block v4.2026.08.27.2228 [FileCR].apk`
-Copied to: `eyecon.apk` (simple filename; the original `&` broke the apktool wrapper at exit)
+A temporary `eyecon_tool.apk` copy is used for tools because the original `&` breaks
+the apktool wrapper at exit; `README.md` creates and deletes it around each regeneration.
 
 Package: `com.eyecon.global`
 Launcher activity: `com.eyecon.global.MainScreen.MainActivity`
@@ -172,7 +173,7 @@ from the hardcoded values above.
   `throw null;`. For genuinely broken methods, read smali:
   `eyecon_apktool/smali_classes4/com/eyecon/global/Network/ApiEndpointConfig$1.smali`
 - If you need raw bytecode-level output instead, use:
-  `jadx --deobf --decompilation-mode fallback -d eyecon_jadx_fallback eyecon.apk`
+  `jadx --deobf --decompilation-mode fallback -d eyecon_jadx_fallback eyecon_tool.apk`
 - Mod artifacts: `p000/Xpk8a.java` (9mod updater) and
   `bin/p020mt/signature/pokie.java` referencing `ApkSignatureKillerEx` confirm this is a
   repackaged/modded APK, not a stock Play Store build.

@@ -19,7 +19,7 @@
   Next.js `app/`, and the TrueCaller notes in `truecaller_research/`.
 - **Not tracked (see `.gitignore`):** APKs, `*_apktool/`, `*_jadx/`, `*_jadx_badcode/`,
   Frida binaries, `*.msi`/`*.xz`, logs, runtime DBs, `node_modules/`, `.next/`,
-  `.vercel/`, and local `.env*` files (except `*.env.example` templates). These stay
+  `.vercel/`, `.wrangler/`, and local `.env*` files (except `*.env.example` templates). These stay
   on disk or in the local environment. Do not attempt to commit them. Regeneration
   commands are in `README.md`.
 
@@ -59,6 +59,8 @@
 
 ## Current state
 
-Eyecon research complete (real CID + live lookups working). Three parallel tasks are
-under way: root hygiene (`GIT_WORKFLOW.md`), the client-only Next.js app in `app/`,
-and TrueCaller research in `truecaller_research/`. The main agent handles all commits.
+Eyecon and TrueCaller research are complete and live-verified end-to-end. The
+client-only app in `app/` is deployed to Cloudflare Pages at
+**https://callerid-lookup.pages.dev** and uses the Cloudflare Worker relay
+**https://callerid-relay.everse.workers.dev**. Root hygiene is documented in
+`GIT_WORKFLOW.md` and `README.md`. The main agent handles all commits.

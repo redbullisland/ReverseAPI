@@ -61,7 +61,7 @@ So although no Bearer header is needed, the endpoint still validates the install
   - User approved on device; result was a 47-byte empty archive. The manifest has
     `android:allowBackup="true"` plus `android:backupAgent="com.truecaller.TruecallerBackupAgent"`
     and `fullBackupOnly="true"`, so the custom agent excluded auth data.
-- Existing `logcat_phone.txt` (30 MB):
+- Previous `logcat_phone.txt` capture (30 MB; removed during the 2026-11-24 root cleanup):
   - No TrueCaller Bearer/installationId values. The `Token=CAM...` hit was a
     Google Play Services `PhenotypeModule` `serverToken`, unrelated.
 - Stock app is **not debuggable** (`run-as com.truecaller` → "package not debuggable").

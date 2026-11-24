@@ -21,10 +21,10 @@ frontend that reproduces their name + spam lookups.
 | `eyecon_hook*.js` | yes | Frida hook scripts used for dynamic analysis |
 | `eyecon_lookup_react/` | yes | Working Vite+React webapp (reference; CID pre-filled) |
 | `eyecon_lookup_webapp/` | yes | Original plain Python/HTML prototype (reference) |
-| `app/` | yes | **Client-only Next.js app for Vercel** (no API routes) |
+| `app/` | yes | **Client-only Next.js app deployed to Cloudflare Pages** (no API routes) |
 | `truecaller_research/` | yes | TrueCaller notes, plan, and grep results |
-| `.env*`, `.vercel/` | no | Local secrets and deploy metadata (gitignored) |
-| `eyecon.apk`, `Truecaller*.apk` | no | Source APKs (keep on disk, gitignored) |
+| `.env*`, `.vercel/`, `.wrangler/` | no | Local secrets and deploy metadata (gitignored) |
+| `Eyecon... [FileCR].apk`, `Truecaller... [FileCR].apk` | no | Source APKs (keep on disk, gitignored) |
 | `eyecon_apktool/`, `eyecon_jadx*/` | no | Decompiled trees (regenerate; see below) |
 | `frida-*`, `*.msi`, `*.xz`, `*.zip` | no | Downloaded tools/binaries (gitignored) |
 | `contactdb*.db`, `logcat_*.txt` | no | Captured runtime data (gitignored) |
@@ -40,7 +40,7 @@ frontend that reproduces their name + spam lookups.
 Tools used (installed locally, not in this repo):
 
 - **apktool** — `C:\Users\redbull\Tools\apktool\apktool.jar`
-- **jadx** — GUI `jadx-gui-1.5.7.msi` / CLI on PATH, or `D:\ReverseAPI\jadx-gui-1.5.7.msi`
+- **jadx** — CLI on PATH; the GUI installer can be re-downloaded if needed
 - Java (for apktool/jadx), Python 3.13 (for Frida CLI), Node.js (for the webapps)
 
 ### Eyecon
@@ -48,14 +48,20 @@ Tools used (installed locally, not in this repo):
 ```bat
 cd D:\ReverseAPI
 
+:: the original filename contains '&', which breaks the apktool wrapper on exit;
+:: make a short temporary tool copy, then remove it after decompiling
+copy /Y "Eyecon Caller ID & Spam Block v4.2026.08.27.2228 [FileCR].apk" eyecon_tool.apk
+
 :: resource + smali ground truth (needed for Frida hook method names)
-java -jar C:\Users\redbull\Tools\apktool\apktool.jar d -f eyecon.apk -o eyecon_apktool
+java -jar C:\Users\redbull\Tools\apktool\apktool.jar d -f eyecon_tool.apk -o eyecon_apktool
 
 :: deobfuscated Java sources
-jadx -d eyecon_jadx eyecon.apk
+jadx -d eyecon_jadx eyecon_tool.apk
 
 :: second pass with bad-code shown (helps some obfuscated methods)
-jadx --deobf --show-bad-code -d eyecon_jadx_badcode eyecon.apk
+jadx --deobf --show-bad-code -d eyecon_jadx_badcode eyecon_tool.apk
+
+del eyecon_tool.apk
 ```
 
 ### TrueCaller
@@ -66,8 +72,8 @@ java -jar C:\Users\redbull\Tools\apktool\apktool.jar d -f "Truecaller - Phone Ca
 jadx --deobf -d truecaller_jadx "Truecaller - Phone Call Blocker v26.43.5 [FileCR].apk"
 ```
 
-> Use the short `eyecon.apk` copy for tools — the original filename contains `&`,
-> which breaks the apktool wrapper on exit.
+> The original filename contains `&`; the commands above create a temporary short
+> `eyecon_tool.apk` copy for tools and delete it when finished.
 
 ---
 
@@ -99,12 +105,14 @@ npm run dev -- --host 127.0.0.1
 Vite middleware in `vite.config.js` exposes `/api/lookup` so the browser avoids
 Eyecon's CORS/custom-header restrictions. The CID is pre-filled in `src/App.jsx`.
 
-### Production (client-only Next.js for Vercel) — `app/`
+### Production (client-only Next.js on Cloudflare Pages) — `app/`
 
-Vercel setup: **Root Directory = `app`**. There are **no Next.js API routes**: each
-lookup is a direct `fetch()` from the browser, with an optional user-supplied CORS
-proxy template (Eyecon sends no CORS headers for its custom-header requests).
-Credentials are pasted in the UI and stored in that browser's `localStorage`; no
-secrets live in source or environment variables. Both Eyecon and TrueCaller providers are
-implemented and live-verified; users paste their own CID / installationId in the UI.
-See `app/README.md`, `truecaller_research/TRUE_CALLER_ENDPOINTS.md`, and `GIT_WORKFLOW.md`.
+Deployed at **https://callerid-lookup.pages.dev** from the `app/` root directory.
+Cloudflare Pages serves a static export (`STATIC_EXPORT=1`); there are **no Next.js API
+routes** or server-held secrets. Browser lookups go through the public Cloudflare Worker
+relay in `app/relay-worker.js` (**https://callerid-relay.everse.workers.dev**), whose URL
+is the default proxy template. Credentials are pasted in the UI and stored in that
+browser's `localStorage`; no real CID or installationId is bundled. Both Eyecon and
+TrueCaller providers are implemented and live-verified; users paste their own CID /
+installationId in the UI. See `app/README.md`,
+`truecaller_research/TRUE_CALLER_ENDPOINTS.md`, and `GIT_WORKFLOW.md`.

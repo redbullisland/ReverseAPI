@@ -8,7 +8,8 @@
 
 - Work only inside `D:\ReverseAPI`.
 - Target APK: `D:\ReverseAPI\Eyecon Caller ID & Spam Block v4.2026.08.27.2228 [FileCR].apk`.
-- Copy used for tools: `D:\ReverseAPI\eyecon.apk` (original filename has `&`, which breaks apktool wrapper).
+- A temporary `D:\ReverseAPI\eyecon_tool.apk` copy is used for tools (original filename has `&`,
+  which breaks apktool wrapper); `README.md` creates and deletes it around regeneration.
 - Webapp scope is **only** `GET /app/getnames.jsp`:
   - **Name + spam** (`is_callerid=true`)
   - **Name history** (all `name` values from the same response / search variant)
@@ -227,13 +228,13 @@ $adb = "C:\Users\redbull\AppData\Local\Android\Sdk\platform-tools\adb.exe"
 $adb = "C:\Users\redbull\AppData\Local\Android\Sdk\platform-tools\adb.exe"
 & $adb root
 & $adb shell id                 # expect uid=0(root)
-& $adb install -r D:\ReverseAPI\eyecon.apk
+& $adb install -r D:\ReverseAPI\eyecon_tool.apk
 ```
 If install verification blocks:
 ```powershell
 & $adb shell settings put global package_verifier_enable 0
 & $adb shell settings put global verify_apps_over_usb 0
-& $adb install -r D:\ReverseAPI\eyecon.apk
+& $adb install -r D:\ReverseAPI\eyecon_tool.apk
 ```
 If `adb root` fails, the AVD is wrong — recreate with a **Google APIs** image (not Google Play).
 
@@ -312,7 +313,7 @@ WHPX(10.0.26200) is installed and usable.
 - Booted successfully with WHPX + SwiftShader; `sys.boot_completed=1`, device `emulator-5554`.
 - APK install needed the `-d` flag:
   ```powershell
-  adb install -r -d D:\ReverseAPI\eyecon.apk
+  adb install -r -d D:\ReverseAPI\eyecon_tool.apk
   ```
   Result: `Success`.
 - Launching the app lands on `com.eyecon.global/.Registration.RegistrationActivity`.
@@ -381,7 +382,8 @@ Both Caller ID (`is_callerid=true`, `requestApi=okHttp`) and Search
 - `D:\ReverseAPI\eyecon_debuggable.apk` — debuggable, no Gadget (installed on phone).
 - `D:\ReverseAPI\cid.txt` — the real CID.
 - `D:\ReverseAPI\contactdb_live.db` — pulled app DB (contains `shared_preference_v2`).
-- `D:\ReverseAPI\logcat_phone.txt` — passive logcat capture during registration.
+- `D:\ReverseAPI\logcat_phone.txt` — passive logcat capture during registration (removed during
+  the 2026-11-24 root cleanup; findings remain documented here).
 - `D:\ReverseAPI\debug.keystore` — signing key for the debuggable rebuild.
 
 ---
@@ -521,7 +523,8 @@ Working tree is clean; bulky artifacts and captures are gitignored but retained 
 - `truecaller_research/AUTH_AND_TESTING_FINDINGS.md` §6 = live verification, §8 = open questions,
   §9 = TLS fingerprint diagnosis, §10 = Cloudflare Worker relay + NumVerify CORS.
 - `HANDOFF.md` earlier sections = full Eyecon reverse-engineering history.
-- `tc_signin_logcat.txt`, `tc_live_response.txt` = gitignored captures kept on disk.
+- `tc_signin_logcat.txt`, `tc_live_response.txt` = gitignored captures removed during the
+  2026-11-24 root cleanup; the findings are preserved in `truecaller_research/`.
 
 ---
 
@@ -603,3 +606,20 @@ Deployment: **https://f00558f1.callerid-lookup.pages.dev**
 Browser verification on the live alias: no console errors, no horizontal overflow, zero elements
 with non-zero `border-radius`, correct fonts, first-run status strip visible, no credentials in the
 DOM or bundle. Local live lookup verification returned Eyecon `TAS IF?` and TrueCaller `Tasif`.
+
+---
+
+## UPDATE 2026-11-24 — root cleanup
+
+Root docs were brought current: `README.md` now describes the Cloudflare Pages deployment and
+relay, `AGENTS.md` reflects completed research, `GIT_WORKFLOW.md` includes `.wrangler/`, and
+`EYECON_ENDPOINTS.md`/this file use the temporary `eyecon_tool.apk` regeneration path.
+
+Removed from disk (all were gitignored derived/scratch files): the duplicate `eyecon.apk`, all
+debuggable/gadget APK rebuilds and their `.idsig` files, the x86 `frida-server` and its `.xz`,
+the JADX GUI installer, stale runner/log/capture text files, `NUL`, the root `.wrangler/` cache,
+and the `tc_*` TrueCaller capture files. Roughly 1 GB was reclaimed.
+
+Kept on disk: both original `[FileCR].apk` sources, `frida-server-arm64*` for the phone, all
+decompiled trees, runtime DB/captures, Frida Gadget binary/xz, `_design_review/`,
+`caller_id_lookup_design.zip`, `debug.keystore`, and everything under `app/`.

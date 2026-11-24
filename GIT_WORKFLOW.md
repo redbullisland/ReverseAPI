@@ -17,7 +17,7 @@ and regeneration commands.
   ```text
   Add client-only Next.js lookup app
   Document TrueCaller endpoint findings
-  Ignore Vercel and local env artifacts
+  Ignore Cloudflare and local env artifacts
   ```
 
 - One logical change per commit. Do not amend, rebase, or reset commits made by
@@ -37,7 +37,7 @@ and regeneration commands.
 | `*.ps1`, `*.bat`, `*.py` helpers | `*_apktool/`, `*_jadx/`, `*_jadx_badcode/` |
 | `eyecon_hook*.js` Frida hooks | Frida binaries, `*.msi`, `*.xz`, `*.zip`, tool folders |
 | `eyecon_lookup_react/`, `eyecon_lookup_webapp/` | `*.log`, `logcat_*.txt`, `*_out.txt`, runtime `*.db` / `*.sqlite*` |
-| `app/` (Next.js source + lockfile) | `node_modules/`, `dist/`, `.next/`, `out/`, `.vercel/`, `*.tsbuildinfo` |
+| `app/` (Next.js source + lockfile) | `node_modules/`, `dist/`, `.next/`, `out/`, `.vercel/`, `.wrangler/`, `*.tsbuildinfo` |
 | `truecaller_research/` notes | `.env`, `.env.*` (except `*.env.example` templates) |
 
 The reason is reproducibility and size: derived trees, APKs, and captures can be
@@ -69,9 +69,9 @@ names for Frida hooks; jadx deobfuscated names are for reading only.
 ## Adding a new app
 
 1. Use one top-level directory per app (e.g. `app/`), with its own `README.md`
-   stating the Vercel **Root Directory** and whether it is client-only.
+   stating the deploy target/root directory and whether it is client-only.
 2. Keep its source, `package.json`, and lockfile tracked. Build/dependency output
-   (`node_modules/`, `.next/`, `dist/`, `out/`, `.vercel/`, `*.tsbuildinfo`) and
+   (`node_modules/`, `.next/`, `dist/`, `out/`, `.vercel/`, `.wrangler/`, `*.tsbuildinfo`) and
    `.env*` files are ignored globally; add a narrow rule only for something new.
 3. Never hardcode real credentials in components or scripts, and never commit
    `.env` files. Commit `*.env.example` templates with placeholder values only.
