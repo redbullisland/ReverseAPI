@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.3.5",
+    "@yume-chan/adb": "^2.6.4",
+    "@yume-chan/adb-credential-web": "^2.1.0",
+    "@yume-chan/adb-daemon-webusb": "^2.3.2",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.5.2",
     "lucide-react": "^1.79.0",

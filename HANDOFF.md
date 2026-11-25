@@ -623,3 +623,102 @@ and the `tc_*` TrueCaller capture files. Roughly 1 GB was reclaimed.
 Kept on disk: both original `[FileCR].apk` sources, `frida-server-arm64*` for the phone, all
 decompiled trees, runtime DB/captures, Frida Gadget binary/xz, `_design_review/`,
 `caller_id_lookup_design.zip`, `debug.keystore`, and everything under `app/`.
+
+---
+
+## UPDATE 2026-11-24 — local credential import (no live device)
+
+### What changed
+- Added tracked `app/public/import_credentials.py`: stdlib-only, local-only ADB helper. It uses
+  `exec-out run-as com.eyecon.global cat databases/contactdb`, copies `contactdb-wal` only when
+  listed, queries `shared_preference_v2` for `clientId` with `sqlite3`, and mirrors the exact
+  `authChecksum()`. It never raw-greps bytes. TrueCaller reads `account.xml` via `run-as`; root
+  (`su`) is attempted only with explicit `--truecaller-root`. No network, clipboard, upload,
+  telemetry, APK patching or privilege bypass. Codes preserved: `ADB_NOT_FOUND`, `NO_DEVICE`,
+  `MULTIPLE_DEVICES`, `UNAUTHORIZED`, `EYECON_NOT_INSTALLED`, `EYECON_NOT_DEBUGGABLE`,
+  `EYECON_DB_NOT_FOUND`, `EYECON_PARSE_FAILED`, `EYECON_DB_LOCKED`, `TRUECALLER_NOT_INSTALLED`,
+  `TRUECALLER_NOT_DEBUGGABLE`, `TRUECALLER_ROOT_NOT_AVAILABLE`, `TRUECALLER_PARSE_FAILED`.
+- Added `app/src/lib/webadb-import.js` and a **Get credentials from Android (ADB)** panel in
+  `app/src/app/page.js`. The panel gives the numbered USB setup guide, a **Connect & read** button,
+  retry buttons, and a pending/running/success/failed status list. It fills draft credential
+  fields only; **Save settings** remains a separate explicit action. Failure copy is inline and
+  contains no HTTP/proxy noise.
+- WebUSB uses `@yume-chan/adb` 2.6.4, `@yume-chan/adb-daemon-webusb` 2.3.2 and
+  `@yume-chan/adb-credential-web` 2.1.0, so `app/package.json` / `app/package-lock.json` changed.
+  This was required for the experimental in-app path; no server/API route was added.
+- Docs: `app/README.md` and root `README.md` now point to both import paths.
+
+### Verified without a phone
+- `python -m py_compile app/public/import_credentials.py` and `--help` passed.
+- Local ADB is installed but `adb devices` returned only `List of devices attached` with no device
+  rows → **no devices**. No serial, CID or token was printed.
+- `STATIC_EXPORT=1 npm run build` passed (4 static pages, 2 export entries); no API routes and no
+  changes to `next.config.mjs`, `.env.local` or provider/persistence logic.
+- Headless Chrome on `http://127.0.0.1`: `navigator.usb` present with WebUSB enabled, absent with
+  `--disable-features=WebUSB`. The built UI showed the correct guided message only in the absent
+  case; the guided list, Zadig link, helper link and all three step labels were present in both,
+  and **Connect & read** was disabled only when WebUSB was absent.
+- Pure-function checks passed: checksum digits/hex cases, small and multi-page SQLite fixtures
+  (fake values only), TrueCaller XML/expiry parsing, unsupported-browser gate, and stock-device
+  `EYECON_NOT_DEBUGGABLE` / `TRUECALLER_NOT_DEBUGGABLE` mapping.
+
+### Not verified / explicit limitations
+- No phone was attached, so the WebUSB device picker, ADB RSA prompt and `run-as` reads were **not**
+  tested live. Browser automation cannot select a WebUSB device here; that path was verified by
+  API/source inspection, build and synthetic fixtures only.
+- Windows driver conflict is real: Tango documents “If Google ADB has already claimed the ADB
+  interface, WebUSB API in Chrome or usb package can't claim it again.” The UI points to closing
+  other ADB tools and, on Windows, installing a WinUSB driver with Zadig.
+- Stock phones do not expose either credential. Eyecon still needs a debuggable setup or root;
+  TrueCaller has no supported stock-phone export, and its Bearer token expires roughly every
+  72 hours. The helper remains the reliable fallback.
+- Nothing was committed, pushed or deployed.
+
+### Parent-review follow-up — installed-package audit and real-DB check
+Audited the actual files under `app/node_modules` (not docs assumptions):
+
+- `@yume-chan/adb-credential-web@2.1.0` exports `AdbWebCredentialStore` as `export default`;
+  `new AdbWebCredentialStore(name)` is correct. `.d.ts` confirms `generateKey()` and `iterateKeys()`.
+- `@yume-chan/adb-daemon-webusb@2.3.2` exposes `static readonly BROWSER` on
+  `AdbDaemonWebUsbDeviceManager`; correct. `requestDevice()` returns
+  `AdbDaemonWebUsbDevice | undefined` and swallows `NotFoundError`.
+- `AdbDaemonWebUsbDevice` getters are `raw`, `serial` and **`name`** (`raw.productName`).
+  There is no `product` field; `label` now uses `device.name`.
+- `AdbDaemonTransport.authenticate()` requires `serial`, `connection`, `credentialStore`;
+  `authenticators`, `features`, `initialDelayedAckBytes`, `preserveConnection` and
+  `readTimeLimit` are optional. Default `preserveConnection: false` closes the connection on
+  `transport.close()`, and Tango keeps the connection open when authenticate fails.
+- `Adb.close()` calls `transport.close()`. `AdbDaemonWebUsbConnection` has no public `close()`;
+  its duplex `close` calls `device.raw.close()`, releasing the claimed interface. Teardown now
+  calls `adb.close()` (falling back to `transport.close()`) then `device.raw.close()`, and
+  `connectUsbDevice()` also releases the device on `connect()`/`authenticate()` failure.
+- `spawnWaitText()` / `spawnWait()` in both shell and none protocols accept
+  `string | readonly string[]`. `runText`, `runBytes` and `assertInstalled` were already correct
+  to pass argument arrays; no change was needed.
+
+Real captured DB verification (no values printed): Python `SELECT data FROM shared_preference_v2
+WHERE key='clientId'` and the in-browser SQLite reader both produced a 36-character value with an
+identical SHA-256 hash, and the browser checksum matched `computeCidChecksum()`. The temp Node
+script and expected-hash file lived only in the opencode temp folder; no fixture was added to the
+repo. Re-ran `py_compile`, `--help`, `npm run build` and `STATIC_EXPORT=1 npm run build` with
+`NEXT_PUBLIC_*` credentials overridden to empty strings. Retry buttons were made explicit:
+connection-only, Eyecon-only, TrueCaller-only.
+
+### Parent deployment and live verification
+Rebuilt the static export with `.env.local` hidden and only the public relay URL inlined; secret
+scan was clean and `out/import_credentials.py` was present. Deployed with:
+
+```
+wrangler pages deploy out --project-name callerid-lookup --branch main --commit-dirty=true
+```
+
+Deployment: **https://fb55dbdf.callerid-lookup.pages.dev**
+(alias: **https://callerid-lookup.pages.dev**).
+
+Live browser verification on the alias: no console errors, `navigator.usb` present in Chrome,
+**Connect & read** and **Retry connection** enabled, individual retry buttons correctly disabled
+until a session exists, setup guide and Zadig/Platform Tools links present, stock-device warning and
+no-auto-save copy present, helper link at `/import_credentials.py`, 0px radius throughout, no
+horizontal overflow, no credentials in the DOM/bundle. The helper URL returned HTTP 200 with
+14,872 bytes. WebUSB device selection/RSA prompt still requires a real phone and was not automatable
+here.

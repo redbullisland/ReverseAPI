@@ -38,9 +38,46 @@ import {
 import { PROVIDERS, getProvider, lookup } from '@/lib/providers';
 import { authChecksum } from '@/lib/providers/eyecon';
 import { COUNTRIES, loadSettings, saveSettings } from '@/lib/settings';
+import {
+  connectUsbDevice,
+  describeUsbError,
+  disconnectUsbSession,
+  isWebUsbAvailable,
+  preloadUsbLibraries,
+  readEyeconViaUsb,
+  readTrueCallerViaUsb,
+} from '@/lib/webadb-import';
 
 const REQUIRED_SECRETS = { eyecon: 'cid', truecaller: 'token' };
 const SECRET_LABELS = { eyecon: 'Client ID', truecaller: 'installationId' };
+const USB_STEP_ROWS = [
+  ['device', 'USB connection'],
+  ['eyecon', 'Eyecon CID'],
+  ['truecaller', 'TrueCaller installationId'],
+];
+
+function initialUsbState() {
+  return {
+    steps: {
+      device: { state: 'pending', detail: '' },
+      eyecon: { state: 'pending', detail: '' },
+      truecaller: { state: 'pending', detail: '' },
+    },
+  };
+}
+
+function usbStatusClass(state) {
+  if (state === 'success') {
+    return 'inline-flex h-5 min-w-[54px] items-center justify-center bg-success-container px-1.5 text-[10px] font-semibold uppercase tracking-[0.06em] text-success';
+  }
+  if (state === 'failed') {
+    return 'inline-flex h-5 min-w-[54px] items-center justify-center bg-error-container px-1.5 text-[10px] font-semibold uppercase tracking-[0.06em] text-error-ink';
+  }
+  if (state === 'running') {
+    return 'inline-flex h-5 min-w-[54px] items-center justify-center bg-accent px-1.5 text-[10px] font-semibold uppercase tracking-[0.06em] text-foreground';
+  }
+  return 'inline-flex h-5 min-w-[54px] items-center justify-center bg-muted px-1.5 text-[10px] font-semibold uppercase tracking-[0.06em] text-muted-foreground';
+}
 
 function parseNumbers(raw) {
   return String(raw ?? '')
@@ -252,7 +289,10 @@ export default function Home() {
   const [results, setResults] = useState([]);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+  const [usbImport, setUsbImport] = useState(initialUsbState);
+  const [usbBusy, setUsbBusy] = useState(false);
   const csvInputRef = useRef(null);
+  const usbSessionRef = useRef(null);
 
   useEffect(() => {
     setSettings(loadSettings());
@@ -261,6 +301,17 @@ export default function Home() {
   useEffect(() => {
     if (settings) saveSettings(settings);
   }, [settings]);
+
+  useEffect(() => {
+    if (settingsOpen && isWebUsbAvailable()) void preloadUsbLibraries().catch(() => {});
+  }, [settingsOpen]);
+
+  useEffect(
+    () => () => {
+      void disconnectUsbSession(usbSessionRef.current);
+    },
+    []
+  );
 
   const selectedProviders = useMemo(
     () => (settings?.providers ?? []).map(getProvider).filter((provider) => !provider.placeholder),
@@ -326,6 +377,86 @@ export default function Home() {
         [providerId]: { ...(previous.secrets[providerId] ?? {}), [key]: value },
       },
     }));
+  }
+
+  function patchUsbStep(key, patch) {
+    setUsbImport((previous) => ({
+      ...previous,
+      steps: { ...previous.steps, [key]: { ...previous.steps[key], ...patch } },
+    }));
+  }
+
+  async function usbConnectStep() {
+    patchUsbStep('device', { state: 'running', detail: 'Opening the USB device…' });
+    await disconnectUsbSession(usbSessionRef.current);
+    usbSessionRef.current = null;
+    try {
+      const session = await connectUsbDevice();
+      usbSessionRef.current = session;
+      patchUsbStep('device', {
+        state: 'success',
+        detail: `Connected to ${session.label}. Any values found are added to the draft only.`,
+      });
+      return true;
+    } catch (error) {
+      patchUsbStep('device', { state: 'failed', detail: describeUsbError(error) });
+      return false;
+    }
+  }
+
+  async function usbEyeconStep() {
+    const adb = usbSessionRef.current?.adb;
+    if (!adb) {
+      patchUsbStep('eyecon', { state: 'failed', detail: 'Connect a device first, then retry Eyecon.' });
+      return;
+    }
+    patchUsbStep('eyecon', { state: 'running', detail: 'Reading the Eyecon app data…' });
+    try {
+      const result = await readEyeconViaUsb(adb);
+      patchDraftSecret('eyecon', 'cid', result.cid);
+      patchUsbStep('eyecon', {
+        state: 'success',
+        detail: `CID copied to the draft · e-auth-c ${result.checksum}. Review it, then click Save settings.`,
+      });
+    } catch (error) {
+      patchUsbStep('eyecon', { state: 'failed', detail: describeUsbError(error) });
+    }
+  }
+
+  async function usbTrueCallerStep() {
+    const adb = usbSessionRef.current?.adb;
+    if (!adb) {
+      patchUsbStep('truecaller', { state: 'failed', detail: 'Connect a device first, then retry TrueCaller.' });
+      return;
+    }
+    patchUsbStep('truecaller', { state: 'running', detail: 'Checking whether the token is reachable…' });
+    try {
+      const result = await readTrueCallerViaUsb(adb);
+      patchDraftSecret('truecaller', 'token', result.installationId);
+      patchUsbStep('truecaller', {
+        state: 'success',
+        detail: `installationId copied to the draft${result.expiry ? ` · local expiry estimate ${result.expiry} (server TTL unconfirmed)` : ''}. Review it, then click Save settings.`,
+      });
+    } catch (error) {
+      patchUsbStep('truecaller', { state: 'failed', detail: describeUsbError(error) });
+    }
+  }
+
+  async function runUsbImport({ reconnect = true, eyecon = true, truecaller = true } = {}) {
+    setUsbBusy(true);
+    if (reconnect) setUsbImport(initialUsbState());
+    try {
+      if (reconnect || !usbSessionRef.current) {
+        const connected = await usbConnectStep();
+        if (!connected) return;
+      } else {
+        patchUsbStep('device', { state: 'success', detail: 'Using the connected device.' });
+      }
+      if (eyecon) await usbEyeconStep();
+      if (truecaller) await usbTrueCallerStep();
+    } finally {
+      setUsbBusy(false);
+    }
   }
 
   function toggleDraftProvider(providerId, enabled) {
@@ -778,6 +909,126 @@ export default function Home() {
                     </section>
                   );
                 })}
+
+                <details className="ui-panel">
+                  <summary className="cursor-pointer px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                    Get credentials from Android (ADB)
+                  </summary>
+                  <div className="border-t border-border p-4">
+                    <p className="mb-3 text-[12px] leading-5 text-muted-foreground">
+                      Stock phones do not expose these values. Everything here works only with your own
+                      debuggable or rooted setup. Nothing is saved until you click <strong className="text-foreground">Save settings</strong>.
+                    </p>
+
+                    <h4 className="field-label">Import via USB (experimental)</h4>
+                    <ol className="mb-3 flex list-decimal flex-col gap-1.5 pl-5 text-[12px] leading-5 text-muted-foreground">
+                      <li>
+                        Install{' '}
+                        <a
+                          href="https://developer.android.com/tools/releases/platform-tools"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-brand-blue underline underline-offset-2"
+                        >
+                          Android SDK Platform Tools (ADB)
+                        </a>
+                        . On Windows, if WebUSB cannot claim the ADB interface, install a WinUSB driver
+                        with{' '}
+                        <a
+                          href="https://zadig.akeo.ie/"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-brand-blue underline underline-offset-2"
+                        >
+                          Zadig
+                        </a>{' '}
+                        and retry.
+                      </li>
+                      <li>On the phone, enable Developer options and USB debugging.</li>
+                      <li>Connect by USB, unlock the phone, and accept the “Allow USB debugging?” prompt.</li>
+                      <li>Keep this dialog open while importing, then review the fields and click Save settings.</li>
+                    </ol>
+
+                    {!isWebUsbAvailable() && (
+                      <p className="mb-3 border-l-2 border-error-ink bg-error-container px-3 py-2 text-[12px] leading-5 text-error-ink">
+                        WebUSB is unavailable here. Use Chrome or Edge over HTTPS or localhost, or use the
+                        local Python helper below.
+                      </p>
+                    )}
+
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        disabled={usbBusy || !isWebUsbAvailable()}
+                        onClick={() => runUsbImport()}
+                        className="btn btn-primary btn-compact"
+                      >
+                        {usbBusy ? 'Working…' : 'Connect & read'}
+                      </button>
+                      <button
+                        type="button"
+                        disabled={usbBusy || !isWebUsbAvailable()}
+                        onClick={() => runUsbImport({ reconnect: true, eyecon: false, truecaller: false })}
+                        className="btn btn-secondary btn-compact"
+                      >
+                        Retry connection
+                      </button>
+                      <button
+                        type="button"
+                        disabled={usbBusy || !usbSessionRef.current}
+                        onClick={() => runUsbImport({ reconnect: false, eyecon: true, truecaller: false })}
+                        className="btn btn-secondary btn-compact"
+                      >
+                        Retry Eyecon
+                      </button>
+                      <button
+                        type="button"
+                        disabled={usbBusy || !usbSessionRef.current}
+                        onClick={() => runUsbImport({ reconnect: false, eyecon: false, truecaller: true })}
+                        className="btn btn-secondary btn-compact"
+                      >
+                        Retry TrueCaller
+                      </button>
+                    </div>
+
+                    <ul className="mt-4 flex flex-col gap-2 border-t border-border pt-3">
+                      {USB_STEP_ROWS.map(([key, label]) => {
+                        const step = usbImport.steps[key];
+                        return (
+                          <li key={key} className="flex flex-col gap-0.5 text-[12px] leading-5">
+                            <span className="flex items-center gap-2">
+                              <span className={usbStatusClass(step.state)}>{step.state}</span>
+                              <span className="font-semibold text-foreground">{label}</span>
+                            </span>
+                            {step.detail && <span className="pl-[62px] text-muted-foreground">{step.detail}</span>}
+                          </li>
+                        );
+                      })}
+                    </ul>
+
+                    <div className="mt-4 border-t border-border pt-3">
+                      <h4 className="field-label">Reliable fallback · local helper</h4>
+                      <p className="text-[12px] leading-5 text-muted-foreground">
+                        After registration, the Eyecon CID is stored in the app&apos;s private database.
+                        Run the helper, then paste the CID below. TrueCaller has no supported stock-phone
+                        export; the installationId expires roughly every 72 hours, so skip it if you cannot
+                        supply it yourself.
+                      </p>
+                      <a
+                        href="/import_credentials.py"
+                        download
+                        className="btn btn-secondary btn-compact mt-3"
+                      >
+                        Download local helper (.py)
+                      </a>
+                      <p className="mt-2 text-[11px] leading-4 text-muted-foreground">
+                        Needs Android SDK Platform Tools (<code>adb</code>), USB debugging, and the phone
+                        unlocked for the RSA prompt. Run:{' '}
+                        <code className="text-foreground">python import_credentials.py --serial &lt;serial&gt;</code>
+                      </p>
+                    </div>
+                  </div>
+                </details>
 
                 <details className="ui-panel">
                   <summary className="cursor-pointer px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">

@@ -22,6 +22,7 @@ frontend that reproduces their name + spam lookups.
 | `eyecon_lookup_react/` | yes | Working Vite+React webapp (reference; CID pre-filled) |
 | `eyecon_lookup_webapp/` | yes | Original plain Python/HTML prototype (reference) |
 | `app/` | yes | **Client-only Next.js app deployed to Cloudflare Pages** (no API routes) |
+| `app/public/import_credentials.py` | yes | Local-only ADB fallback for your own debuggable/rooted phone (no uploads) |
 | `truecaller_research/` | yes | TrueCaller notes, plan, and grep results |
 | `.env*`, `.vercel/`, `.wrangler/` | no | Local secrets and deploy metadata (gitignored) |
 | `Eyecon... [FileCR].apk`, `Truecaller... [FileCR].apk` | no | Source APKs (keep on disk, gitignored) |
@@ -114,5 +115,7 @@ relay in `app/relay-worker.js` (**https://callerid-relay.everse.workers.dev**), 
 is the default proxy template. Credentials are pasted in the UI and stored in that
 browser's `localStorage`; no real CID or installationId is bundled. Both Eyecon and
 TrueCaller providers are implemented and live-verified; users paste their own CID /
-installationId in the UI. See `app/README.md`,
+installationId in the UI. Settings also offers an experimental browser WebUSB import and links the
+local-only fallback helper `app/public/import_credentials.py` for debuggable/rooted setups; stock
+phones cannot export these values. See `app/README.md`,
 `truecaller_research/TRUE_CALLER_ENDPOINTS.md`, and `GIT_WORKFLOW.md`.

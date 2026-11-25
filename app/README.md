@@ -72,6 +72,47 @@ values fall back to the env defaults so a stale browser entry cannot erase a wor
 **No working credentials are compiled into the deployed site** — visitors paste their own once in
 Settings and that browser remembers them.
 
+### Importing credentials from Android
+
+Open **Settings → Get credentials from Android (ADB)**. Stock phones do not expose these values:
+this works only with your own debuggable or rooted setup. Both paths read only local app data, make
+no network requests, and **never auto-save**. They fill the existing draft fields so you can review
+them and click **Save settings** yourself.
+
+**WebUSB (experimental)** — Chrome/Edge on HTTPS or localhost:
+
+1. Install [Android SDK Platform Tools (ADB)](https://developer.android.com/tools/releases/platform-tools).
+   On Windows, if WebUSB cannot claim the ADB interface, install a WinUSB driver with
+   [Zadig](https://zadig.akeo.ie/) and retry. Google ADB holding the interface also blocks WebUSB.
+2. On the phone, enable **Developer options** and **USB debugging**.
+3. Connect by USB, unlock the phone, and accept **Allow USB debugging?**
+4. Keep the dialog open and click **Connect & read**. Per-step **pending / running / success /
+   failed** statuses show what happened; **Retry connection**, **Retry Eyecon** and
+   **Retry TrueCaller** repeat only the failed step.
+
+The in-app path uses `@yume-chan/adb`, `@yume-chan/adb-daemon-webusb` and
+`@yume-chan/adb-credential-web` in the browser. It stores its ADB key in that browser's IndexedDB
+and talks only to the selected local USB device. Eyecon is read from
+`databases/contactdb` → `shared_preference_v2` (`clientId`, no raw byte scanning) and the exact
+`e-auth-c` checksum is computed in the UI. TrueCaller is attempted only if `run-as` can read its
+prefs; on a stock app it reports **not exportable** with a manual-paste hint. Its locally stored
+expiry is only an estimate: the server TTL (~72 hours) is unconfirmed.
+
+**Local helper (reliable fallback)** — download
+`/import_credentials.py` from the same panel or run the tracked copy at
+`app/public/import_credentials.py`. It uses only Python's standard library plus `adb` on PATH:
+
+```bat
+python import_credentials.py
+python import_credentials.py --serial <serial>
+python import_credentials.py --serial <serial> --truecaller-root
+```
+
+`--truecaller-root` is advanced and opt-in only; without it the helper never tries `su`. It reports
+machine-readable codes such as `UNAUTHORIZED`, `EYECON_NOT_DEBUGGABLE`, `EYECON_DB_LOCKED` and
+`TRUECALLER_ROOT_NOT_AVAILABLE`. Copy any value into Settings yourself; the helper sends nothing
+anywhere and does not patch APKs or bypass app protections.
+
 ### Local credential defaults (`.env.local`)
 
 Copy `app/.env.example` to `app/.env.local` and set:
