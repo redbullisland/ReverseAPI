@@ -90,6 +90,11 @@ them and click **Save settings** yourself.
    failed** statuses show what happened; **Retry connection**, **Retry Eyecon** and
    **Retry TrueCaller** repeat only the failed step.
 
+A full guided page is available at **`/help`** (linked from the header and the ADB panel). It also
+records the verification result from 2026-11-26: `adb devices` listed the connected phone as
+authorized, the embedded OpenCode browser exposed `navigator.usb`, but its native WebUSB picker did
+not appear — so a real Chrome/Edge window is required for device selection.
+
 The in-app path uses `@yume-chan/adb`, `@yume-chan/adb-daemon-webusb` and
 `@yume-chan/adb-credential-web` in the browser. It stores its ADB key in that browser's IndexedDB
 and talks only to the selected local USB device. Eyecon is read from

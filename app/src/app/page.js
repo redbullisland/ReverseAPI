@@ -141,16 +141,21 @@ function BrandHeader({ onOpenSettings }) {
           </span>
         </div>
 
-        <DialogTrigger asChild>
-          <button
-            type="button"
-            onClick={onOpenSettings}
-            className="btn btn-secondary btn-compact"
-          >
-            <Settings2 className="size-4 text-muted-foreground" aria-hidden="true" />
-            Settings
-          </button>
-        </DialogTrigger>
+        <div className="flex shrink-0 items-center gap-2">
+          <a href="/help" className="btn btn-secondary btn-compact">
+            Help
+          </a>
+          <DialogTrigger asChild>
+            <button
+              type="button"
+              onClick={onOpenSettings}
+              className="btn btn-secondary btn-compact"
+            >
+              <Settings2 className="size-4 text-muted-foreground" aria-hidden="true" />
+              Settings
+            </button>
+          </DialogTrigger>
+        </div>
       </div>
     </header>
   );
@@ -919,6 +924,9 @@ export default function Home() {
                       Stock phones do not expose these values. Everything here works only with your own
                       debuggable or rooted setup. Nothing is saved until you click <strong className="text-foreground">Save settings</strong>.
                     </p>
+                    <a href="/help" className="btn btn-secondary btn-compact mb-4">
+                      Open full USB setup guide
+                    </a>
 
                     <h4 className="field-label">Import via USB (experimental)</h4>
                     <ol className="mb-3 flex list-decimal flex-col gap-1.5 pl-5 text-[12px] leading-5 text-muted-foreground">

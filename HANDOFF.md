@@ -722,3 +722,25 @@ no-auto-save copy present, helper link at `/import_credentials.py`, 0px radius t
 horizontal overflow, no credentials in the DOM/bundle. The helper URL returned HTTP 200 with
 14,872 bytes. WebUSB device selection/RSA prompt still requires a real phone and was not automatable
 here.
+
+### Live USB attempt and help page (2026-11-26)
+Dev server opened in the OpenCode embedded browser with Settings → ADB panel expanded. Verified:
+
+- `navigator.usb` was present and `window.isSecureContext` was true.
+- `adb devices` listed `jnroyp6tjzztqwfm` as `device` (authorized).
+- Clicking **Connect & read** inside the embedded browser produced
+  `NO_USB_DEVICE: No device was selected in the browser picker.` after 30s. The native WebUSB
+  picker did not appear in the embedded browser; a real Chrome/Edge window is required for the
+  user to select the phone. On Windows, Google ADB normally owns the ADB interface, so a WinUSB
+  driver via Zadig may also be needed before WebUSB can claim it.
+
+Added a dedicated static help page at `/help` (`app/src/app/help/page.js`), linked from the header
+and the Settings ADB panel. It documents exactly when to connect the phone (after Platform Tools
+and USB debugging are ready, with the app open in a real browser), the WebUSB steps, the local
+helper fallback, and the verified/blocked findings above. No CID or installationId was printed or
+stored during the attempt.
+
+Rebuilt and redeployed the static export with the help route:
+**https://76d05f10.callerid-lookup.pages.dev** (alias
+**https://callerid-lookup.pages.dev/help**). Live fetch confirmed the full guide, the
+verification table, and the helper link are present.
